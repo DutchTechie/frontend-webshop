@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-md-12">
+        <button class="btn btn-primary">New Product</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <a class="list-group-item clearfix" href="#" *ngFor="let product of products">
+            <div class="pull-left">
+                <h4 class="list-group-item-heading">{{ product.name }}</h4>
+                <p class="list-group-item-text">{{ product.description }}</p>
+            </div>
+
+            <!-- TODO: Add image -->
+            <span class="pull-right">
+                <p>Image source</p>
+            </span>
+        </a>
+    </div>
+</div>
