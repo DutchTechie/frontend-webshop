@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ProductCatalogComponent } from './products/product-catalog/product-catalog.component';
 import { ProductAdminOptionsComponent } from './products/product-admin-options/product-admin-options.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { ProductAdminOptionsComponent } from './products/product-admin-options/p
     ProductAdminOptionsComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
