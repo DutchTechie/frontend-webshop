@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from '../product.model'
+import { map } from 'rxjs/operators'
 
 // TODO: Place this somewhere else, such as in a service
 import { HttpClient } from '@angular/common/http'
@@ -27,15 +28,32 @@ export class ProductCatalogComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
+  ngOnInit(): void {}
+
   createNewProduct() {
     // let product = 
-    this.products.push(new Product(this.newProductName, this.newProductDescription, this.newProductImageUrl))
+    
 
     // We're going to create a simple fetch method here for now, just a simple test
-    this.http.get("http://localhost:8080/hello-world").subscribe(data => console.log(data))
-  }
+    this.http.get("http://localhost:8080/hello-world")
+    .pipe(map(data => {
+      const productArray = [];
 
-  ngOnInit(): void {
-  }
+      // NOTE: there is no need for this since the raw data works
+      // for (const key in data) {
+      //   if (data.hasOwnProperty(key)) {
+      //     productArray.push({...data[key], id: key})
+      //   }
+      // }
 
+      // so, simply push the raw data to array
+      if (data.hasOwnProperty("name") && data.hasOwnProperty("description")) {
+        productArray.push(new Product(data["name"], data["description"], "path"))
+      }
+
+      return productArray;
+    }))
+    .subscribe(data => 
+      this.products = data)
+  }
 }
