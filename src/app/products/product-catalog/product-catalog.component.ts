@@ -30,10 +30,7 @@ export class ProductCatalogComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  createNewProduct() {
-    // let product = 
-    
-
+  fetchAllProducts() {
     // We're going to create a simple fetch method here for now, just a simple test
     this.http.get("http://localhost:8080/hello-world")
     .pipe(map(data => {
@@ -55,12 +52,21 @@ export class ProductCatalogComponent implements OnInit {
       //     productArray.push({...data[key], id: key})
       //   }
       // }
-
-      
-
       return productArray;
     }))
-    .subscribe(data => 
-      this.products = data)
+    .subscribe(data => this.products = data)
+  }
+
+  createNewProduct() {
+    // let product = 
+    
+
+    // We're going to create a simple fetch method here for now, just a simple test
+    this.http.post("http://localhost:8080/hello-world", {
+      "name" : this.newProductName,
+      "description" : this.newProductDescription,
+      "imagePath" : this.newProductImageUrl
+    })
+    .subscribe(data => console.log(data))
   }
 }
