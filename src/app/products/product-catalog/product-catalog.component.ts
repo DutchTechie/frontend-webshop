@@ -39,6 +39,16 @@ export class ProductCatalogComponent implements OnInit {
     .pipe(map(data => {
       const productArray = [];
 
+      if(data instanceof Array){
+        console.log("is array")
+        // so, simply push the raw data to array
+        for (const key in data) {
+          if (data[key].hasOwnProperty("name") && data[key].hasOwnProperty("description")) {
+            productArray.push(new Product(data[key]["name"], data[key]["description"], "path"))
+          }
+        }
+      }
+
       // NOTE: there is no need for this since the raw data works
       // for (const key in data) {
       //   if (data.hasOwnProperty(key)) {
@@ -46,10 +56,7 @@ export class ProductCatalogComponent implements OnInit {
       //   }
       // }
 
-      // so, simply push the raw data to array
-      if (data.hasOwnProperty("name") && data.hasOwnProperty("description")) {
-        productArray.push(new Product(data["name"], data["description"], "path"))
-      }
+      
 
       return productArray;
     }))
