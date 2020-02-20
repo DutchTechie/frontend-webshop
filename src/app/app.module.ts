@@ -4,12 +4,14 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ProductCatalogComponent } from './products/product-catalog/product-catalog.component';
+import { ProductAdminOptionsComponent } from './products/product-admin-options/product-admin-options.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    ProductCatalogComponent
+    ProductCatalogComponent,
+    ProductAdminOptionsComponent
   ],
   imports: [
     BrowserModule

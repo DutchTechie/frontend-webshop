@@ -8,6 +8,7 @@ import { Product } from '../product.model'
 })
 export class ProductCatalogComponent implements OnInit {
   products : Product[] = [
+    new Product("shoe", "What can I say? It's a bloody shoe.", "no path"),
     new Product("shoe", "What can I say? It's a bloody shoe.", "no path")
   ];
 
