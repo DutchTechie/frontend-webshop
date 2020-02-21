@@ -18,7 +18,6 @@ export class ProductCatalogComponent implements OnInit {
   newProductDescription = ""
   newProductImageUrl = ""
 
-  // Testing binding events
   // We're passing something out of the component, so use output
   @Output() productSelected = new EventEmitter<{name: string, description: string, imagePath: string}>();
 
@@ -40,6 +39,7 @@ export class ProductCatalogComponent implements OnInit {
       this.products = data})
   }
 
+  // TODO: put this in a seperate component
   createNewProduct() {
     this.api.addNewProduct(this.newProductName, 
       this.newProductDescription,

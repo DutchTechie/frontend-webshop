@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ProductAdminOptionsComponent } from './product-admin-options.component';
 
 describe('ProductAdminOptionsComponent', () => {
