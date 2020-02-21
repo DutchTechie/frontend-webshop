@@ -1,7 +1,9 @@
 <div class="container">
     <app-header></app-header>
     <h1>Shoes</h1>
-    <app-product-catalog></app-product-catalog>
+    <app-product-catalog (productSelected)="onProductSelected($event)"></app-product-catalog>
     <hr />
-    <app-product-admin-options></app-product-admin-options>
+
+    <!-- Update this by binding it to the parent -->
+    <app-product-admin-options [product]="currentProduct"></app-product-admin-options>
 </div>

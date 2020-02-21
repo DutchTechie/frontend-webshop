@@ -11,13 +11,11 @@ import { Product } from '../products/product.model'
 
 @Injectable({providedIn: 'root'})
 export class ApiComponent implements OnInit {
-  products : Product[] = []
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {}
 
   public fetchAllProducts() {
-    // We're going to create a simple fetch method here for now, just a simple test
     return this.http.get("http://localhost:8080/hello-world")
     .pipe(map(data => {
       const productArray = [];
@@ -28,7 +26,6 @@ export class ApiComponent implements OnInit {
           }
         }
       }
-
       return productArray
     }))
   }
@@ -39,5 +36,9 @@ export class ApiComponent implements OnInit {
       "description" : newProductDescription,
       "imagePath" : newProductImagePath
     })
+  }
+
+  public deleteProduct() {
+    return this.http.delete("http://localhost:8080/hello-world")
   }
 }

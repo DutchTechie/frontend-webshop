@@ -9,17 +9,22 @@
         <div class="form-group">
             <input type="text" class="form-control" [(ngModel)]="newProductImageUrl" placeholder="Image url">
         </div>
+
         <div class="form-group">
             <button class="btn btn-primary" (click)="createNewProduct()" >Create new product</button>
             &nbsp;
             <button class="btn btn-primary" (click)="fetchAllProducts()" >Fetch all products</button>
+            &nbsp;
+            <button class="btn btn-primary" (click)="deleteAllProducts()" >Delete all products</button>
         </div>
     </div>
 </div>
 <hr />
+
+<!-- Place this in a seperate component -->
 <div class="row">
     <div class="col-md-12">
-        <a class="list-group-item clearfix" href="#" (click)="updateDetails(product.name)" *ngFor="let product of products">
+        <a class="list-group-item clearfix" href="#" (click)="onProductSelect(product)" *ngFor="let product of products">
             <div class="pull-left">
                 <h4 class="list-group-item-heading">{{ product.name }}</h4>
                 <p class="list-group-item-text">{{ product.description }}</p>

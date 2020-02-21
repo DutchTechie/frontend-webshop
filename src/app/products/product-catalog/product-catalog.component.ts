@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Product } from '../product.model'
 import { HttpClient } from '@angular/common/http'
 import { map } from 'rxjs/operators'
@@ -13,14 +13,14 @@ export class ProductCatalogComponent implements OnInit {
   products : Product[] = [];
 
   // TODO: Make use of the @viewChild instead
+  // TODO: Place this somewhere more appropiate
   newProductName = ""
   newProductDescription = ""
   newProductImageUrl = ""
 
-  updateDetails(event) {
-    console.log(event)
-    alert(event)
-  }
+  // Testing binding events
+  // We're passing something out of the component, so use output
+  @Output() productSelected = new EventEmitter<{name: string, description: string, imagePath: string}>();
 
   constructor(private http: HttpClient, private api: ApiComponent) { }
 
@@ -28,6 +28,13 @@ export class ProductCatalogComponent implements OnInit {
     this.fetchAllProducts()
   }
 
+  onProductSelect(product) {
+    this.productSelected.emit({name: product.name, 
+      description: product.description, 
+      imagePath: product.imagePath})
+  }
+
+  // Keep the following in this component
   fetchAllProducts() {
     this.api.fetchAllProducts().subscribe(data => {
       this.products = data})
@@ -37,5 +44,9 @@ export class ProductCatalogComponent implements OnInit {
     this.api.addNewProduct(this.newProductName, 
       this.newProductDescription,
       this.newProductImageUrl).subscribe(data => console.log(data))
+  }
+
+  deleteAllProducts() {
+    this.api.deleteProduct().subscribe(data => this.products = [])
   }
 }
