@@ -6,15 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  currentProduct = {name: "No product select", description: "", imagePath: ""}
-  title = 'frontend';
-
+  isAdmin = true
+  
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
-  onProductSelected(product) {
-    this.currentProduct = product
-  }
+  ngOnInit(): void {}
 }

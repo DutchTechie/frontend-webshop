@@ -1,8 +1,6 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { Product } from '../product.model'
-import { HttpClient } from '@angular/common/http'
-import { map } from 'rxjs/operators'
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { ApiComponent } from 'src/app/api/api.component';
+import { Product } from '../product.model';
 
 @Component({
   selector: 'app-product-catalog',
@@ -10,43 +8,17 @@ import { ApiComponent } from 'src/app/api/api.component';
   styleUrls: ['./product-catalog.component.css']
 })
 export class ProductCatalogComponent implements OnInit {
-  products : Product[] = [];
-
-  // TODO: Make use of the @viewChild instead
-  // TODO: Place this somewhere more appropiate
-  newProductName = ""
-  newProductDescription = ""
-  newProductImageUrl = ""
-
-  // We're passing something out of the component, so use output
+  @Input() gridView : boolean
+  @Input() products : Product[]
   @Output() productSelected = new EventEmitter<{name: string, description: string, imagePath: string}>();
 
-  constructor(private http: HttpClient, private api: ApiComponent) { }
+  constructor(private api: ApiComponent) { }
 
-  ngOnInit(): void {
-    this.fetchAllProducts()
-  }
+  ngOnInit(): void {}
 
   onProductSelect(product) {
     this.productSelected.emit({name: product.name, 
       description: product.description, 
       imagePath: product.imagePath})
-  }
-
-  // Keep the following in this component
-  fetchAllProducts() {
-    this.api.fetchAllProducts().subscribe(data => {
-      this.products = data})
-  }
-
-  // TODO: put this in a seperate component
-  createNewProduct() {
-    this.api.addNewProduct(this.newProductName, 
-      this.newProductDescription,
-      this.newProductImageUrl).subscribe(data => console.log(data))
-  }
-
-  deleteAllProducts() {
-    this.api.deleteProduct().subscribe(data => this.products = [])
   }
 }

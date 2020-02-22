@@ -6,13 +6,10 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./product-admin-options.component.css']
 })
 export class ProductAdminOptionsComponent implements OnInit {
-  @Input() product: {name: string, description : string , imagePath : string}
+  @Input() product: {name: string, description:string, imagePath : string}
 
   constructor() { }
 
-  // Use input here
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
 }
