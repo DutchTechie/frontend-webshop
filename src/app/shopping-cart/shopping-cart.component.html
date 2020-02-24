@@ -6,17 +6,31 @@
                     <th colspan="2">Item</th>
                     <th>Unit price</th>
                     <th>Quantity</th>
-                    <th>Total price</th>
+                    <th colspan="2">Total price</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>product image</td>
-                    <td>product name</td>
-                    <td>Product price</td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
+                <tr *ngFor="let cart of carts">
+                    <td>{{ cart.product.imagePath }}</td>
+                    <td>{{ cart.product.name }}</td>
+                    <td>&euro;{{ cart.product.price }}</td>
+                    <td>
+                        <input
+                            onKeyDown="return false"
+                            name="{{ cart.product.name }}"
+                            class="form-control" 
+                            min="1" 
+                            max="5" 
+                            name="amount" 
+                            type="number" 
+                            value="{{ cart.amount }}"
+                            (change)="updateTotalPrice($event)"/>
+                    </td>
+                    <td>
+                        &euro;{{ cart.product.price * cart.amount }}
+                        <button class="btn btn-warning pull-right">delete</button>
+                    </td>
+                </tr>      
             </tbody>
         </table>
     </div>
@@ -26,8 +40,9 @@
         <div class="cart">
             YOUR ORDER
             <hr />
-            Subtotal
+            Subtotal: &euro;{{ totalPrice }}
         </div>
+        <!-- TODO: add a button to proceed to payment -->
     </div>
 </div>
 

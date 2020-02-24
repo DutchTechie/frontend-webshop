@@ -1,7 +1,7 @@
 <!-- Place this in a seperate component -->
 <div class="row">
     <div class="col-md-12">
-        <div *ngIf="!gridView">
+        <div class="list-wrapper" *ngIf="!gridView">
             <a class="list-group-item clearfix" href="#" (click)="onProductSelect(product)" *ngFor="let product of products">
                 <div class="pull-left">
                     <h4 class="list-group-item-heading">{{ product.name }}</h4>
@@ -19,12 +19,14 @@
                 <div class="col-md-4" *ngFor="let product of products">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            Heading
+                            {{product.imagePath}}
                         </div>
                         <div class="panel-body">
-                            Panel content
+                            {{product.name}}
                         </div>
-                        <div class="panel-footer">Panel footer</div>
+                        <div class="panel-footer">
+                            <button class="btn btn-block btn-primary" (click)="onAddToCart(product)">Add to cart</button>
+                        </div>
                     </div>
                 </div>
             </div>

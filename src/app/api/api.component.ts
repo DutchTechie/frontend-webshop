@@ -30,7 +30,10 @@ export class ApiComponent implements OnInit {
     }))
   }
 
-  public addNewProduct(newProductName : String, newProductDescription:String, newProductImagePath: String) {
+  public addNewProduct(
+    newProductName : String, 
+    newProductDescription:String, 
+    newProductImagePath: String) {
     return this.http.post("http://localhost:8080/hello-world", {
       "name" : newProductName,
       "description" : newProductDescription,

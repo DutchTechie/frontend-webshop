@@ -1,14 +1,42 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
+
+    <!-- Brand -->
     <div class="navbar-header">
       <a class="navbar-brand" routerLink="/">Brand</a>
     </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
     <ul class="nav navbar-nav navbar-right">
-        <li class="active" ><a routerLink="/login"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a></li>
-        <li><a routerLink="/cart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li>
+      
+        <!-- Login link -->
+        <li class="active" >
+          <a routerLink="/login" *ngIf="!isAuthenticated" style="cursor: pointer;">
+            <span class="glyphicon glyphicon-user" aria-hidden="true">
+            </span>
+          </a>
+        </li>
+
+        <!-- account -->
+        <li *ngIf="isAuthenticated">
+          <a (click)="onLogout()" style="cursor: pointer;">
+            {{ userEmail }}
+          </a>
+        </li>
+
+        <!-- Login link -->
+        <li *ngIf="isAuthenticated">
+          <a (click)="onLogout()" style="cursor: pointer;">
+            Logout
+          </a>
+        </li>
+
+        <!-- cart link -->
+        <li *ngIf="!isAdmin">
+          <a routerLink="/cart">
+            <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+          </a>
+        </li>
     </ul>
-  </div><!-- /.container-fluid -->
+  </div>
 </nav>

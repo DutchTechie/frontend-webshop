@@ -11,7 +11,10 @@ export class ProductCatalogComponent implements OnInit {
   @Input() gridView : boolean
   @Input() products : Product[]
   @Output() productSelected = new EventEmitter<{name: string, description: string, imagePath: string}>();
+  cartline = {productName: '', consumerName: ''}
 
+  // TODO: Make the api injectable so you only need to instantiate it here
+  // and the childeren component can use the same instance
   constructor(private api: ApiComponent) { }
 
   ngOnInit(): void {}
@@ -20,5 +23,14 @@ export class ProductCatalogComponent implements OnInit {
     this.productSelected.emit({name: product.name, 
       description: product.description, 
       imagePath: product.imagePath})
+  }
+
+  onAddToCart(product) {
+    this.cartline.consumerName = "dummy"
+    this.cartline.productName = product.name
+    alert(`${this.cartline.consumerName} ${this.cartline.productName}`)
+
+    // TODO: Get the current consumer's id or guest and add the product to cart
+    
   }
 }
