@@ -46,8 +46,6 @@ export class ProductComponent {
       this.userSub.unsubscribe()
     }
 
-  
-
   onSwitchMode() {
       this.isEditMode = !this.isEditMode
   }
@@ -73,7 +71,6 @@ export class ProductComponent {
       if (this.isEditMode) {
         console.log("save new information")
       } else {
-        // When in info mode, open update mode
         if (this.user.isAdmin && !this.isCreateMode) { // TODO: I don't think the isCreate needs to be here
           this.isEditMode = true
           this.backToInfo = true

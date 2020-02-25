@@ -1,14 +1,15 @@
 <div class="container login-container">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6" *ngIf="!isCreateMode">
             <img 
                 src="http://www.oxygenmelody.com/wp-content/uploads/2018/03/nike-w-air-max-thea-ultra-prm-womens-shoes-beautiful-power.jpg"
                 alt="test image"
                 width="100%"
             />
         </div>
-        <div class="col-md-6">
+        <div class="{{ !isCreateMode? 'col-md-6' : 'col-md-12' }}">
             <h3 *ngIf="isEditMode">Edit</h3>
+            <h3 *ngIf="isCreateMode">Add a new product</h3>
             <form #productForm="ngForm" (ngSubmit)="onSubmit(productForm)">
                 <div class="form-group">
                     <h1 *ngIf="!isEditMode && !isCreateMode">Sample text</h1>

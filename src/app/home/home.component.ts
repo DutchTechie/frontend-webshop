@@ -44,6 +44,22 @@ export class HomeComponent implements OnInit {
   }
 
   deleteAllProducts() {
-    this.api.deleteProduct().subscribe(data => this.products = [])
+    let status = confirm('Are you sure?') // dry?
+    if (status) {
+      console.log("delete all products")
+      this.api.deleteProduct().subscribe(data => this.products = [])
+    }
+  }
+
+  addToCart() {
+    console.log("Add product to cart")
+  }
+
+  deleteProduct(event) {
+    console.log(event)
+    let status = confirm('Are you sure?')
+    if (status) {
+      console.log("delete product")
+    }
   }
 }
