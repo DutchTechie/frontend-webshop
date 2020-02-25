@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { User } from '../auth/user.model';
 import { AuthService } from '../auth/auth.service';
 import { ApiComponent } from '../api/api.component';
-import { Product } from '../products/product.model';
+import { Product } from './product.model';  // TODO: Add the product model to its service
 
 @Component({
   selector: 'app-home',

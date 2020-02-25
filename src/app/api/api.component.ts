@@ -1,7 +1,7 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { map } from 'rxjs/operators'
 import { HttpClient } from '@angular/common/http'
-import { Product } from '../products/product.model'
+import { Product } from '../home/product.model'
 
 @Component({
   selector: 'app-api',

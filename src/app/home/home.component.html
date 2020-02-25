@@ -1,9 +1,12 @@
 <h1>Shoes</h1>
-<app-product-catalog *ngIf="!user.isAdmin" 
-    [gridView]="true" 
-    [products]="products">
-</app-product-catalog>
+<div *ngIf="!user.isAdmin" >
+    Add products page for users here
+</div>
 <div *ngIf="user.isAdmin">
+    <button 
+        class="btn btn-primary">
+            +Add new product
+    </button>&nbsp;
     <button 
         class="btn btn-primary" 
         (click)="fetchAllProducts()">
@@ -29,20 +32,22 @@
                                 <img src="{{ product.imagePath }}" alt="Nike shoe" width=100px />
                             </td>
                             <td class="vcenter">
-                                <p>{{ product.name }}</p>
+                                {{ product.name }}
                             </td>
-                            <td class="vcenter">&euro;{{ product.price }}</td>
+                            <td class="vcenter">
+                                &euro;{{ product.price }}
+                            </td>
                             <td class="vcenter">
                                 {{ product.stock }}
                             </td>
                             <td class="vcenter">
-                                <a>Edit</a>&nbsp;|
-                                &nbsp;<a>Details</a>&nbsp;|
+                                <a routerLink="/product">Edit</a>&nbsp;|
+                                &nbsp;<a routerLink="/product">Details</a>&nbsp;|
                                 &nbsp;<a>Delete</a>
                             </td>
                         </tr>      
                     </tbody>
-                </table>
+                </table> 
             </div>
         </div>
     </div>
@@ -50,10 +55,10 @@
     <div class="row">
         <div class="col-md-12">
             <button 
-        class="btn btn-primary pull-right" 
-        (click)="deleteAllProducts()">
-            Delete all products
-    </button>
+                class="btn btn-primary pull-right" 
+                (click)="deleteAllProducts()">
+                    Delete all products
+            </button>
         </div>
     </div>
 </div>
