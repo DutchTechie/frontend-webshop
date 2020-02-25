@@ -3,7 +3,6 @@
     [gridView]="true" 
     [products]="products">
 </app-product-catalog>
-<!-- TODO: find out why this isn't working -->
 <div *ngIf="user.isAdmin">
     <button 
         class="btn btn-primary" 
@@ -11,25 +10,50 @@
             Fetch all products
     </button>
     &nbsp;
-    <button 
-        class="btn btn-primary" 
-        (click)="deleteAllProducts()">
-            Delete all products
-    </button>
     <hr />
     <div class="row">
-        <div class="col-md-8">
-            <app-product-catalog
-                [gridView]="false"
-                [products]="products" 
-                (productSelected)="onProductSelected($event)">
-            </app-product-catalog>
-        </div>
-        <div class="col-md-4">
-            <app-product-create-form>
-            </app-product-create-form>
+        <div class="col-md-12">
+            <div class="list-wrapper">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Item</th>
+                            <th>Unit price</th>
+                            <th>Stock</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let product of products">
+                            <td>
+                                <img src="{{ product.imagePath }}" alt="Nike shoe" width=100px />
+                            </td>
+                            <td class="vcenter">
+                                <p>{{ product.name }}</p>
+                            </td>
+                            <td class="vcenter">&euro;{{ product.price }}</td>
+                            <td class="vcenter">
+                                {{ product.stock }}
+                            </td>
+                            <td class="vcenter">
+                                <a>Edit</a>&nbsp;|
+                                &nbsp;<a>Details</a>&nbsp;|
+                                &nbsp;<a>Delete</a>
+                            </td>
+                        </tr>      
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <hr />
-    <app-product-admin-options [product]="currentProduct"></app-product-admin-options>
+    <div class="row">
+        <div class="col-md-12">
+            <button 
+        class="btn btn-primary pull-right" 
+        (click)="deleteAllProducts()">
+            Delete all products
+    </button>
+        </div>
+    </div>
 </div>

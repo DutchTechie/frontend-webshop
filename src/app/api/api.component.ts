@@ -22,7 +22,15 @@ export class ApiComponent implements OnInit {
       if(data instanceof Array){
         for (const key in data) {
           if (data[key].hasOwnProperty("name") && data[key].hasOwnProperty("description")) {
-            productArray.push(new Product(data[key]["name"], data[key]["description"], "path"))
+            productArray.push(
+              new Product(
+                data[key]["name"], 
+                data[key]["description"], 
+                "http://www.oxygenmelody.com/wp-content/uploads/2018/03/nike-w-air-max-thea-ultra-prm-womens-shoes-beautiful-power.jpg",
+                300,
+                7
+              )
+            )
           }
         }
       }

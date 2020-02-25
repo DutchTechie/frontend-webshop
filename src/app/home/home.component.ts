@@ -11,7 +11,7 @@ import { Product } from '../products/product.model';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  currentProduct = {name: "No product select", description: "", imagePath: ""}
+  // currentProduct = {name: "No product select", description: "", imagePath: ""}
   products: Product[] = []
 
   private userSub : Subscription;
@@ -34,9 +34,9 @@ export class HomeComponent implements OnInit {
     this.userSub.unsubscribe()
   }
 
-  onProductSelected(product) {
-    this.currentProduct = product
-  }
+  // onProductSelected(product) {
+  //   this.currentProduct = product
+  // }
   
   fetchAllProducts() {
     this.api.fetchAllProducts().subscribe(data => {
