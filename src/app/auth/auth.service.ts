@@ -26,7 +26,7 @@ export class AuthService {
         userPassword: password
       }
     ).pipe(catchError(this.handleError), tap(resData => {
-        this.handleAuthentication(resData.userEmail, "1", true) // TODO: Replace with actual user id ans admin info
+        this.handleAuthentication(resData.userEmail, "1", false) // TODO: Replace with actual user id ans admin info
         this.router.navigate(['/'])
     }))
   }
@@ -35,6 +35,22 @@ export class AuthService {
     this.user.next(null)
     this.router.navigate(['/login'])
     localStorage.removeItem('userData')
+  }
+
+  handleOnAccountLinkClicked() {
+    // TODO: Check if the user is authenticated
+    // If the user is not authenticated, redirect to login screen
+    this.router.navigate(['/account'])
+  }
+
+  deleteUserAccount() {
+    // TODO: implement delete function
+    this.router.navigate(['/'])
+  }
+
+  // TODO: Implement update user method
+  updateUserAccount() {
+    console.log("Update user")
   }
 
   private handleAuthentication(email: string, userId: string, isAdmin: boolean) {
@@ -81,5 +97,4 @@ export class AuthService {
     }
     return throwError(errorMessage);
   }
-
 }

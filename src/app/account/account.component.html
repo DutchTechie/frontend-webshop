@@ -1,0 +1,133 @@
+ <div class="row" *ngIf="!user.isAdmin">
+     <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label col-sm-6" for="email">Name:</label>
+            <div class="col-sm-6">
+                <p>{{ userInfo.name? userInfo.name : 'empty' }}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-6" for="email">Email:</label>
+            <div class="col-sm-6">
+                <p>{{ user.userEmail }}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-6" for="email">Phone number:</label>
+            <div class="col-sm-6">
+                <p>{{ userInfo.phone? userInfo.phone : 'empty' }}</p>
+            </div>
+        </div>
+     </div>
+     <div class="col-md-6">
+        <div class="form-group">
+            <label class="control-label col-sm-6" for="email">Address:</label>
+            <div class="col-sm-6">
+                <p>{{ userInfo.address? userInfo.address : 'empty' }}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-6" for="email">Zip code:</label>
+            <div class="col-sm-6">
+                <p>{{ userInfo.zipCode? userInfo.zipCode : 'empty' }}</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-6" for="email">Country:</label>
+            <div class="col-sm-6">
+                <p>{{ userInfo.country? userInfo.country : 'empty' }}</p>
+            </div>
+        </div>
+     </div>
+ </div>
+ <hr />
+ <div class="row" *ngIf="clickedUpdate">
+    <div class="col-md-8 col-md-offset-2">
+        <form class="form-horizontal" #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Name:</label>
+                <div class="col-sm-9">
+                    <input class="form-control" value="{{ userInfo.name }}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Email:</label>
+                <div class="col-sm-9">
+                    <input class="form-control" value="{{ user.userEmail }}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Phone number:</label>
+                <div class="col-sm-9">
+                    <input class="form-control" value="{{ userInfo.phone }}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Address:</label>
+                <div class="col-sm-9">
+                    <input class="form-control" value="{{ userInfo.address }}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Zip code:</label>
+                <div class="col-sm-9">
+                    <input class="form-control" value="{{ userInfo.zipCode }}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Country:</label>
+                <div class="col-sm-9">
+                    <input class="form-control" value="{{ userInfo.country }}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <div class="col-md-6">
+                        <button 
+                            type="submit" 
+                            class="btn btn-primary btn-block">
+                                Update
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" 
+                            class="btn btn-default btn-block" 
+                            (click)="hideAccountUpdateForm()">
+                                Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <div *ngIf="user.isAdmin">
+            <address>
+                Company name <br>
+                Company address <br>
+                Company zip code <br>
+                Company number
+            </address>
+        </div>
+
+        <!-- TODO: think of a solution for updating an account -->
+        <button 
+        *ngIf="!clickedUpdate && !user.isAdmin"
+            class="btn btn-primary btn-block" 
+            (click)="displayAccountUpdateForm()">
+                Update account
+        </button>
+    </div>
+</div>
+<br />
+<div class="row" *ngIf="!clickedUpdate && !user.isAdmin">
+    <div class="col-md-6 col-md-offset-3">
+        <button 
+            class="btn btn-danger btn-block" 
+            (click)="deleteAccount()">
+                Delete account
+        </button>
+    </div>
+</div>

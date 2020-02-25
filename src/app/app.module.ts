@@ -12,16 +12,17 @@ import { ApiComponent } from './api/api.component';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
-import { AdminComponent } from './home/admin/admin.component';
 import { ConsumerComponent } from './home/consumer/consumer.component';
 import { ProductGridViewComponent } from './products/product-catalog/product-grid-view/product-grid-view.component';
 import { ProductListViewComponent } from './products/product-catalog/product-list-view/product-list-view.component';
 import { ProductCreateFormComponent } from './products/product-create-form/product-create-form.component'
 import { AuthComponent } from './auth/auth.component'
-import { LoadingSpinnerComponent } from '../shared/loading-spinner/loading-spinner.component'
+import { LoadingSpinnerComponent } from '../shared/loading-spinner/loading-spinner.component';
+import { AccountComponent } from './account/account.component'
 
 const appRoutes : Routes = [
   { path: '', component: HomeComponent },
+  { path: 'account', component: AccountComponent },
   { path: 'signup', component: AuthComponent },
   { path: 'login', component: AuthComponent },
   { path: 'cart', component: ShoppingCartComponent }
@@ -38,13 +39,13 @@ const appRoutes : Routes = [
     HeaderComponent,
     FooterComponent,
     ShoppingCartComponent,
-    AdminComponent,
     ConsumerComponent,
     ProductGridViewComponent,
     ProductListViewComponent,
     ProductCreateFormComponent,
     AuthComponent,
     LoadingSpinnerComponent,
+    AccountComponent,
   ],
   imports: [
     BrowserModule,

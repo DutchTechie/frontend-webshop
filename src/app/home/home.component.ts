@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { User } from '../auth/user.model';
+import { AuthService } from '../auth/auth.service';
+import { ApiComponent } from '../api/api.component';
+import { Product } from '../products/product.model';
 
 @Component({
   selector: 'app-home',
@@ -6,9 +11,38 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  isAdmin = false
-  
-  constructor() { }
+  currentProduct = {name: "No product select", description: "", imagePath: ""}
+  products: Product[] = []
 
-  ngOnInit(): void {}
+  private userSub : Subscription;
+  user: User = null
+  
+  constructor(private authService: AuthService, private api:ApiComponent) { }
+
+  ngOnInit(): void {
+    this.fetchAllProducts()
+    this.userSub = this.authService.user.subscribe(user => {
+      if (user == null) {
+        return
+      }
+      this.user = user
+    })
+  }
+
+  ngOnDestroy() {
+    this.userSub.unsubscribe()
+  }
+
+  onProductSelected(product) {
+    this.currentProduct = product
+  }
+  
+  fetchAllProducts() {
+    this.api.fetchAllProducts().subscribe(data => {
+      this.products = data})
+  }
+
+  deleteAllProducts() {
+    this.api.deleteProduct().subscribe(data => this.products = [])
+  }
 }

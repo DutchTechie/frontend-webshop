@@ -13,7 +13,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
   userEmail = null
   isAdmin = false
-
+  
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
@@ -22,19 +22,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
       if (user == null) {
         return
       }
-      // console.log(user)
       this.userEmail = user.userEmail
       this.isAdmin = user.isAdmin
     })
   }
 
   onLogout() {
-    this.isAdmin = false
     this.authService.logout()
+  }
+
+  onClickAccount() {
+    this.authService.handleOnAccountLinkClicked()
   }
 
   ngOnDestroy() {
     this.userSub.unsubscribe()
+    this.isAdmin = false
   }
 
 }
