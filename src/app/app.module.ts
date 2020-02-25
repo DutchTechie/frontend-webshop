@@ -19,7 +19,7 @@ import { ProductComponent } from './product/product.component'
 
 const appRoutes : Routes = [
   { path: '', component: HomeComponent },
-  { path: 'product', component: ProductComponent },  // TODO: Update path
+  { path: 'product/:mode', component: ProductComponent },  // TODO: Update path
   { path: 'account', component: AccountComponent },
   { path: 'signup', component: AuthComponent },
   { path: 'login', component: AuthComponent },

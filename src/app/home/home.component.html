@@ -3,10 +3,11 @@
     Add products page for users here
 </div>
 <div *ngIf="user.isAdmin">
-    <button 
+    <a
+        routerLink='/product/create' 
         class="btn btn-primary">
             +Add new product
-    </button>&nbsp;
+    </a>&nbsp;
     <button 
         class="btn btn-primary" 
         (click)="fetchAllProducts()">
@@ -41,8 +42,8 @@
                                 {{ product.stock }}
                             </td>
                             <td class="vcenter">
-                                <a routerLink="/product">Edit</a>&nbsp;|
-                                &nbsp;<a routerLink="/product">Details</a>&nbsp;|
+                                <a routerLink="/product/edit">Edit</a>&nbsp;|
+                                &nbsp;<a routerLink="/product/details">Details</a>&nbsp;|
                                 &nbsp;<a>Delete</a>
                             </td>
                         </tr>      

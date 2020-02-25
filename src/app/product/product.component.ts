@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm, FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { User } from '../auth/user.model';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-product',
@@ -7,18 +11,76 @@ import { NgForm, FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent {
-  isUpdateMode = true
+  isEditMode = false
+  isCreateMode = false
+  private userSub : Subscription;
+  user: User = null
+  backToInfo = false
 
-  constructor() {}
+  constructor(private activatedRoute: ActivatedRoute,
+              private authService: AuthService, 
+              private router: Router) {
+
+      this.isEditMode = this.activatedRoute
+        .snapshot
+        .paramMap
+        .get('mode') == "edit"? true : false
+
+      this.isCreateMode = this.activatedRoute
+        .snapshot
+        .paramMap
+        .get('mode') == "create"? true : false
+
+      console.log(this.isEditMode)
+
+      this.userSub = this.authService.user.subscribe(user => {
+        if (user == null) {
+          this.user = new User("", "", false)
+          return
+        }
+        this.user = user
+      })
+    }
+
+    ngOnDestroy() {
+      this.userSub.unsubscribe()
+    }
+
+  
 
   onSwitchMode() {
-      this.isUpdateMode = !this.isUpdateMode
+      this.isEditMode = !this.isEditMode
+  }
+
+  onBackClicked() {
+    if (this.isEditMode) {
+      if (this.backToInfo) {
+        this.isEditMode = false
+        return;
+      }
+    }
+    this.router.navigate([''])
   }
 
   onSubmit(form: NgForm) {
       if (!form.valid) {
           return
       }
-      console.log("Hello world!")
+      if (this.isCreateMode) {
+        console.log("Add a new product")
+        return
+      }
+      if (this.isEditMode) {
+        console.log("save new information")
+      } else {
+        // When in info mode, open update mode
+        if (this.user.isAdmin && !this.isCreateMode) { // TODO: I don't think the isCreate needs to be here
+          this.isEditMode = true
+          this.backToInfo = true
+        }
+        if (this.user.isAdmin == false) {
+          console.log("Add to cart")
+        }
+      }
   }
 }
