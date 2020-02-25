@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
     this.fetchAllProducts()
     this.userSub = this.authService.user.subscribe(user => {
       if (user == null) {
+        this.user = new User("", "", false)
         return
       }
       this.user = user

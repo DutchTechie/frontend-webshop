@@ -1,10 +1,10 @@
 <h1>Shoes</h1>
-<app-product-catalog 
+<app-product-catalog *ngIf="!user.isAdmin" 
     [gridView]="true" 
     [products]="products">
 </app-product-catalog>
 <!-- TODO: find out why this isn't working -->
-<!-- <div *ngIf="user.isAdmin">
+<div *ngIf="user.isAdmin">
     <button 
         class="btn btn-primary" 
         (click)="fetchAllProducts()">
@@ -32,4 +32,4 @@
     </div>
     <hr />
     <app-product-admin-options [product]="currentProduct"></app-product-admin-options>
-</div> -->
+</div>

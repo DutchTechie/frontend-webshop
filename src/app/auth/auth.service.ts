@@ -26,7 +26,7 @@ export class AuthService {
         userPassword: password
       }
     ).pipe(catchError(this.handleError), tap(resData => {
-        this.handleAuthentication(resData.userEmail, "1", false) // TODO: Replace with actual user id ans admin info
+        this.handleAuthentication(resData.userEmail, "1", true) // TODO: Replace with actual user id ans admin info
         this.router.navigate(['/'])
     }))
   }
