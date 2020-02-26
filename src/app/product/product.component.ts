@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from '../auth/user.model';
 import { AuthService } from '../auth/auth.service';
+import { ProductService } from './product.service';
+import { Product } from '../home/product.model';
 
 @Component({
   selector: 'app-product',
@@ -19,7 +21,8 @@ export class ProductComponent {
 
   constructor(private activatedRoute: ActivatedRoute,
               private authService: AuthService, 
-              private router: Router) {
+              private router: Router,
+              private productService: ProductService) {
 
       this.isEditMode = this.activatedRoute
         .snapshot
@@ -70,6 +73,15 @@ export class ProductComponent {
       }
       if (this.isEditMode) {
         console.log("save new information")
+
+        // For testing
+        const product: Product = new Product(
+          "2", "shoe", "desc", "path", 500, 2
+        )
+        this.productService.updateProduct(product).subscribe(data => {
+          console.log(data);
+        })
+        
       } else {
         if (this.user.isAdmin && !this.isCreateMode) { // TODO: I don't think the isCreate needs to be here
           this.isEditMode = true
