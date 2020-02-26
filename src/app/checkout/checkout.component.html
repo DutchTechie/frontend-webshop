@@ -1,0 +1,79 @@
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <h1>Shipping and payment</h1>
+        <hr/>
+        <form class="form-horizontal" #authForm="ngForm">
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Name:</label>
+                <div class="col-sm-9">
+                    <input class="form-control" value="{{ userInfo.name }}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Email:</label>
+                <div class="col-sm-9">
+                    <input class="form-control" value="{{ user.userEmail }}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Phone number:</label>
+                <div class="col-sm-9">
+                    <input class="form-control" value="{{ userInfo.phone }}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Address:</label>
+                <div class="col-sm-9">
+                    <input class="form-control" value="{{ userInfo.address }}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Zip code:</label>
+                <div class="col-sm-9">
+                    <input class="form-control" value="{{ userInfo.zipCode }}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3" for="email">Country:</label>
+                <div class="col-sm-9">
+                    <input class="form-control" value="{{ userInfo.country }}" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row" style="margin-top: 25px;">
+    <div class="col-md-8 cart col-md-offset-2">
+        <table class="table borderless">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Unit price</th>
+                    <th>Quantity</th>
+                    <th>Total price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cart of carts">
+                    <td>{{ cart.product.name }}</td>
+                    <td>&euro;{{ cart.product.price }}</td>
+                    <td>{{ cart.amount }}</td>
+                    <td>
+                        &euro;{{ cart.product.price * cart.amount }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3"></td>
+                    <td>Subtotal: &euro;{{ totalPrice }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row" style="margin-top: 25px;">
+    <div class="col-md-12 center">
+        <button class="btn btn-primary center-block">
+            To payment method
+        </button>
+    </div>
+</div>

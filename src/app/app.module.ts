@@ -15,7 +15,8 @@ import { ProductCreateFormComponent } from './products/product-create-form/produ
 import { AuthComponent } from './auth/auth.component'
 import { LoadingSpinnerComponent } from '../shared/loading-spinner/loading-spinner.component';
 import { AccountComponent } from './account/account.component';
-import { ProductComponent } from './product/product.component'
+import { ProductComponent } from './product/product.component';
+import { CheckoutComponent } from './checkout/checkout.component'
 
 const appRoutes : Routes = [
   { path: '', component: HomeComponent },
@@ -23,7 +24,8 @@ const appRoutes : Routes = [
   { path: 'account', component: AccountComponent },
   { path: 'signup', component: AuthComponent },
   { path: 'login', component: AuthComponent },
-  { path: 'cart', component: ShoppingCartComponent }
+  { path: 'cart', component: ShoppingCartComponent },
+  { path: 'checkout', component: CheckoutComponent }
   // ... canActivate: [AuthGuard] <-- use this for for example, going to the admin page or personal user page
 ]
 
@@ -41,6 +43,7 @@ const appRoutes : Routes = [
     LoadingSpinnerComponent,
     AccountComponent,
     ProductComponent,
+    CheckoutComponent,
   ],
   imports: [
     BrowserModule,
