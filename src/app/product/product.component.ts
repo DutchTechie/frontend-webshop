@@ -50,10 +50,18 @@ export class ProductComponent {
         .paramMap
         .get('id');
 
-      this.productService.fetchProduct(id).subscribe(product =>{ 
-        this.currentProduct = product;
-        console.log(product);
-      });
+      if (id != null) {
+        this.productService.fetchProduct(id).subscribe(product =>{ 
+          this.currentProduct = product;
+          console.log(product);
+        });
+      } else {
+
+        // TODO: Use a loop for this
+        this.currentProduct = new Product(
+          null, null, null, null, null, null
+        );
+      }
 
       // console.log(this.currentProduct);
     }

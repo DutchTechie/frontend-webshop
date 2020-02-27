@@ -3,7 +3,7 @@
     <div class="row">
         <div *ngFor="let product of products" class="col-md-3 my-card">
             <div routerLink="/product/details/{{ product.id }}">
-                <img src="{{ product.imagePath }}" alt="Nike shoe" height=150px /><br>
+                <img src="{{ product.imagePath }}" alt="Nike shoe" /><br>
                 <div class="my-card-container">
                     {{ product.name }}<br>
                     &euro;{{ product.price }}<br>
@@ -54,7 +54,7 @@
                                 {{ product.stock }}
                             </td>
                             <td class="vcenter">
-                                <a routerLink="/product/edit">Edit</a>&nbsp;|
+                                <a routerLink="/product/edit/{{ product.id }}">Edit</a>&nbsp;|
                                 &nbsp;<a routerLink="/product/details/{{ product.id }}">Details</a>&nbsp;|
                                 &nbsp;<a (click)="deleteProduct(product.id)" >Delete</a>
                             </td>
