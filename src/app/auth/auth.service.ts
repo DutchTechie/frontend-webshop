@@ -19,14 +19,13 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  login(email: string, password: string) {
-    const uri = `${this.USER_PATH_URI}/login/${email}/${password}`;
-    return this.http.post<User>(uri, null).pipe(catchError(this.handleError), tap(resData => {
-      console.log(resData)
-      this.handleAuthentication(resData['id'], resData['email'], resData['admin']) // TODO: Replace with actual user id ans admin info
-      this.router.navigate(['/'])
-  }))
-    
+    login(email: string, password: string) {
+      const uri = `${this.USER_PATH_URI}/login/${email}/${password}`;
+      return this.http.post<User>(uri, null).pipe(catchError(this.handleError), tap(resData => {
+        console.log(resData)
+        this.handleAuthentication(resData['id'], resData['email'], resData['admin']) // TODO: Replace with actual user id ans admin info
+        this.router.navigate(['/'])
+    }))
   }
 
   signUp(email: string, password: string) {

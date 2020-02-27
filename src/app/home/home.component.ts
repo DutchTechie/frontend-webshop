@@ -4,6 +4,7 @@ import { User } from '../auth/user.model';
 import { AuthService } from '../auth/auth.service';
 import { Product } from './product.model';  // TODO: Add the product model to its service
 import { ProductService } from '../product/product.service';
+import { ShoppingCartService } from '../shopping-cart/shopping-cart.service';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,8 @@ export class HomeComponent implements OnInit {
   
   constructor(
     private authService: AuthService, 
-    private productService: ProductService) { }
+    private productService: ProductService,
+    private shoppingCartService: ShoppingCartService) { }
 
   ngOnInit(): void {
     this.fetchAllProducts()
@@ -48,8 +50,13 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  addToCart() {
+  addToCart(productId) {
+    let id = this.user.userId;
+    console.log(productId);
+    console.log(id)
     console.log("Add product to cart")
+    this.shoppingCartService.addToCart(id, productId)
+    .subscribe(data => console.log(data));
   }
 
   deleteProduct(id) {
