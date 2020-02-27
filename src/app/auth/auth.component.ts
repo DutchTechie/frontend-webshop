@@ -40,7 +40,17 @@ export class AuthComponent {
             )
             form.reset()
         } else {
-        
+            this.authService.signUp(email, password).subscribe(
+                resData => {
+                    this.isLoading = false
+                },
+                error => {
+                    console.log(error)
+                    this.error = "An error occurred."
+                    this.isLoading = false
+                }
+            )
+            form.reset()
         }
     }
 }

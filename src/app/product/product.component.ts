@@ -18,6 +18,7 @@ export class ProductComponent {
   private userSub : Subscription;
   user: User = null
   backToInfo = false
+  currentProduct : Product;
 
   constructor(private activatedRoute: ActivatedRoute,
               private authService: AuthService, 
@@ -43,6 +44,18 @@ export class ProductComponent {
         }
         this.user = user
       })
+
+      const id: string = this.activatedRoute
+        .snapshot
+        .paramMap
+        .get('id');
+
+      this.productService.fetchProduct(id).subscribe(product =>{ 
+        this.currentProduct = product;
+        console.log(product);
+      });
+
+      // console.log(this.currentProduct);
     }
 
     ngOnDestroy() {

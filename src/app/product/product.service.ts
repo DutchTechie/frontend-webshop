@@ -8,56 +8,42 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProductService {
   constructor(private http: HttpClient) { }
+  private PRODUCT_PATH_URI: string = "http://localhost:8080/products"
 
-  // TODO: Modify the product resource on the server to work accordingly
   public fetchAllProducts() {
-    return this.http.get("http://localhost:8080/hello-world").pipe(map(data => {
-      const productArray = [];
-      if(data instanceof Array){
-        let index = 1
-        for (const key in data) {
-          productArray.push(
-            new Product(
-              "" + index,
-              data[key]["name"], 
-              data[key]["description"], 
-              "http://www.oxygenmelody.com/wp-content/uploads/2018/03/nike-w-air-max-thea-ultra-prm-womens-shoes-beautiful-power.jpg",
-              300,
-              7
-            )
-          )
-          index++;
-        }
-      }
-      return productArray
-    }))
+    return this.http.get<Product[]>(this.PRODUCT_PATH_URI).pipe(map(products => 
+    {
+      return products;
+    }));
   }
 
-  // TODO: Replace urls
-  // TODO: Add the id attribute to the product model
+  public fetchProduct(id: String) {
+    const getProductUri: string = `${this.PRODUCT_PATH_URI}/${id}`;
+    return this.http.get<Product>(getProductUri).pipe(map(data => 
+    {
+      return data;
+    }));
+  }
+
   public addNewProduct(product: Product) {
-    return this.http.post("http://localhost:8080/hello-world", {
+    return this.http.post(this.PRODUCT_PATH_URI, {
       product
-    })
+    });
   }
 
   // TODO: Create an error handler
   public updateProduct(product: Product) {
-    return this.http.put<Product>("http://localhost:8080/hello-world", {
-      id: 4,
-      name: "fuck",
-      description: product.description
-    })
+    return this.http.put<Product>(this.PRODUCT_PATH_URI, {
+      product
+    });
   }
 
-  // const url = `${this.heroesUrl}/${id}`; // DELETE api/heroes/42
   public deleteProduct(id: string) {
-    const url = `http://localhost:8080/hello-world/${id}`
-    return this.http.delete<Product>(url);
+    const deleteProductUri: string = `${this.PRODUCT_PATH_URI}/${id}`;
+    return this.http.delete<Product>(deleteProductUri);
   }
 
   public deleteAllProducts() {
-    return this.http.delete("http://localhost:8080/hello-world")
+    return this.http.delete(this.PRODUCT_PATH_URI);
   }
-
 }

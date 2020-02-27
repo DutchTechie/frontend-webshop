@@ -16,7 +16,7 @@ import { CheckoutComponent } from './checkout/checkout.component'
 
 const appRoutes : Routes = [
   { path: '', component: HomeComponent },
-  { path: 'product/:mode', component: ProductComponent },  // TODO: Update path
+  { path: 'product/:mode/:id', component: ProductComponent },  // TODO: Update path
   { path: 'account', component: AccountComponent },
   { path: 'signup', component: AuthComponent },
   { path: 'login', component: AuthComponent },

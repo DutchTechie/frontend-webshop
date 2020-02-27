@@ -2,7 +2,7 @@
 <div *ngIf="!user.isAdmin" >
     <div class="row">
         <div *ngFor="let product of products" class="col-md-3 my-card">
-            <div routerLink="/product/details">
+            <div routerLink="/product/details/{{ product.id }}">
                 <img src="{{ product.imagePath }}" alt="Nike shoe" height=150px /><br>
                 <div class="my-card-container">
                     {{ product.name }}<br>
@@ -55,7 +55,7 @@
                             </td>
                             <td class="vcenter">
                                 <a routerLink="/product/edit">Edit</a>&nbsp;|
-                                &nbsp;<a routerLink="/product/details">Details</a>&nbsp;|
+                                &nbsp;<a routerLink="/product/details/{{ product.id }}">Details</a>&nbsp;|
                                 &nbsp;<a (click)="deleteProduct(product.id)" >Delete</a>
                             </td>
                         </tr>      
