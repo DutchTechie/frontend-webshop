@@ -16,6 +16,8 @@ export class ShoppingCartComponent implements OnInit {
   user: User = null;
   totalPrice : number = 0;
 
+  cartToUpdate: Cart = null;
+
   constructor(private shoppingCartService: ShoppingCartService, private authService: AuthService) {
     this.userSub = this.authService.user.subscribe(user => {
       if (user == null) {
@@ -52,11 +54,18 @@ export class ShoppingCartComponent implements OnInit {
       if (event.srcElement != null) {
         if (event.srcElement.name == cart.products.name) {
           cart.carts.amount = event.target.value
-          console.log(event.srcElement.name)
+          this.updateCart(cart.carts)
+          // console.log(event.srcElement.name)
         } 
       }
       this.totalPrice += cart.carts.amount * cart.products.price
     });
+  }
+
+  updateCart(cart: Cart) {
+    this.shoppingCartService.updateCart(cart).subscribe(data => {
+      console.log(data);
+    })
   }
 
   deleteCart(cart: Cart) {

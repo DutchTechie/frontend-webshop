@@ -31,6 +31,13 @@ export class ShoppingCartService {
       }));
   }
 
+  public updateCart(cart: Cart) {
+    const uri = `${this.SHOPPING_CART_PATH_URI}/${cart.userId}/${cart.productId}`;
+    return this.http.put(uri, cart).pipe(map(data => {
+      return data;
+    }))
+  }
+
   public removeCart(cart: Cart) {
     console.log(cart)
     const uri = `${this.SHOPPING_CART_PATH_URI}/${cart.userId}/${cart.productId}`;
