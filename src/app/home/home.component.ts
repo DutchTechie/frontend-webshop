@@ -46,8 +46,9 @@ export class HomeComponent implements OnInit {
     let status = confirm('Are you sure?') // dry?
     if (status) {
       console.log("delete all products")
-      this.productService.deleteAllProducts().subscribe(data => this.products = [])
+      this.productService.deleteAllProducts().subscribe(data => console.log(data))
     }
+    this.fetchAllProducts();
   }
 
   addToCart(productId) {
@@ -60,7 +61,10 @@ export class HomeComponent implements OnInit {
     let status = confirm('Are you sure?')
     if (status) {
       this.productService.deleteProduct(id)
-      .subscribe(data => console.log(data))
+      .subscribe(data => {
+        console.log(data)
+        this.fetchAllProducts();
+      })
     }
   }
 }

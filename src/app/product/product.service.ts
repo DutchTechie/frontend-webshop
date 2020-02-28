@@ -26,16 +26,17 @@ export class ProductService {
   }
 
   public addNewProduct(product: Product) {
-    return this.http.post(this.PRODUCT_PATH_URI, {
-      product
-    });
+    return this.http.post(this.PRODUCT_PATH_URI, product).pipe(map(data => {
+      return data;
+    }))
   }
 
   // TODO: Create an error handler
   public updateProduct(product: Product) {
-    return this.http.put<Product>(this.PRODUCT_PATH_URI, {
-      product
-    });
+    const uri = `${this.PRODUCT_PATH_URI}`;
+    return this.http.put(uri, product).pipe(map(data => {
+      return data;
+    }))
   }
 
   public deleteProduct(id: string) {

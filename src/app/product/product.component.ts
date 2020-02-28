@@ -61,7 +61,7 @@ export class ProductComponent {
 
         // TODO: Use a loop for this
         this.currentProduct = new Product(
-          null, null, null, null, null, null
+          "-1", null, null, null, null, null
         );
       }
 
@@ -74,6 +74,13 @@ export class ProductComponent {
 
   onSwitchMode() {
       this.isEditMode = !this.isEditMode
+  }
+
+  addNewProduct() {
+    this.productService.addNewProduct(this.currentProduct).subscribe(data => {
+      console.log(data);
+    })
+    this.router.navigate([''])
   }
 
   onBackClicked() {
@@ -92,16 +99,12 @@ export class ProductComponent {
     }
     if (this.isCreateMode) {
       console.log("Add a new product")
+      this.addNewProduct()
       return
     }
     if (this.isEditMode) {
       console.log("save new information")
-
-      // For testing
-      const product: Product = new Product(
-        "2", "shoe", "desc", "path", 500, 2
-      )
-      this.productService.updateProduct(product).subscribe(data => {
+      this.productService.updateProduct(this.currentProduct).subscribe(data => {
         console.log(data);
       })
       
@@ -116,5 +119,6 @@ export class ProductComponent {
           .subscribe(data => console.log(data));
       }
     }
+    this.router.navigate([''])
   }
 }
