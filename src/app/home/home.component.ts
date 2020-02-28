@@ -52,9 +52,6 @@ export class HomeComponent implements OnInit {
 
   addToCart(productId) {
     let id = this.user.userId;
-    console.log(productId);
-    console.log(id)
-    console.log("Add product to cart")
     this.shoppingCartService.addToCart(id, productId)
     .subscribe(data => console.log(data));
   }

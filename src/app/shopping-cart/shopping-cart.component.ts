@@ -11,13 +11,12 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./shopping-cart.component.css']
 })
 export class ShoppingCartComponent implements OnInit {
-  carts: Cart[] = [];
-  totalPrice
+  shoppingCartData
   private userSub : Subscription;
-  user: User = null
+  user: User = null;
+  totalPrice : number = 0;
 
-  constructor(private shoppingCartService: ShoppingCartService, private authService: AuthService, ) {
-    this.updateTotalPrice('');
+  constructor(private shoppingCartService: ShoppingCartService, private authService: AuthService) {
     this.userSub = this.authService.user.subscribe(user => {
       if (user == null) {
         this.user = new User("", "", false)
@@ -34,28 +33,36 @@ export class ShoppingCartComponent implements OnInit {
 
   updateSubTotal() {
     this.totalPrice = 0
-    // this.carts.forEach(cart => {
-    //   this.totalPrice += cart.amount*cart.product.price
-    // });
+    this.shoppingCartData.forEach(cart => {
+      this.totalPrice += cart.carts.amount * cart.products.price
+    });
   }
 
   fetchShoppingCart() {
     this.shoppingCartService.fetchShoppingCart(this.user.userId).subscribe(data => {
-      console.log(data);
+      this.shoppingCartData = data;
+      this.updateSubTotal();
+      console.log(this.shoppingCartData)
     });
   }
 
   updateTotalPrice(event) {
     this.totalPrice = 0
-    this.carts.forEach(cart => {
+    this.shoppingCartData.forEach(cart => {
       if (event.srcElement != null) {
-        // if (event.srcElement.name == cart.product.name) {
-        //   cart.amount = event.target.value
-        //   console.log(event.srcElement.name)
-        // } 
+        if (event.srcElement.name == cart.products.name) {
+          cart.carts.amount = event.target.value
+          console.log(event.srcElement.name)
+        } 
       }
-      // this.totalPrice += cart.amount*cart.product.price
+      this.totalPrice += cart.carts.amount * cart.products.price
     });
   }
 
+  deleteCart(cart: Cart) {
+    this.shoppingCartService.removeCart(cart).subscribe(data =>{
+      console.log(data);
+    })
+    this.fetchShoppingCart();
+  }
 }

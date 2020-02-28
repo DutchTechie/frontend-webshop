@@ -6,6 +6,7 @@ import { User } from '../auth/user.model';
 import { AuthService } from '../auth/auth.service';
 import { ProductService } from './product.service';
 import { Product } from '../home/product.model';
+import { ShoppingCartService } from '../shopping-cart/shopping-cart.service';
 
 @Component({
   selector: 'app-product',
@@ -23,7 +24,8 @@ export class ProductComponent {
   constructor(private activatedRoute: ActivatedRoute,
               private authService: AuthService, 
               private router: Router,
-              private productService: ProductService) {
+              private productService: ProductService,
+              private shoppingCartService: ShoppingCartService) {
 
       this.isEditMode = this.activatedRoute
         .snapshot
@@ -85,32 +87,34 @@ export class ProductComponent {
   }
 
   onSubmit(form: NgForm) {
-      if (!form.valid) {
-          return
-      }
-      if (this.isCreateMode) {
-        console.log("Add a new product")
+    if (!form.valid) {
         return
-      }
-      if (this.isEditMode) {
-        console.log("save new information")
+    }
+    if (this.isCreateMode) {
+      console.log("Add a new product")
+      return
+    }
+    if (this.isEditMode) {
+      console.log("save new information")
 
-        // For testing
-        const product: Product = new Product(
-          "2", "shoe", "desc", "path", 500, 2
-        )
-        this.productService.updateProduct(product).subscribe(data => {
-          console.log(data);
-        })
-        
-      } else {
-        if (this.user.isAdmin && !this.isCreateMode) { // TODO: I don't think the isCreate needs to be here
-          this.isEditMode = true
-          this.backToInfo = true
-        }
-        if (this.user.isAdmin == false) {
-          console.log("Add to cart")
-        }
+      // For testing
+      const product: Product = new Product(
+        "2", "shoe", "desc", "path", 500, 2
+      )
+      this.productService.updateProduct(product).subscribe(data => {
+        console.log(data);
+      })
+      
+    } else {
+      if (this.user.isAdmin && !this.isCreateMode) { // TODO: I don't think the isCreate needs to be here
+        this.isEditMode = true
+        this.backToInfo = true
       }
+      if (this.user.isAdmin == false) {
+        let id = this.user.userId;
+        this.shoppingCartService.addToCart(id, this.currentProduct.id)
+          .subscribe(data => console.log(data));
+      }
+    }
   }
 }

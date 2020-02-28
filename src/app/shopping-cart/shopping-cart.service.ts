@@ -20,7 +20,7 @@ export class ShoppingCartService {
       .pipe(map(cart => {
         console.log(cart)
         return cart;
-      }))
+    }))
   }
 
   public fetchShoppingCart(userId: String) {
@@ -29,6 +29,12 @@ export class ShoppingCartService {
       {
         return shoppingCart;
       }));
+  }
+
+  public removeCart(cart: Cart) {
+    console.log(cart)
+    const uri = `${this.SHOPPING_CART_PATH_URI}/${cart.userId}/${cart.productId}`;
+    return this.http.delete(uri);
   }
 
 }

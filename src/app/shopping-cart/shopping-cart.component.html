@@ -10,27 +10,30 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let cart of carts">
-                    <td>{{ cart.product.imagePath }}</td>
-                    <td>{{ cart.product.name }}</td>
-                    <td>&euro;{{ cart.product.price }}</td>
-                    <td>
-                        <input
-                            onKeyDown="return false"
-                            name="{{ cart.product.name }}"
-                            class="form-control" 
-                            min="1" 
-                            max="5" 
-                            name="amount" 
-                            type="number" 
-                            value="{{ cart.amount }}"
-                            (change)="updateTotalPrice($event)"/>
-                    </td>
-                    <td>
-                        &euro;{{ cart.product.price * cart.amount }}
-                        <button class="btn btn-warning pull-right">delete</button>
-                    </td>
-                </tr>      
+                    <tr *ngFor="let cart of this.shoppingCartData">
+                        <td><img src="{{ cart.products.imagePath }}" alt="Shoe" height="150px" /></td>
+                        <td>{{ cart.products.name }}</td>
+
+                        <td>&euro;{{ cart.products.price }}</td>
+                        <td>
+                            <input
+                                onKeyDown="return false"
+                                name="{{ cart.products.name }}"
+                                class="form-control" 
+                                min="1" 
+                                max="{{ cart.products.stock }}" 
+                                name="amount" 
+                                type="number" 
+                                value="{{ cart.carts.amount }}"
+                                (change)="updateTotalPrice($event)"/>
+                        </td>
+                        <td>
+                            &euro;{{ cart.products.price * cart.carts.amount }}
+                        </td>
+                        <td>
+                            <button class="btn btn-warning pull-right" (click)="deleteCart(cart.carts)">delete</button>
+                        </td>
+                    </tr>   
             </tbody>
         </table>
     </div>
