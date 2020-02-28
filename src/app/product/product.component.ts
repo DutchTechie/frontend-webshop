@@ -100,12 +100,14 @@ export class ProductComponent {
     if (this.isCreateMode) {
       console.log("Add a new product")
       this.addNewProduct()
+      this.router.navigate([''])
       return
     }
     if (this.isEditMode) {
       console.log("save new information")
       this.productService.updateProduct(this.currentProduct).subscribe(data => {
         console.log(data);
+        this.router.navigate([''])
       })
       
     } else {
@@ -117,8 +119,9 @@ export class ProductComponent {
         let id = this.user.userId;
         this.shoppingCartService.addToCart(id, this.currentProduct.id)
           .subscribe(data => console.log(data));
+        this.router.navigate([''])
       }
     }
-    this.router.navigate([''])
+    
   }
 }
