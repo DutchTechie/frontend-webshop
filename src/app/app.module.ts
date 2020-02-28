@@ -2,17 +2,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
+import { HeaderComponent } from './shared/header/header.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { HomeComponent } from './home/home.component';
-import { FooterComponent } from './footer/footer.component';
-import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
-import { AuthComponent } from './auth/auth.component'
-import { LoadingSpinnerComponent } from '../shared/loading-spinner/loading-spinner.component';
-import { AccountComponent } from './account/account.component';
-import { ProductComponent } from './product/product.component';
-import { CheckoutComponent } from './checkout/checkout.component'
+import { HomeComponent } from './pages/home/home.component';
+import { FooterComponent } from './shared/footer/footer.component';
+import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.component';
+import { AuthComponent } from './pages/auth/auth.component'
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { AccountComponent } from './pages/account/account.component';
+import { ProductComponent } from './pages/product/product.component';
+import { CheckoutComponent } from './pages/checkout/checkout.component'
 
 const appRoutes : Routes = [
   { path: '', component: HomeComponent },

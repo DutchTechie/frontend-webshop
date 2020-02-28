@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { User } from '../../models/user.model';
-import { AuthService } from '../auth/auth.service';
+import { User } from '../../../models/user.model';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-checkout',

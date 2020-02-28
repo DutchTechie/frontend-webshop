@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Cart } from './cart.model';
+import { Cart } from '../models/cart.model';
 import { map } from 'rxjs/operators';
 
 @Injectable({

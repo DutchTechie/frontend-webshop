@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { User } from '../../models/user.model';
-import { AuthService } from '../auth/auth.service';
-import { Product } from './product.model';  // TODO: Add the product model to its service
-import { ProductService } from '../product/product.service';
-import { ShoppingCartService } from '../shopping-cart/shopping-cart.service';
+import { User } from '../../../models/user.model';
+import { AuthService } from '../../../services/auth.service';
+import { Product } from '../../../models/product.model';  // TODO: Add the product model to its service
+import { ProductService } from '../../../services/product.service';
+import { ShoppingCartService } from '../../../services/shopping-cart.service';
 
 @Component({
   selector: 'app-home',

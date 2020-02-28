@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Cart } from './cart.model';
+import { Cart } from '../../../models/cart.model';
 import { Subscription } from 'rxjs';
-import { User } from '../../models/user.model';
-import { ShoppingCartService } from './shopping-cart.service';
-import { AuthService } from '../auth/auth.service';
+import { User } from '../../../models/user.model';
+import { ShoppingCartService } from '../../../services/shopping-cart.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-shopping-cart',
