@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Cart } from './cart.model';
 import { Subscription } from 'rxjs';
-import { User } from '../auth/user.model';
+import { User } from '../../models/user.model';
 import { ShoppingCartService } from './shopping-cart.service';
 import { AuthService } from '../auth/auth.service';
 

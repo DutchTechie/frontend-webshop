@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { User } from '../auth/user.model';
+import { User } from '../../models/user.model';
 import { AuthService } from '../auth/auth.service';
 
 @Component({

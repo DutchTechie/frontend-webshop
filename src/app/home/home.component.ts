@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { User } from '../auth/user.model';
+import { User } from '../../models/user.model';
 import { AuthService } from '../auth/auth.service';
 import { Product } from './product.model';  // TODO: Add the product model to its service
 import { ProductService } from '../product/product.service';
