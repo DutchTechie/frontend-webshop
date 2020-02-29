@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { User } from '../../../models/user.model';
-import { AuthService } from '../../../services/auth.service';
+import { AuthenticationService } from '../../../services/authentication.service';
 import { Product } from '../../../models/product.model';  // TODO: Add the product model to its service
 import { ProductService } from '../../../services/product.service';
 import { ShoppingCartService } from '../../../services/shopping-cart.service';
@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   user: User = null
   
   constructor(
-    private authService: AuthService, 
+    private authService: AuthenticationService, 
     private productService: ProductService,
     private shoppingCartService: ShoppingCartService) { }
 

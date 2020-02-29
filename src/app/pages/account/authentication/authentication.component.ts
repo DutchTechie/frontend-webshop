@@ -1,19 +1,19 @@
 import { Component } from '@angular/core'
 import { NgForm } from '@angular/forms'
-import { AuthService } from '../../../services/auth.service';
+import { AuthenticationService } from '../../../../services/authentication.service';
 
 @Component ({
-    selector: 'app-auth',
-    templateUrl: './auth.component.html',
-    styleUrls: ['./auth.component.css']
+    selector: 'app-authentication',
+    templateUrl: './authentication.component.html',
+    styleUrls: ['./authentication.component.css']
 })
 
-export class AuthComponent {
+export class AuthenticationComponent {
     isLoginMode = true
     isLoading = false
     error : string = null
 
-    constructor(private authService: AuthService) {}
+    constructor(private authenticationService: AuthenticationService) {}
 
     onSwitchMode() {
         this.isLoginMode = !this.isLoginMode
@@ -28,7 +28,7 @@ export class AuthComponent {
         this.isLoading = true
 
         if (this.isLoginMode) {
-            this.authService.login(email, password).subscribe(
+            this.authenticationService.login(email, password).subscribe(
                 resData => {
                     this.isLoading = false
                 },
@@ -40,7 +40,7 @@ export class AuthComponent {
             )
             form.reset()
         } else {
-            this.authService.signUp(email, password).subscribe(
+            this.authenticationService.signUp(email, password).subscribe(
                 resData => {
                     this.isLoading = false
                 },

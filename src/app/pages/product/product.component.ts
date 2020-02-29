@@ -3,7 +3,7 @@ import { NgForm, FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from '../../../models/user.model';
-import { AuthService } from '../../../services/auth.service';
+import { AuthenticationService } from '../../../services/authentication.service';
 import { ProductService } from '../../../services/product.service';
 import { Product } from '../../../models/product.model';
 import { ShoppingCartService } from '../../../services/shopping-cart.service';
@@ -22,7 +22,7 @@ export class ProductComponent {
   currentProduct : Product;
 
   constructor(private activatedRoute: ActivatedRoute,
-              private authService: AuthService, 
+              private authService: AuthenticationService, 
               private router: Router,
               private productService: ProductService,
               private shoppingCartService: ShoppingCartService) {

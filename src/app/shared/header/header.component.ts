@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from '../../../services/auth.service';
+import { AuthenticationService } from '../../../services/authentication.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   userEmail = null
   isAdmin = false
   
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.userSub = this.authService.user.subscribe(user => {

@@ -8,9 +8,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './pages/home/home.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.component';
-import { AuthComponent } from './pages/auth/auth.component'
+import { AuthenticationComponent } from './pages/account/authentication/authentication.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
-import { AccountComponent } from './pages/account/account.component';
+import { AccountComponent } from './pages/account/user-information/account.component';
 import { ProductComponent } from './pages/product/product.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component'
 
@@ -19,8 +19,8 @@ const appRoutes : Routes = [
   { path: 'product/:mode', component: ProductComponent },
   { path: 'product/:mode/:id', component: ProductComponent },  // TODO: Update path
   { path: 'account', component: AccountComponent },
-  { path: 'signup', component: AuthComponent },
-  { path: 'login', component: AuthComponent },
+  { path: 'signup', component: AuthenticationComponent },
+  { path: 'login', component: AuthenticationComponent },
   { path: 'cart', component: ShoppingCartComponent },
   { path: 'checkout', component: CheckoutComponent }
   // ... canActivate: [AuthGuard] <-- use this for for example, going to the admin page or personal user page
@@ -33,7 +33,7 @@ const appRoutes : Routes = [
     HeaderComponent,
     FooterComponent,
     ShoppingCartComponent,
-    AuthComponent,
+    AuthenticationComponent,
     LoadingSpinnerComponent,
     AccountComponent,
     ProductComponent,

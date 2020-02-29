@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { User } from '../../../models/user.model';
-import { AuthService } from '../../../services/auth.service';
+import { AuthenticationService } from '../../../services/authentication.service';
 
 @Component({
   selector: 'app-checkout',
@@ -38,7 +38,7 @@ export class CheckoutComponent implements OnInit {
     phone: null,
   }
 
-  constructor(private authService: AuthService) { 
+  constructor(private authService: AuthenticationService) { 
     this.updateTotalPrice('')
   }
 

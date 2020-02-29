@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +8,7 @@ import { AuthService } from '../services/auth.service';
 })
 
 export class AppComponent {
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.authService.autoLogin()

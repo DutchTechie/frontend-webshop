@@ -3,7 +3,7 @@ import { Cart } from '../../../models/cart.model';
 import { Subscription } from 'rxjs';
 import { User } from '../../../models/user.model';
 import { ShoppingCartService } from '../../../services/shopping-cart.service';
-import { AuthService } from '../../../services/auth.service';
+import { AuthenticationService } from '../../../services/authentication.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -18,7 +18,7 @@ export class ShoppingCartComponent implements OnInit {
 
   cartToUpdate: Cart = null;
 
-  constructor(private shoppingCartService: ShoppingCartService, private authService: AuthService) {
+  constructor(private shoppingCartService: ShoppingCartService, private authService: AuthenticationService) {
     this.userSub = this.authService.user.subscribe(user => {
       if (user == null) {
         this.user = new User("", "", false)

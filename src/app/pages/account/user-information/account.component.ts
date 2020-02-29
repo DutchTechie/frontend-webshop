@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AuthService } from '../../../services/auth.service';
-import { User } from '../../../models/user.model';
+import { AuthenticationService } from '../../../../services/authentication.service';
+import { User } from '../../../../models/user.model';
 import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-account',
-  templateUrl: './account.component.html',
-  styleUrls: ['./account.component.css']
+  templateUrl: './account.component.html'
 })
 export class AccountComponent implements OnInit {
   private userSub : Subscription;
@@ -23,7 +22,7 @@ export class AccountComponent implements OnInit {
     phone: null,
   }
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthenticationService) { }
 
   // TODO: Add functionality to recieve user details, such as shipping addresses etc.
   ngOnInit(): void {

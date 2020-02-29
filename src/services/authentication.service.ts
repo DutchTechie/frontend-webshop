@@ -13,7 +13,7 @@ interface AuthResponseData {
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthenticationService {
   user = new BehaviorSubject<User>(null) // TODO: why use this type?
   private USER_PATH_URI: string = "http://localhost:8080/users"
 
