@@ -1,3 +1,5 @@
+
+import { IUserCredentials } from '../interfaces/IUserCredentials.component';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { Subject, throwError, BehaviorSubject } from 'rxjs';
@@ -5,31 +7,30 @@ import { User } from '../models/user.model';
 import { catchError, tap, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
-interface AuthResponseData {
-  userEmail: string,
-  userPassword: string
-}
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  user = new BehaviorSubject<User>(null) // TODO: why use this type?
-  private USER_PATH_URI: string = "http://localhost:8080/users"
+  user = new BehaviorSubject<User>(null); // TODO: why use this type?
+  private USER_PATH_URI: string = "http://localhost:8080/users";
 
   constructor(private http: HttpClient, private router: Router) {}
 
-    login(email: string, password: string) {
-      const uri = `${this.USER_PATH_URI}/login/${email}/${password}`;
-      return this.http.post<User>(uri, null).pipe(catchError(this.handleError), tap(resData => {
-        console.log(resData)
-        this.handleAuthentication(resData['id'], resData['email'], resData['admin']) // TODO: Replace with actual user id ans admin info
-        this.router.navigate(['/'])
-    }))
+    login(userCredentials: IUserCredentials) {
+      const loginParameters = `${userCredentials.email}/${userCredentials.password}`;
+      const uri = `${this.USER_PATH_URI}/login/${loginParameters}`;
+
+      return this.http.post<User>(uri, null).pipe(catchError(this.handleError), tap(
+        resData => {
+          console.log(resData)
+          this.handleAuthentication(resData['id'], resData['email'], resData['admin']) // TODO: Replace with actual user id ans admin info
+          this.router.navigate(['/'])
+        })
+      );
   }
 
-  signUp(email: string, password: string) {
-    const uri = `${this.USER_PATH_URI}/signUp/${email}/${password}`;
+  signUp(userCredentials: IUserCredentials) {
+    const uri = `${this.USER_PATH_URI}/signUp/${userCredentials.email}/${userCredentials.password}`;
     return this.http.post(uri, null).pipe(map(user => {
       return user;
     }))

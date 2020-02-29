@@ -1,11 +1,7 @@
 import { Component } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { AuthenticationService } from '../../../../services/authentication.service';
-
-interface UserCredentials {
-    email: string,
-    password: string
-}
+import { IUserCredentials } from '../../../../interfaces/IUserCredentials.component';
 
 const LOGIN: string = 'LOGIN';
 const SIGNUP: string = 'SIGNUP';
@@ -34,7 +30,7 @@ export class AuthenticationComponent {
     onSubmit(form: NgForm) {
         if (!form.valid) { return; }
         
-        const userCredentials: UserCredentials = {
+        const userCredentials: IUserCredentials = {
             email: form.value.email,
             password: form.value.password
         };
@@ -48,16 +44,16 @@ export class AuthenticationComponent {
         form.reset();
     }
 
-    private submitLoginForm(userCredentials: UserCredentials) {
-        this.authenticationService.login(userCredentials.email, userCredentials.password)
+    private submitLoginForm(userCredentials: IUserCredentials) {
+        this.authenticationService.login(userCredentials)
         .subscribe(
             responseData => { this.handleResponseData(responseData); },
             error => { this.handleError(error); }
         );
     }
 
-    private submitSignUpForm(userCredentials: UserCredentials) {
-        this.authenticationService.signUp(userCredentials.email, userCredentials.password)
+    private submitSignUpForm(userCredentials: IUserCredentials) {
+        this.authenticationService.signUp(userCredentials)
         .subscribe(
             responseData => { this.handleResponseData(responseData); },
             error => { this.handleError(error);}
