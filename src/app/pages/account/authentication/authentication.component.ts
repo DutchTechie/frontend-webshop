@@ -2,6 +2,14 @@ import { Component } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { AuthenticationService } from '../../../../services/authentication.service';
 
+interface UserCredentials {
+    email: string,
+    password: string
+}
+
+const LOGIN: string = 'LOGIN';
+const SIGNUP: string = 'SIGNUP';
+
 @Component ({
     selector: 'app-authentication',
     templateUrl: './authentication.component.html',
@@ -9,48 +17,61 @@ import { AuthenticationService } from '../../../../services/authentication.servi
 })
 
 export class AuthenticationComponent {
-    isLoginMode = true
-    isLoading = false
-    error : string = null
+    authenticationMode: string = LOGIN;
+    pageIsLoading: boolean = false;
+    errorMessage : string = null;
 
     constructor(private authenticationService: AuthenticationService) {}
 
     onSwitchMode() {
-        this.isLoginMode = !this.isLoginMode
+        if (this.authenticationMode === LOGIN) {
+            this.authenticationMode = SIGNUP;
+        } else {
+            this.authenticationMode = LOGIN;
+        }
     }
 
     onSubmit(form: NgForm) {
-        if (!form.valid) {
-            return
-        }
-        const email = form.value.email
-        const password = form.value.password
-        this.isLoading = true
+        if (!form.valid) { return; }
+        
+        const userCredentials: UserCredentials = {
+            email: form.value.email,
+            password: form.value.password
+        };
+        this.pageIsLoading = true;
 
-        if (this.isLoginMode) {
-            this.authenticationService.login(email, password).subscribe(
-                resData => {
-                    this.isLoading = false
-                },
-                error => {
-                    console.log(error)
-                    this.error = "An error occurred."
-                    this.isLoading = false
-                }
-            )
-            form.reset()
+        if (this.authenticationMode === LOGIN) {
+            this.submitLoginForm(userCredentials);
         } else {
-            this.authenticationService.signUp(email, password).subscribe(
-                resData => {
-                    this.isLoading = false
-                },
-                error => {
-                    console.log(error)
-                    this.error = "An error occurred."
-                    this.isLoading = false
-                }
-            )
-            form.reset()
+            this.submitSignUpForm(userCredentials);
         }
+        form.reset();
+    }
+
+    private submitLoginForm(userCredentials: UserCredentials) {
+        this.authenticationService.login(userCredentials.email, userCredentials.password)
+        .subscribe(
+            responseData => { this.handleResponseData(responseData); },
+            error => { this.handleError(error); }
+        );
+    }
+
+    private submitSignUpForm(userCredentials: UserCredentials) {
+        this.authenticationService.signUp(userCredentials.email, userCredentials.password)
+        .subscribe(
+            responseData => { this.handleResponseData(responseData); },
+            error => { this.handleError(error);}
+        );
+    }
+
+    private handleResponseData(responseData) {
+        console.log(responseData);
+        this.pageIsLoading = false;
+    }
+
+    private handleError(error) {
+        console.log(error);
+        this.errorMessage = "An error occurred.";
+        this.pageIsLoading = false;
     }
 }
