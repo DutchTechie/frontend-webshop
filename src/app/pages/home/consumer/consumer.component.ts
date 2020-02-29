@@ -1,6 +1,5 @@
 import { ShoppingCartService } from 'src/services/shopping-cart.service';
-import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { User } from 'src/models/user.model';
 import { Product } from 'src/models/product.model';
 
@@ -13,17 +12,17 @@ import { Product } from 'src/models/product.model';
 export class ConsumerComponent implements OnInit {
   @Input() products: Product[];
   @Input() user: User;
+  @Output() pageToRedirectUser = new EventEmitter<string>();
 
   constructor(
-    private shoppingCartService: ShoppingCartService, 
-    private router: Router
+    private shoppingCartService: ShoppingCartService
   ) { }
 
   ngOnInit(): void {}
 
   addToCart(productId) {
     if (this.user === null || this.user.isAdmin === true) {
-      this.redirectUserToLoginPage(); // TODO: Implement error message when home
+      this.redirectUser(); // TODO: Implement error message when home
     } else {
       let id = this.user.userId;
       this.shoppingCartService.addToCart(id, productId)
@@ -31,7 +30,7 @@ export class ConsumerComponent implements OnInit {
     }
   }
 
-  redirectUserToLoginPage() {
-    this.router.navigate(['/login']);
+  redirectUser() {
+    this.pageToRedirectUser.emit('/login');
   }
 }

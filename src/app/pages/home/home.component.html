@@ -1,7 +1,17 @@
 <h1>Shoes</h1>
 <div *ngIf="userIsConsumer(user) == true">
-    <app-consumer [user]="user" [products]="products"></app-consumer>
+
+    <!-- when using output, note that the var should always be event, so $event -->
+    <app-consumer 
+        [user]="user" 
+        [products]="products" 
+        (pageToRedirectUser)="redirectUser($event)">
+    </app-consumer>
 </div>
 <div *ngIf="userIsConsumer(user) == false">
-    <app-admin [user]="user" [products]="products"></app-admin>
+    <app-admin 
+        [user]="user" 
+        [products]="products" 
+        (pageToRedirectUser)="redirectUser($event)">
+    </app-admin>
 </div>

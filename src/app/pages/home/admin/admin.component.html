@@ -39,7 +39,7 @@
                         <td class="vcenter">
                             <a routerLink="/product/edit/{{ product.id }}">Edit</a>&nbsp;|
                             &nbsp;<a routerLink="/product/details/{{ product.id }}">Details</a>&nbsp;|
-                            &nbsp;<a (click)="deleteProduct(product.id)" >Delete</a>
+                            &nbsp;<a style="cursor: pointer;" (click)="deleteProduct(product.id)" >Delete</a>
                         </td>
                     </tr>      
                 </tbody>

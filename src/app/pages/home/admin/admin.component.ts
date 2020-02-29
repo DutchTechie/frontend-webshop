@@ -1,7 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from 'src/models/product.model';
 import { User } from 'src/models/user.model';
-import { Router } from '@angular/router';
 import { ProductService } from 'src/services/product.service';
 
 @Component({
@@ -13,24 +12,22 @@ import { ProductService } from 'src/services/product.service';
 export class AdminComponent implements OnInit {
   @Input() products: Product[];
   @Input() user: User;
+  @Output() pageToRedirectUser = new EventEmitter<string>();
 
   constructor(
-    private router: Router,
     private productService: ProductService
   ) { }
 
-  ngOnInit(): void {}
-
-  addToCart(productId) {
+  ngOnInit(): void {
     if (this.user === null || this.user.isAdmin === false) {
-      this.redirectUserToLoginPage(); // TODO: Implement error message when home
+      this.redirectUser(); // TODO: Implement error message when home
     } else {
       let id = this.user.userId;
     }
   }
 
-  redirectUserToLoginPage() {
-    this.router.navigate(['/login']);
+  redirectUser() {
+    this.pageToRedirectUser.emit('/login');
   }
 
   fetchAllProducts() {
@@ -40,22 +37,24 @@ export class AdminComponent implements OnInit {
   }
 
   deleteAllProducts() {
-    let status = confirm('Are you sure?') // dry?
-    if (status) {
-      console.log("delete all products")
-      this.productService.deleteAllProducts().subscribe(data => console.log(data))
+    if (this.adminIsSureToDelete()) {
+      this.productService.deleteAllProducts()
+      .subscribe(data => console.log(data))
+      this.fetchAllProducts();
     }
-    this.fetchAllProducts();
   }
 
   deleteProduct(id) {
-    let status = confirm('Are you sure?')
-    if (status) {
+    if (this.adminIsSureToDelete()) {
       this.productService.deleteProduct(id)
       .subscribe(data => {
         console.log(data)
         this.fetchAllProducts();
       })
     }
+  }
+
+  private adminIsSureToDelete(): boolean {
+    return confirm('Are you sure?');
   }
 }

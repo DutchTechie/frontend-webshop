@@ -13,6 +13,7 @@ import { ShoppingCartService } from '../../../services/shopping-cart.service';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
+
 export class ProductComponent {
   isEditMode = false
   isCreateMode = false
@@ -122,6 +123,5 @@ export class ProductComponent {
         this.router.navigate([''])
       }
     }
-    
   }
 }

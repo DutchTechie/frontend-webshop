@@ -4,7 +4,7 @@ import { User } from '../../../models/user.model';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { Product } from '../../../models/product.model';
 import { ProductService } from '../../../services/product.service';
-import { ShoppingCartService } from '../../../services/shopping-cart.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -15,10 +15,13 @@ export class HomeComponent implements OnInit {
   private userSubscription : Subscription;
   user: User = null;
   products: Product[] = [];
+  pageToRedirectUserTo : string;
   
   constructor(
     private authenticationService: AuthenticationService, 
-    private productService: ProductService) {}
+    private productService: ProductService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.productService.fetchAllProducts().subscribe(allProducts => {
@@ -55,5 +58,9 @@ export class HomeComponent implements OnInit {
 
   ngOnDestroy() {
     this.userSubscription.unsubscribe();
+  }
+
+  redirectUser(pageToRedirectUserTo) {
+    this.router.navigate([pageToRedirectUserTo]);
   }
 }
