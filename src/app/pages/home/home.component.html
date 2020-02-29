@@ -1,63 +1,7 @@
 <h1>Shoes</h1>
-<app-consumer [user]="user" [products]="products"></app-consumer>
-<div *ngIf="user !== null">
-    <a
-        routerLink='/product/create' 
-        class="btn btn-primary">
-            +Add new product
-    </a>&nbsp;
-    <button 
-        class="btn btn-primary" 
-        (click)="fetchAllProducts()">
-            Fetch all products
-    </button>
-    &nbsp;
-    <hr />
-    <div class="row">
-        <div class="col-md-12">
-            <div class="list-wrapper">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th colspan="2">Item</th>
-                            <th>Unit price</th>
-                            <th>Stock</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let product of products">
-                            <td>
-                                <img src="{{ product.imagePath }}" alt="Nike shoe" width=100px />
-                            </td>
-                            <td class="vcenter">
-                                {{ product.name }}
-                            </td>
-                            <td class="vcenter">
-                                &euro;{{ product.price }}
-                            </td>
-                            <td class="vcenter">
-                                {{ product.stock }}
-                            </td>
-                            <td class="vcenter">
-                                <a routerLink="/product/edit/{{ product.id }}">Edit</a>&nbsp;|
-                                &nbsp;<a routerLink="/product/details/{{ product.id }}">Details</a>&nbsp;|
-                                &nbsp;<a (click)="deleteProduct(product.id)" >Delete</a>
-                            </td>
-                        </tr>      
-                    </tbody>
-                </table> 
-            </div>
-        </div>
-    </div>
-    <hr />
-    <div class="row">
-        <div class="col-md-12">
-            <button 
-                class="btn btn-primary pull-right" 
-                (click)="deleteAllProducts()">
-                    Delete all products
-            </button>
-        </div>
-    </div>
+<div *ngIf="userIsConsumer(user) == true">
+    <app-consumer [user]="user" [products]="products"></app-consumer>
+</div>
+<div *ngIf="userIsConsumer(user) == false">
+    <app-admin [user]="user" [products]="products"></app-admin>
 </div>

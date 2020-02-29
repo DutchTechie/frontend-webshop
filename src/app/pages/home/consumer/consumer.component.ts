@@ -22,23 +22,16 @@ export class ConsumerComponent implements OnInit {
   ngOnInit(): void {}
 
   addToCart(productId) {
-    if (this.user === null) {
+    if (this.user === null || this.user.isAdmin === true) {
       this.redirectUserToLoginPage(); // TODO: Implement error message when home
     } else {
       let id = this.user.userId;
       this.shoppingCartService.addToCart(id, productId)
-      .subscribe(data => console.log(data));
+        .subscribe(data => console.log(data));
     }
   }
 
   redirectUserToLoginPage() {
     this.router.navigate(['/login']);
-  }
-
-  userIsConsumer(user: User) {
-    if (user === null) {
-      return true;
-    }
-    return (user.isAdmin === false);
   }
 }

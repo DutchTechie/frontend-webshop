@@ -21,13 +21,24 @@ export class HomeComponent implements OnInit {
     private productService: ProductService) {}
 
   ngOnInit(): void {
-    this.fetchAllProducts();
+    this.productService.fetchAllProducts().subscribe(allProducts => {
+      this.products = allProducts;
+    })
     this.user = this.getLoggedInUser();
     if (this.userIsLoggedIn(this.user)) {
       console.log("The user is logged in.");
     } else {
       console.log("The user is NOT logged in.");
     }
+  }
+
+  userIsConsumer(user: User) {
+    // App cannot check if user is admin or not if null.
+    // So, check for that first.
+    if (user === null) {
+      return true;
+    }
+    return (user.isAdmin === false);
   }
 
   private getLoggedInUser(): User {
@@ -44,31 +55,5 @@ export class HomeComponent implements OnInit {
 
   ngOnDestroy() {
     this.userSubscription.unsubscribe();
-  }
-  
-  fetchAllProducts() {
-    this.productService.fetchAllProducts().subscribe(data => {
-      this.products = data
-    })
-  }
-
-  deleteAllProducts() {
-    let status = confirm('Are you sure?') // dry?
-    if (status) {
-      console.log("delete all products")
-      this.productService.deleteAllProducts().subscribe(data => console.log(data))
-    }
-    this.fetchAllProducts();
-  }
-
-  deleteProduct(id) {
-    let status = confirm('Are you sure?')
-    if (status) {
-      this.productService.deleteProduct(id)
-      .subscribe(data => {
-        console.log(data)
-        this.fetchAllProducts();
-      })
-    }
   }
 }
