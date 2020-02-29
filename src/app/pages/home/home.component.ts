@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { User } from '../../../models/user.model';
 import { AuthenticationService } from '../../../services/authentication.service';
-import { Product } from '../../../models/product.model';  // TODO: Add the product model to its service
+import { Product } from '../../../models/product.model';
 import { ProductService } from '../../../services/product.service';
 import { ShoppingCartService } from '../../../services/shopping-cart.service';
 
@@ -12,28 +12,38 @@ import { ShoppingCartService } from '../../../services/shopping-cart.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  products: Product[] = []
-  private userSub : Subscription;
-  user: User = null
+  private userSubscription : Subscription;
+  user: User = null;
+  products: Product[] = [];
   
   constructor(
-    private authService: AuthenticationService, 
-    private productService: ProductService,
-    private shoppingCartService: ShoppingCartService) { }
+    private authenticationService: AuthenticationService, 
+    private productService: ProductService) {}
 
   ngOnInit(): void {
-    this.fetchAllProducts()
-    this.userSub = this.authService.user.subscribe(user => {
-      if (user == null) {
-        this.user = new User("", "", false)
-        return
-      }
-      this.user = user
+    this.fetchAllProducts();
+    this.user = this.getLoggedInUser();
+    if (this.userIsLoggedIn(this.user)) {
+      console.log("The user is logged in.");
+    } else {
+      console.log("The user is NOT logged in.");
+    }
+  }
+
+  private getLoggedInUser(): User {
+    let userToAsssignValueTo : User = null;
+    this.userSubscription = this.authenticationService.user.subscribe(user => {
+      userToAsssignValueTo = user;
     })
+    return userToAsssignValueTo;
+  }
+
+  private userIsLoggedIn(user: User) : boolean {
+    return (user !== null);
   }
 
   ngOnDestroy() {
-    this.userSub.unsubscribe()
+    this.userSubscription.unsubscribe();
   }
   
   fetchAllProducts() {
@@ -49,12 +59,6 @@ export class HomeComponent implements OnInit {
       this.productService.deleteAllProducts().subscribe(data => console.log(data))
     }
     this.fetchAllProducts();
-  }
-
-  addToCart(productId) {
-    let id = this.user.userId;
-    this.shoppingCartService.addToCart(id, productId)
-    .subscribe(data => console.log(data));
   }
 
   deleteProduct(id) {
