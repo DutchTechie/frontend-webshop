@@ -12,7 +12,8 @@ import { AuthenticationComponent } from './pages/account/authentication/authenti
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AccountComponent } from './pages/account/user-information/account.component';
 import { ProductComponent } from './pages/product/product.component';
-import { CheckoutComponent } from './pages/checkout/checkout.component'
+import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { ConsumerComponent } from './pages/home/consumer/consumer.component'
 
 const appRoutes : Routes = [
   { path: '', component: HomeComponent },
@@ -38,6 +39,7 @@ const appRoutes : Routes = [
     AccountComponent,
     ProductComponent,
     CheckoutComponent,
+    ConsumerComponent,
   ],
   imports: [
     BrowserModule,

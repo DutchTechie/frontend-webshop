@@ -11,8 +11,8 @@ import { Subscription } from 'rxjs';
 export class HeaderComponent implements OnInit, OnDestroy {
   private userSub : Subscription;
   isAuthenticated = false;
-  userEmail = null
-  isAdmin = false
+  userEmail = null;
+  isAdmin = false;
   
   constructor(private authService: AuthenticationService) { }
 
@@ -28,8 +28,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onLogout() {
-    this.authService.logout()
-    this.isAdmin = false
+    this.authService.logout();
+    this.isAdmin = false;
   }
 
   onClickAccount() {
@@ -40,5 +40,4 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.userSub.unsubscribe()
     this.isAdmin = false
   }
-
 }

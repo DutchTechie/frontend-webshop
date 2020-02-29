@@ -24,7 +24,7 @@ export class AuthenticationService {
         resData => {
           console.log(resData)
           this.handleAuthentication(resData['id'], resData['email'], resData['admin']) // TODO: Replace with actual user id ans admin info
-          this.router.navigate(['/'])
+          this.router.navigate(['/']) // TODO: Remove this and place it somewhere more apropiate
         })
       );
   }
