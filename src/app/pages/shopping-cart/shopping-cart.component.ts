@@ -53,7 +53,7 @@ export class ShoppingCartComponent implements OnInit {
     this.shoppingCartData.forEach(cart => {
       if (event.srcElement != null) {
         if (event.srcElement.name == cart.products.name) {
-          cart.carts.amount = event.target.value
+          cart.carts.amount = event.target.value;
           this.updateCart(cart.carts)
           // console.log(event.srcElement.name)
         } 

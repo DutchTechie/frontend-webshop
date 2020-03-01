@@ -1,0 +1,17 @@
+.list-wrapper {
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.table-cell-container {
+    position: relative;
+    border: 1px solid;
+}
+
+.vcenter {
+    transform: translate(0, 50%)
+}
+
+.vcenter a {
+    cursor: pointer;
+}

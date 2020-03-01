@@ -8,14 +8,20 @@
     </div>
     <div class="col-md-6">
         <!-- get the following header to change according to the mode -->
-        <h2>Mutate</h2>
+        <h2>{{ (currentProduct == null) ? 'Create a new product' : currentProduct.name }}</h2>
+        <br>
         <app-details 
             (switchToMode)="switchToMutateMode()" 
-            (pageToRedirectUser)="redirectUser($event)" 
-            [product]="currentProduct" 
-            [user]="user" 
+            [product]="currentProduct"
+            [user]="user"
             *ngIf="productPageMode === 'DETAILS'">
         </app-details>
-        <app-mutate *ngIf="productPageMode === 'MUTATE'"></app-mutate>
+        <app-mutate
+            [product]="currentProduct"
+            [visitedDetailsPage]="visitedDetailsPage" 
+            (goBackToDetailsPage)="handleOnBackPressed($event)"
+            [user]="user"
+            *ngIf="productPageMode === 'MUTATE'">
+        </app-mutate>
     </div>
 </div>

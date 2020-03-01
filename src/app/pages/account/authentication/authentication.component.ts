@@ -2,6 +2,9 @@ import { Component } from '@angular/core'
 import { NgForm } from '@angular/forms'
 import { AuthenticationService } from '../../../../services/authentication.service';
 import { IUserCredentials } from '../../../../interfaces/IUserCredentials.component';
+import { User } from 'src/models/user.model';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 const LOGIN: string = 'LOGIN';
 const SIGNUP: string = 'SIGNUP';
@@ -16,14 +19,38 @@ export class AuthenticationComponent {
     authenticationMode: string = LOGIN;
     pageIsLoading: boolean = false;
     errorMessage : string = null;
+    private userSubscription: Subscription;
 
-    constructor(private authenticationService: AuthenticationService) {}
+    constructor(
+        private authenticationService: AuthenticationService,
+        private router: Router) {}
+
+    ngOnInit(): void {
+        const user = this.getLoggedInUser();
+        if (user != null) {
+            this.router.navigate(['/']);
+        }
+    }
 
     onSwitchMode() {
         if (this.authenticationMode === LOGIN) {
             this.authenticationMode = SIGNUP;
         } else {
             this.authenticationMode = LOGIN;
+        }
+    }
+
+    private getLoggedInUser(): User {
+        let userToAsssignValueTo: User = null;
+        this.userSubscription = this.authenticationService.user.subscribe(user => {
+          userToAsssignValueTo = user;
+        });
+        return userToAsssignValueTo;
+    }
+
+    ngOnDestroy() {
+        if (this.userSubscription != null) {
+          this.userSubscription.unsubscribe();
         }
     }
 

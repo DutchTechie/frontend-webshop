@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from 'src/models/product.model';
 import { User } from 'src/models/user.model';
 import { ShoppingCartService } from 'src/services/shopping-cart.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-details',
@@ -15,7 +16,7 @@ export class DetailsComponent implements OnInit {
   @Output() pageToRedirectUser = new EventEmitter<string>();
   @Output() switchToMode = new EventEmitter<boolean>();
 
-  constructor(private shoppingCartService: ShoppingCartService) { }
+  constructor(private shoppingCartService: ShoppingCartService, private router: Router) { }
 
   ngOnInit(): void {}
 
@@ -49,6 +50,6 @@ export class DetailsComponent implements OnInit {
   }
 
   redirectUser(page) {
-    this.pageToRedirectUser.emit(page);
+    this.router.navigate([page]);
   }
 }
