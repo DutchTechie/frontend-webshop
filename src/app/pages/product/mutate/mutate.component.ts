@@ -76,5 +76,4 @@ export class MutateComponent implements OnInit {
       this.goBackToDetailsPage.emit(false);
     }
   }
-
 }

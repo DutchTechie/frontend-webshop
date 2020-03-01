@@ -62,6 +62,7 @@ export class AuthenticationComponent {
             this.submitLoginForm(userCredentials);
         } else {
             this.submitSignUpForm(userCredentials);
+            this.onSwitchMode();
         }
     }
 

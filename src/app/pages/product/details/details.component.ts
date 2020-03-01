@@ -35,15 +35,15 @@ export class DetailsComponent implements OnInit {
     return (user.isAdmin === true);
   }
 
+  // TODO: Make this globally accessible
   addToCart(productId) {
     if(this.user != null) {
       if (this.user.isAdmin === false) {
         let id = this.user.userId;
         this.shoppingCartService.addToCart(id, productId)
           .subscribe(data => console.log(data));
-      } else {
-        this.redirectUser('/'); // TODO: Implement error message when home
-      }
+      } 
+      this.redirectUser('/');
     } else {
       this.redirectUser('/login');
     }
