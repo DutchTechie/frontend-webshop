@@ -8,6 +8,9 @@ import { ProductService } from '../../../services/product.service';
 import { Product } from '../../../models/product.model';
 import { ShoppingCartService } from '../../../services/shopping-cart.service';
 
+export const MUTATE: string = 'MUTATE';
+export const DETAILS: string = 'DETAILS';
+
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -17,64 +20,90 @@ import { ShoppingCartService } from '../../../services/shopping-cart.service';
 export class ProductComponent {
   isEditMode = false
   isCreateMode = false
-  private userSub : Subscription;
+  private userSubscription: Subscription;
   user: User = null
   backToInfo = false
-  currentProduct : Product;
+  currentProduct: Product;
+
+  productPageMode: string = null;
+  defaultImageUri: string = "https://www.wiersmaverhuizingen.nl/wp-content/themes/consultix/images/no-image-found-360x260.png";
 
   constructor(private activatedRoute: ActivatedRoute,
-              private authService: AuthenticationService, 
+              private authenticationService: AuthenticationService, 
               private router: Router,
               private productService: ProductService,
-              private shoppingCartService: ShoppingCartService) {
+              private shoppingCartService: ShoppingCartService) {}
 
-      this.isEditMode = this.activatedRoute
-        .snapshot
-        .paramMap
-        .get('mode') == "edit"? true : false
+  ngOnInit(): void {
+    const productId: string = this.activatedRoute.snapshot.paramMap.get('id');
+    this.productPageMode = this.determineProductPageMode(); 
+    this.user = this.getLoggedInUser();
 
-      this.isCreateMode = this.activatedRoute
-        .snapshot
-        .paramMap
-        .get('mode') == "create"? true : false
-
-      console.log(this.isEditMode)
-
-      this.userSub = this.authService.user.subscribe(user => {
-        if (user == null) {
-          this.user = new User("", "", false)
-          return
-        }
-        this.user = user
-      })
-
-      const id: string = this.activatedRoute
-        .snapshot
-        .paramMap
-        .get('id');
-
-      if (id != null) {
-        this.productService.fetchProduct(id).subscribe(product =>{ 
-          this.currentProduct = product;
-          console.log(product);
-        });
-      } else {
-
-        // TODO: Use a loop for this
-        this.currentProduct = new Product(
-          "-1", null, null, null, null, null
-        );
+    if (this.productPageMode === MUTATE) {
+      if (this.userIsAdmin(this.user) === false) {
+        this.redirectUserToLoginPage();
       }
-
-      // console.log(this.currentProduct);
     }
 
-    ngOnDestroy() {
-      this.userSub.unsubscribe()
+    if (productId !== null) {
+      this.productService.fetchProduct(productId).subscribe(product => {
+        this.currentProduct = product;
+        if (this.currentProduct.imagePath !== "") {
+          this.defaultImageUri = this.currentProduct.imagePath;
+        }
+      });
     }
+  }
 
-  onSwitchMode() {
-      this.isEditMode = !this.isEditMode
+  private determineProductPageMode(): string {
+    const mode = this.activatedRoute.snapshot.paramMap.get('mode');
+    switch (mode) {
+      case "mutate": return MUTATE;
+      case "details": return DETAILS;
+      default:
+        console.log("Error: cannot determine which mode the product page is in.");
+        return null;
+    }
+  }
+
+  redirectUser(pageToRedirectUserTo) {
+    this.router.navigate([pageToRedirectUserTo]);
+  }
+
+  private userIsAdmin(user: User): boolean {
+    if (user === null) {
+      return false;
+    }
+    return (user.isAdmin === true);
+  }
+
+  switchBetweenMutateAndDetailsMode() {
+  }
+
+  switchToMutateMode() {
+    this.productPageMode = MUTATE;
+  }
+
+  switchToDetailsMode() {
+    this.productPageMode = DETAILS;
+  }
+
+  private getLoggedInUser(): User {
+    let userToAsssignValueTo: User = null;
+    this.userSubscription = this.authenticationService.user.subscribe(user => {
+      userToAsssignValueTo = user;
+    });
+    return userToAsssignValueTo;
+  }
+
+  ngOnDestroy() {
+    if (this.userSubscription != null) {
+      this.userSubscription.unsubscribe();
+    }
+  }
+
+  private redirectUserToLoginPage() {
+    this.router.navigate(['/login']);
   }
 
   addNewProduct() {
@@ -85,24 +114,19 @@ export class ProductComponent {
   }
 
   onBackClicked() {
-    if (this.isEditMode) {
-      if (this.backToInfo) {
-        this.isEditMode = false
-        return;
-      }
-    }
-    this.router.navigate([''])
+    // TODO: Implement back logic
+    this.router.navigate(['']);
   }
 
   onSubmit(form: NgForm) {
     if (!form.valid) {
-        return
+        return;
     }
     if (this.isCreateMode) {
       console.log("Add a new product")
       this.addNewProduct()
       this.router.navigate([''])
-      return
+      return;
     }
     if (this.isEditMode) {
       console.log("save new information")

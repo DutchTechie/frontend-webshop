@@ -14,7 +14,9 @@ import { AccountComponent } from './pages/account/user-information/account.compo
 import { ProductComponent } from './pages/product/product.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { ConsumerComponent } from './pages/home/consumer/consumer.component';
-import { AdminComponent } from './pages/home/admin/admin.component'
+import { AdminComponent } from './pages/home/admin/admin.component';
+import { DetailsComponent } from './pages/product/details/details.component';
+import { MutateComponent } from './pages/product/mutate/mutate.component'
 
 const appRoutes : Routes = [
   { path: '', component: HomeComponent },
@@ -25,7 +27,6 @@ const appRoutes : Routes = [
   { path: 'login', component: AuthenticationComponent },
   { path: 'cart', component: ShoppingCartComponent },
   { path: 'checkout', component: CheckoutComponent }
-  // ... canActivate: [AuthGuard] <-- use this for for example, going to the admin page or personal user page
 ]
 
 @NgModule({
@@ -42,6 +43,8 @@ const appRoutes : Routes = [
     CheckoutComponent,
     ConsumerComponent,
     AdminComponent,
+    DetailsComponent,
+    MutateComponent,
   ],
   imports: [
     BrowserModule,

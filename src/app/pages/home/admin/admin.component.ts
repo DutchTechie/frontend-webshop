@@ -19,11 +19,16 @@ export class AdminComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.user === null || this.user.isAdmin === false) {
+    if (this.userIsAdmin(this.user) === false) {
       this.redirectUser(); // TODO: Implement error message when home
-    } else {
-      let id = this.user.userId;
     }
+  }
+
+  private userIsAdmin(user: User): boolean {
+    if (user === null) {
+      return false;
+    }
+    return (user.isAdmin === true);
   }
 
   redirectUser() {

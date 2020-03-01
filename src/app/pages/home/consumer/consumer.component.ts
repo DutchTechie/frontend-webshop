@@ -21,16 +21,20 @@ export class ConsumerComponent implements OnInit {
   ngOnInit(): void {}
 
   addToCart(productId) {
-    if (this.user === null || this.user.isAdmin === true) {
-      this.redirectUser(); // TODO: Implement error message when home
+    if(this.user != null) {
+      if (this.user.isAdmin === false) {
+        let id = this.user.userId;
+        this.shoppingCartService.addToCart(id, productId)
+          .subscribe(data => console.log(data));
+      } else {
+        this.redirectUser('/'); // TODO: Implement error message when home
+      }
     } else {
-      let id = this.user.userId;
-      this.shoppingCartService.addToCart(id, productId)
-        .subscribe(data => console.log(data));
+      this.redirectUser('/login');
     }
   }
 
-  redirectUser() {
-    this.pageToRedirectUser.emit('/login');
+  redirectUser(page: string) {
+    this.pageToRedirectUser.emit(page);
   }
 }
