@@ -40,14 +40,6 @@ export class AuthenticationComponent {
         }
     }
 
-    private getLoggedInUser(): User {
-        let userToAsssignValueTo: User = null;
-        this.userSubscription = this.authenticationService.user.subscribe(user => {
-          userToAsssignValueTo = user;
-        });
-        return userToAsssignValueTo;
-    }
-
     ngOnDestroy() {
         if (this.userSubscription != null) {
           this.userSubscription.unsubscribe();
@@ -56,19 +48,29 @@ export class AuthenticationComponent {
 
     onSubmit(form: NgForm) {
         if (!form.valid) { return; }
-        
         const userCredentials: IUserCredentials = {
             email: form.value.email,
             password: form.value.password
         };
         this.pageIsLoading = true;
+        this.loginOrSubmitForm(this.authenticationMode, userCredentials);
+        form.reset();
+    }
 
-        if (this.authenticationMode === LOGIN) {
+    private loginOrSubmitForm(mode: string, userCredentials: IUserCredentials) {
+        if (mode === LOGIN) {
             this.submitLoginForm(userCredentials);
         } else {
             this.submitSignUpForm(userCredentials);
         }
-        form.reset();
+    }
+
+    private getLoggedInUser(): User {
+        let userToAsssignValueTo: User = null;
+        this.userSubscription = this.authenticationService.user.subscribe(user => {
+          userToAsssignValueTo = user;
+        });
+        return userToAsssignValueTo;
     }
 
     private submitLoginForm(userCredentials: IUserCredentials) {
