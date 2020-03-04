@@ -9,36 +9,51 @@
             <div *ngIf="pageIsLoading">
                 <app-loading-spinner></app-loading-spinner>
             </div>
-            <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!pageIsLoading">
+
+            <form [formGroup]="authForm" (ngSubmit)="onSubmit()" *ngIf="!pageIsLoading">
+              <div formGroupName="userData">
                 <div class="form-group">
-                    <input 
-                        type="email" 
-                        class="form-control input-lg" 
+                    <input
+                        formControlName="email"
+                        type="email"
+                        class="form-control input-lg"
                         placeholder="Your Email *"
-                        ngModel
                         name="email"
-                        required
                         email
                         id="email"
                          />
-                </div>
-                <div class="form-group">
-                    <input 
-                        type="password" 
-                        class="form-control input-lg" 
-                        placeholder="Your Password *"
-                        ngModel
-                        name="password"
-                        required
-                        minlength="2"
-                        id="password"
-                    />
+                    <span
+                      *ngIf="!authForm.get('userData.email').valid && authForm.get('userData.email').touched"
+                      class="help-block">Please enter a valid email!</span>
+                    <!-- <span
+                      *ngIf="!authForm.get('userData.email').valid && authForm.get('userData.email').touched"
+                      class="help-block">
+                        <span *ngIf="authForm.get('userData.email').errors['required']">This field is required!</span> -->
+                    <!-- </span> -->
+                  </div>
+                  <div class="form-group">
+                      <input
+                          formControlName="password"
+                          type="password"
+                          class="form-control input-lg"
+                          placeholder="Your Password *"
+                          name="password"
+                          minlength="2"
+                          id="password"
+                      />
+                      <span
+                      *ngIf="!authForm.get('userData.password').valid && authForm.get('userData.password').touched"
+                      class="help-block">
+                        <span *ngIf="authForm.get('userData.password').errors['required']">Please enter a valid password!</span>
+                        <span *ngIf="authForm.get('userData.password').errors['minlength']">Please enter more characters!</span>
+                    </span>
+                  </div>
                 </div>
                 <br />
                 <div class="form-group">
                     <button type="submit" class="btn btn-lg btn-block btnSubmit" [disabled]="!authForm.valid">
                         {{ (authenticationMode === 'LOGIN') ? 'Login' : 'Sign up' }}
-                    </button> 
+                    </button>
                 </div>
                 <div class="form-group">
                     <a type="button" class="switchToSignUp" (click)="onSwitchMode()">

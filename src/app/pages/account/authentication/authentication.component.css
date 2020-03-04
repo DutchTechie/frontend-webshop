@@ -41,3 +41,11 @@
     font-weight: 600;
     text-decoration: none;
 }
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+.help-block {
+  color: red;
+}

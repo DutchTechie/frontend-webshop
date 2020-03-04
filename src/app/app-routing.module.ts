@@ -12,7 +12,7 @@ import { AuthorizationGuardService } from 'src/services/authorization-guard.serv
 const appRoutes : Routes = [
     { path: '', component: HomeComponent },
     { path: 'product/:mode', component: ProductComponent, canActivate: [AuthorizationGuardService] },
-    { path: 'product/:mode/:id', component: ProductComponent, canActivate: [AuthorizationGuardService] },  // TODO: Update path
+    { path: 'product/:mode/:id', component: ProductComponent, canActivate: [AuthorizationGuardService] },
     { path: 'account', component: AccountComponent, canActivate: [AuthorizationGuardService] },
     { path: 'signup', component: AuthenticationComponent, canActivate: [AuthorizationGuardService] },
     { path: 'login', component: AuthenticationComponent, canActivate: [AuthorizationGuardService] },

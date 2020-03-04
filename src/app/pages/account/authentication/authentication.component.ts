@@ -1,10 +1,11 @@
 import { Component } from '@angular/core'
-import { NgForm } from '@angular/forms'
+import { NgForm, FormGroup, FormControl, FormArray, Validators } from '@angular/forms'
 import { AuthenticationService } from '../../../../services/authentication.service';
 import { IUserCredentials } from '../../../../interfaces/IUserCredentials.component';
 import { User } from 'src/models/user.model';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
+import {Location} from '@angular/common';
 
 const LOGIN: string = 'LOGIN';
 const SIGNUP: string = 'SIGNUP';
@@ -19,15 +20,39 @@ export class AuthenticationComponent {
     authenticationMode: string = LOGIN;
     pageIsLoading: boolean = false;
     errorMessage : string = null;
-    private userSubscription: Subscription;
+    userSubscription: Subscription;
+    authForm: FormGroup;
+    // forbiddenUsernames = ['David@gmail.com', 'Chris@gmail.com'];
 
     constructor(
         private authenticationService: AuthenticationService,
         private router: Router,
-        private route: ActivatedRoute) {}
+        private route: ActivatedRoute,
+        private location: Location) {}
+
+    forbiddenEmails(control: FormControl): Promise<any> | Observable<any> {
+      const promise = new Promise<any>((resolve, reject) => {
+        setTimeout(() => {
+          if (control.value === 'test@test.com') {
+            resolve({'emailIsForbidden': true});
+          } else {
+            resolve(null);
+          }
+        }, 1500);
+      });
+      return promise;
+    }
 
     ngOnInit() {
       const path: string = this.route.routeConfig.path
+
+      this.authForm = new FormGroup({
+        'userData' : new FormGroup({
+          'email' : new FormControl(null, [Validators.required, Validators.required ], this.forbiddenEmails),
+          'password' : new FormControl(null, [Validators.required, Validators.minLength(6)])
+        })
+      })
+
       if (path === "signup") {
         this.authenticationMode = SIGNUP;
       } else {
@@ -38,9 +63,12 @@ export class AuthenticationComponent {
     onSwitchMode() {
         if (this.authenticationMode === LOGIN) {
           this.authenticationMode = SIGNUP;
+          this.location.go("/signup");
         } else {
           this.authenticationMode = LOGIN;
+          this.location.go("/login");
         }
+        this.authForm.reset();
     }
 
     ngOnDestroy() {
@@ -49,15 +77,20 @@ export class AuthenticationComponent {
         }
     }
 
-    onSubmit(form: NgForm) {
-      if (!form.valid) { return; }
+    // onSubmit() {
+    //   console.log(this.authForm);
+    //   this.authForm.reset();
+    // }
+
+    onSubmit() {
+      if (!this.authForm.valid) { return; }
       const userCredentials: IUserCredentials = {
-          email: form.value.email,
-          password: form.value.password
+          email: this.authForm.get('userData').value.email,
+          password: this.authForm.get('userData').value.password
       };
       this.pageIsLoading = true;
       this.loginOrSubmitForm(this.authenticationMode, userCredentials);
-      form.reset();
+      this.authForm.reset();
     }
 
     private loginOrSubmitForm(mode: string, userCredentials: IUserCredentials) {

@@ -29,6 +29,8 @@ export class AuthorizationGuardService implements CanActivate {
 
     this.user = this.getLoggedInUser();
 
+    // TODO: consider using a swithc statement
+
     if (this.userIsAdmin(this.user) === false) {
       if (mode != null) {
         if (mode === "mutate") {
