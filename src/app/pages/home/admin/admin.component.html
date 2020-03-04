@@ -1,10 +1,10 @@
 <a
-    routerLink='/product/mutate' 
+    routerLink='/product/mutate'
     class="btn btn-primary">
         +Add new product
 </a>&nbsp;
-<button 
-    class="btn btn-primary" 
+<button
+    class="btn btn-primary"
     (click)="fetchAllProducts()">
         Fetch all products
 </button>
@@ -41,17 +41,17 @@
                             &nbsp;<a routerLink="/product/details/{{ product.id }}">Details</a>&nbsp;|
                             &nbsp;<a style="cursor: pointer;" (click)="deleteProduct(product.id)" >Delete</a>
                         </td>
-                    </tr>      
+                    </tr>
                 </tbody>
-            </table> 
+            </table>
         </div>
     </div>
 </div>
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <button 
-            class="btn btn-primary pull-right" 
+        <button
+            class="btn btn-primary pull-right"
             (click)="deleteAllProducts()">
                 Delete all products
         </button>

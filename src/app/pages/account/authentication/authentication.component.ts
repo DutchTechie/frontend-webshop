@@ -22,7 +22,6 @@ export class AuthenticationComponent {
     errorMessage : string = null;
     userSubscription: Subscription;
     authForm: FormGroup;
-    // forbiddenUsernames = ['David@gmail.com', 'Chris@gmail.com'];
 
     constructor(
         private authenticationService: AuthenticationService,
@@ -76,11 +75,6 @@ export class AuthenticationComponent {
           this.userSubscription.unsubscribe();
         }
     }
-
-    // onSubmit() {
-    //   console.log(this.authForm);
-    //   this.authForm.reset();
-    // }
 
     onSubmit() {
       if (!this.authForm.valid) { return; }

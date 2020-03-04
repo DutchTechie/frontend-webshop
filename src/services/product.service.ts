@@ -2,16 +2,19 @@ import { Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
 import { Product } from '../models/product.model';
 import { HttpClient } from '@angular/common/http';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
+  updatedImagePath = new Subject<string>();
+
   constructor(private http: HttpClient) { }
   private PRODUCT_PATH_URI: string = "http://localhost:8080/products"
 
   public fetchAllProducts() {
-    return this.http.get<Product[]>(this.PRODUCT_PATH_URI).pipe(map(products => 
+    return this.http.get<Product[]>(this.PRODUCT_PATH_URI).pipe(map(products =>
     {
       return products;
     }));
@@ -19,7 +22,7 @@ export class ProductService {
 
   public fetchProduct(id: String) {
     const getProductUri: string = `${this.PRODUCT_PATH_URI}/${id}`;
-    return this.http.get<Product>(getProductUri).pipe(map(data => 
+    return this.http.get<Product>(getProductUri).pipe(map(data =>
     {
       return data;
     }));

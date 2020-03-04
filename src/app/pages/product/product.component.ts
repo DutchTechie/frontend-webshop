@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm, FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { NgForm, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from '../../../models/user.model';
@@ -17,14 +17,17 @@ const DETAILS: string = 'DETAILS';
 })
 
 export class ProductComponent {
-  private userSubscription: Subscription;
-  user: User = null
-  backToInfo = false
-  currentProduct: Product;
-
+  noImageFoundImagePath = "https://www.wiersmaverhuizingen.nl/wp-content/themes/consultix/images/no-image-found-360x260.png";
   visitedDetailsPage: boolean = false;
   productPageMode: string = null;
-  defaultImageUri: string = "https://www.wiersmaverhuizingen.nl/wp-content/themes/consultix/images/no-image-found-360x260.png";
+  defaultImageUri: string = this.noImageFoundImagePath;
+  updatedImageSub: Subscription;
+  userSubscription: Subscription;
+  user: User = null;
+  backToInfo = false;
+  currentProduct: Product;
+
+  @ViewChild('imagePath', {static: true}) imagePath: ElementRef;
 
   constructor(private activatedRoute: ActivatedRoute,
               private authenticationService: AuthenticationService,
@@ -45,6 +48,15 @@ export class ProductComponent {
         }
       });
     }
+
+    // todo
+    this.updatedImageSub = this.productService.updatedImagePath.subscribe(data => {
+      this.defaultImageUri = data;
+    });
+  }
+
+  onError() {
+    this.defaultImageUri = this.noImageFoundImagePath;
   }
 
   private determineProductPageMode(): string {
@@ -86,6 +98,9 @@ export class ProductComponent {
   ngOnDestroy() {
     if (this.userSubscription != null) {
       this.userSubscription.unsubscribe();
+    }
+    if (this.updatedImageSub != null) {
+      this.updatedImageSub.unsubscribe();
     }
   }
 

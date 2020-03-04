@@ -2,8 +2,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from 'src/models/product.model';
 import { User } from 'src/models/user.model';
 import { ProductService } from 'src/services/product.service';
-import { NgForm } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+// import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-mutate',
@@ -11,33 +13,40 @@ import { Router } from '@angular/router';
   styleUrls: ['./mutate.component.css']
 })
 
+// TODO: Use subject
+
 export class MutateComponent implements OnInit {
   @Input() product: Product;
   @Input() user: User = null;
   @Input() visitedDetailsPage: boolean;
   @Output() goBackToDetailsPage = new EventEmitter<boolean>();
+  productForm: FormGroup;
 
   constructor(private productService: ProductService, private router: Router) { }
 
   ngOnInit(): void {
-    if (this.product == null) {
-      this.product = new Product();
-    }
+    // if (this.product == null) {
+    //   this.product = new Product();
+    // }
+  }
+
+  ngOnChanges() {
+    this.initForm();
   }
 
   redirectUser(page) {
     this.router.navigate([page]);
   }
 
-  onSubmit(productForm: NgForm) {
-    if (!productForm.valid) {
+  onSubmit() {
+    if (!this.productForm.valid) {
       return;
     }
-    if (this.userIsAdmin(this.user) === false) {
-      this.redirectUser('/login'); // TODO: Implement error message when on login page
-      return;
+    const product = this.productForm.value;
+    if (this.product.id !== null) {
+      product.id = this.product.id;
     }
-    this.mutateProduct(this.product);
+    this.mutateProduct(product);
   }
 
   private mutateProduct(product: Product) {
@@ -50,7 +59,6 @@ export class MutateComponent implements OnInit {
 
   addNewProduct(newProduct: Product) {
     this.productService.addNewProduct(newProduct).subscribe(data => {
-      console.log(data);
       this.redirectUser('/');
     });
   }
@@ -75,5 +83,28 @@ export class MutateComponent implements OnInit {
     } else {
       this.goBackToDetailsPage.emit(false);
     }
+  }
+
+  initForm() {
+    if (this.product == null) {
+      this.product = new Product();
+    }
+    this.productForm = new FormGroup({
+      'name': new FormControl(this.product.name, Validators.required),
+      'imagePath': new FormControl(this.product.imagePath, { updateOn: 'blur'}),
+      'description': new FormControl(this.product.description),
+      'stock': new FormControl(this.product.stock, [ Validators.required, Validators.pattern(/^[0-9]+[0-9]*$/)]),
+      'price': new FormControl(this.product.price, [ Validators.required, Validators.pattern(/^[0-9]+(.[0-9]{0,2})?$/)]),
+    });
+
+    this.productForm.get('imagePath').valueChanges.subscribe(value => {
+      console.log(`I changed value 😃: ${value}`);
+      this.updateImage(value);
+    });
+  }
+
+  updateImage(imagePath: string) {
+    this.productService.updatedImagePath.next(imagePath);
+    console.log("called update image");
   }
 }
