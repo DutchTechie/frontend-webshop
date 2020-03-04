@@ -2,6 +2,7 @@ import { ShoppingCartService } from 'src/services/shopping-cart.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { User } from 'src/models/user.model';
 import { Product } from 'src/models/product.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-consumer',

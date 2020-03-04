@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { FormsModule } from '@angular/forms';
@@ -16,18 +15,10 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { ConsumerComponent } from './pages/home/consumer/consumer.component';
 import { AdminComponent } from './pages/home/admin/admin.component';
 import { DetailsComponent } from './pages/product/details/details.component';
-import { MutateComponent } from './pages/product/mutate/mutate.component'
-
-const appRoutes : Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'product/:mode', component: ProductComponent },
-  { path: 'product/:mode/:id', component: ProductComponent },  // TODO: Update path
-  { path: 'account', component: AccountComponent },
-  { path: 'signup', component: AuthenticationComponent },
-  { path: 'login', component: AuthenticationComponent },
-  { path: 'cart', component: ShoppingCartComponent },
-  { path: 'checkout', component: CheckoutComponent }
-]
+import { MutateComponent } from './pages/product/mutate/mutate.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component'
+import { AppRoutingModule } from './app-routing.module';
+import { AuthorizationGuardService } from 'src/services/authorization-guard.service';
 
 @NgModule({
   declarations: [
@@ -45,15 +36,16 @@ const appRoutes : Routes = [
     AdminComponent,
     DetailsComponent,
     MutateComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(appRoutes),
+    AppRoutingModule
   ],
   exports: [HeaderComponent], // TODO: Investigate this! It works, but why?
-  providers: [],
+  providers: [AuthorizationGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

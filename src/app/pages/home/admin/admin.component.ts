@@ -18,6 +18,7 @@ export class AdminComponent implements OnInit {
     private productService: ProductService
   ) { }
 
+  // TODO: remove this when done with routes
   ngOnInit(): void {
     if (this.userIsAdmin(this.user) === false) {
       this.redirectUser(); // TODO: Implement error message when home

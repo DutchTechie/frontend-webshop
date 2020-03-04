@@ -2,16 +2,16 @@
 <div *ngIf="userIsConsumer(user) == true">
 
     <!-- when using output, note that the var should always be event, so $event -->
-    <app-consumer 
-        [user]="user" 
-        [products]="products" 
+    <app-consumer
+        [user]="user"
+        [products]="products"
         (pageToRedirectUser)="redirectUser($event)">
     </app-consumer>
 </div>
 <div *ngIf="userIsConsumer(user) == false">
-    <app-admin 
-        [user]="user" 
-        [products]="products" 
+    <app-admin
+        [user]="user"
+        [products]="products"
         (pageToRedirectUser)="redirectUser($event)">
     </app-admin>
 </div>

@@ -10,7 +10,7 @@
     <ul class="nav navbar-nav navbar-right">
 
         <!-- Login link -->
-        <li class="active" >
+        <li routerLinkActive="active" >
           <a routerLink="/login" *ngIf="!isAuthenticated" style="cursor: pointer;">
             <span class="glyphicon glyphicon-user" aria-hidden="true">
             </span>
@@ -18,21 +18,21 @@
         </li>
 
         <!-- account -->
-        <li *ngIf="isAuthenticated">
+        <li *ngIf="isAuthenticated" routerLinkActive="active">
           <a (click)="onClickAccount()" style="cursor: pointer;">
             {{ userEmail }}
           </a>
         </li>
 
         <!-- Login link -->
-        <li *ngIf="isAuthenticated">
+        <li *ngIf="isAuthenticated" routerLinkActive="active">
           <a (click)="onLogout()" style="cursor: pointer;">
             Logout
           </a>
         </li>
 
         <!-- cart link -->
-        <li *ngIf="!isAdmin">
+        <li *ngIf="!isAdmin" routerLinkActive="active">
           <a routerLink="/cart">
             <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
           </a>

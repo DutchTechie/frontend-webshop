@@ -4,7 +4,7 @@ import { AuthenticationService } from '../../../../services/authentication.servi
 import { IUserCredentials } from '../../../../interfaces/IUserCredentials.component';
 import { User } from 'src/models/user.model';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 const LOGIN: string = 'LOGIN';
 const SIGNUP: string = 'SIGNUP';
@@ -23,20 +23,23 @@ export class AuthenticationComponent {
 
     constructor(
         private authenticationService: AuthenticationService,
-        private router: Router) {}
+        private router: Router,
+        private route: ActivatedRoute) {}
 
-    ngOnInit(): void {
-        const user = this.getLoggedInUser();
-        if (user != null) {
-            this.router.navigate(['/']);
-        }
+    ngOnInit() {
+      const path: string = this.route.routeConfig.path
+      if (path === "signup") {
+        this.authenticationMode = SIGNUP;
+      } else {
+        this.authenticationMode = LOGIN;
+      }
     }
 
     onSwitchMode() {
         if (this.authenticationMode === LOGIN) {
-            this.authenticationMode = SIGNUP;
+          this.authenticationMode = SIGNUP;
         } else {
-            this.authenticationMode = LOGIN;
+          this.authenticationMode = LOGIN;
         }
     }
 
@@ -47,57 +50,49 @@ export class AuthenticationComponent {
     }
 
     onSubmit(form: NgForm) {
-        if (!form.valid) { return; }
-        const userCredentials: IUserCredentials = {
-            email: form.value.email,
-            password: form.value.password
-        };
-        this.pageIsLoading = true;
-        this.loginOrSubmitForm(this.authenticationMode, userCredentials);
-        form.reset();
+      if (!form.valid) { return; }
+      const userCredentials: IUserCredentials = {
+          email: form.value.email,
+          password: form.value.password
+      };
+      this.pageIsLoading = true;
+      this.loginOrSubmitForm(this.authenticationMode, userCredentials);
+      form.reset();
     }
 
     private loginOrSubmitForm(mode: string, userCredentials: IUserCredentials) {
-        if (mode === LOGIN) {
-            this.submitLoginForm(userCredentials);
-        } else {
-            this.submitSignUpForm(userCredentials);
-            this.onSwitchMode();
-        }
-    }
-
-    private getLoggedInUser(): User {
-        let userToAsssignValueTo: User = null;
-        this.userSubscription = this.authenticationService.user.subscribe(user => {
-          userToAsssignValueTo = user;
-        });
-        return userToAsssignValueTo;
+      if (mode === LOGIN) {
+        this.submitLoginForm(userCredentials);
+      } else {
+        this.submitSignUpForm(userCredentials);
+        this.onSwitchMode();
+      }
     }
 
     private submitLoginForm(userCredentials: IUserCredentials) {
-        this.authenticationService.login(userCredentials)
-        .subscribe(
-            responseData => { this.handleResponseData(responseData); },
-            error => { this.handleError(error); }
-        );
+      this.authenticationService.login(userCredentials)
+      .subscribe(
+          responseData => { this.handleResponseData(responseData); },
+          error => { this.handleError(error); }
+      );
     }
 
     private submitSignUpForm(userCredentials: IUserCredentials) {
-        this.authenticationService.signUp(userCredentials)
-        .subscribe(
-            responseData => { this.handleResponseData(responseData); },
-            error => { this.handleError(error);}
-        );
+      this.authenticationService.signUp(userCredentials)
+      .subscribe(
+          responseData => { this.handleResponseData(responseData); },
+          error => { this.handleError(error);}
+      );
     }
 
     private handleResponseData(responseData) {
-        console.log(responseData);
-        this.pageIsLoading = false;
+      console.log(responseData);
+      this.pageIsLoading = false;
     }
 
     private handleError(error) {
-        console.log(error);
-        this.errorMessage = "An error occurred.";
-        this.pageIsLoading = false;
+      console.log(error);
+      this.errorMessage = "An error occurred.";
+      this.pageIsLoading = false;
     }
 }

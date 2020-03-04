@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from 'src/models/product.model';
 import { User } from 'src/models/user.model';
 import { ShoppingCartService } from 'src/services/shopping-cart.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-details',
@@ -16,9 +16,27 @@ export class DetailsComponent implements OnInit {
   @Output() pageToRedirectUser = new EventEmitter<string>();
   @Output() switchToMode = new EventEmitter<boolean>();
 
-  constructor(private shoppingCartService: ShoppingCartService, private router: Router) { }
+  constructor(
+    private shoppingCartService: ShoppingCartService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const productId: any = this.activatedRoute.snapshot.paramMap;
+    console.log(productId);
+  }
+
+  // TODO: Don't have it here, put it in the parent component instead!
+  ngOnChanges() {
+    this.activatedRoute.params.subscribe(
+      (params: Params) => {
+        if (this.product != null) {
+          this.product.id = params['id'];
+          console.log(this.product.id);
+        }
+      }
+    );
+  }
 
   handleMainButtonClick() {
     if (this.userIsAdmin(this.user)) {
@@ -42,7 +60,7 @@ export class DetailsComponent implements OnInit {
         let id = this.user.userId;
         this.shoppingCartService.addToCart(id, productId)
           .subscribe(data => console.log(data));
-      } 
+      }
       this.redirectUser('/');
     } else {
       this.redirectUser('/login');

@@ -27,26 +27,20 @@ export class ProductComponent {
   defaultImageUri: string = "https://www.wiersmaverhuizingen.nl/wp-content/themes/consultix/images/no-image-found-360x260.png";
 
   constructor(private activatedRoute: ActivatedRoute,
-              private authenticationService: AuthenticationService, 
+              private authenticationService: AuthenticationService,
               private router: Router,
               private productService: ProductService) {}
 
   ngOnInit(): void {
     const productId: string = this.activatedRoute.snapshot.paramMap.get('id');
-    this.productPageMode = this.determineProductPageMode(); 
+    this.productPageMode = this.determineProductPageMode();
     this.user = this.getLoggedInUser();
-
-    if (this.productPageMode === MUTATE) {
-      if (this.userIsAdmin(this.user) === false) {
-        this.router.navigate(['/login']);
-      }
-    }
 
     if (productId !== null) {
       this.productService.fetchProduct(productId).subscribe(product => {
         this.currentProduct = product;
         console.log(product)
-        if (this.currentProduct.imagePath !== "") {
+        if (this.currentProduct.imagePath !== "") { // TODO: check for null?
           this.defaultImageUri = this.currentProduct.imagePath;
         }
       });
@@ -62,13 +56,6 @@ export class ProductComponent {
         console.log("Error: cannot determine which mode the product page is in.");
         return null;
     }
-  }
-
-  private userIsAdmin(user: User): boolean {
-    if (user === null) {
-      return false;
-    }
-    return (user.isAdmin === true);
   }
 
   switchToMutateMode() {
