@@ -3,6 +3,13 @@
     overflow-y: scroll;
 }
 
+.fixed-header thead th {
+  position: sticky;
+  top: 0;
+  z-index: +1;
+  background-color: white;
+}
+
 .table-cell-container {
     position: relative;
     border: 1px solid;
@@ -14,4 +21,8 @@
 
 .vcenter a {
     cursor: pointer;
+}
+
+.borderless td, .borderless th {
+  border: none;
 }

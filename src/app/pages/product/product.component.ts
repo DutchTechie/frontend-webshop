@@ -43,7 +43,7 @@ export class ProductComponent {
       this.productService.fetchProduct(productId).subscribe(product => {
         this.currentProduct = product;
         console.log(product)
-        if (this.currentProduct.imagePath !== "") { // TODO: check for null?
+        if (this.currentProduct.imagePath !== "" || this.currentProduct,this.imagePath == null) { // TODO: check for null?
           this.defaultImageUri = this.currentProduct.imagePath;
         }
       });
@@ -57,6 +57,7 @@ export class ProductComponent {
 
   onError() {
     this.defaultImageUri = this.noImageFoundImagePath;
+    this.currentProduct.imagePath = null;
   }
 
   private determineProductPageMode(): string {

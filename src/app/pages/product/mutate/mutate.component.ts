@@ -53,7 +53,11 @@ export class MutateComponent implements OnInit {
   }
 
   private mutateProduct(product: Product) {
+    let noImageFoundImagePath: string = "https://www.wiersmaverhuizingen.nl/wp-content/themes/consultix/images/no-image-found-360x260.png";
     if (product.id == null) {
+      if (product.imagePath == null) {
+        product.imagePath = noImageFoundImagePath;
+      }
       this.addNewProduct(product);
     } else {
       this.updateCurrentProduct(product);
