@@ -5,4 +5,5 @@ export class Product {
     public imagePath: string;
     public price: number;
     public stock: number;
+    public state?: string;
 }

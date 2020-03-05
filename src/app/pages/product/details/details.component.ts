@@ -15,6 +15,7 @@ export class DetailsComponent implements OnInit {
   @Input() user: User = null;
   @Output() pageToRedirectUser = new EventEmitter<string>();
   @Output() switchToMode = new EventEmitter<boolean>();
+  pageIsLoading: boolean = false;
 
   constructor(
     private shoppingCartService: ShoppingCartService,
@@ -24,6 +25,7 @@ export class DetailsComponent implements OnInit {
   ngOnInit(): void {
     const productId: any = this.activatedRoute.snapshot.paramMap;
     console.log(productId);
+    this.pageIsLoading = true;
   }
 
   // TODO: Don't have it here, put it in the parent component instead!
@@ -34,6 +36,7 @@ export class DetailsComponent implements OnInit {
           this.product.id = params['id'];
           console.log(this.product.id);
         }
+        this.pageIsLoading = false;
       }
     );
   }

@@ -1,13 +1,18 @@
 <div class="row">
-    <div *ngFor="let product of products" class="col-md-3 my-card">
+    <div *ngIf="pageIsLoading">
+        <app-loading-spinner></app-loading-spinner>
+    </div>
+    <div *ngIf="!pageIsLoading">
+      <div *ngFor="let product of products" class="col-md-3 my-card">
         <div routerLink="/product/details/{{ product.id }}">
             <img src="{{ product.imagePath }}" alt="Nike shoe" height="150px" class="img-responsive" /><br>
             <div class="my-card-container">
                 {{ product.name }}<br>
-                &euro;{{ product.price }}<br>
+                {{ product.price | currency:'EUR' }}<br>
                 {{ product.stock > 0? 'In stock' : 'Out of stock' }}
             </div>
         </div>
         <button class="btn btn-info btn-block" (click)="addToCart(product.id)">Add to cart</button>
+      </div>
     </div>
 </div>

@@ -14,12 +14,19 @@ export class ConsumerComponent implements OnInit {
   @Input() products: Product[];
   @Input() user: User;
   @Output() pageToRedirectUser = new EventEmitter<string>();
+  pageIsLoading: boolean = false;
 
   constructor(
     private shoppingCartService: ShoppingCartService
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.pageIsLoading = true;
+  }
+
+  ngOnChanges() {
+    this.pageIsLoading = false;
+  }
 
   addToCart(productId) {
     if(this.user != null) {

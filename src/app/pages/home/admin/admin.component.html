@@ -12,7 +12,10 @@
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <div class="list-wrapper">
+        <div *ngIf="pageIsLoading">
+          <app-loading-spinner></app-loading-spinner>
+        </div>
+        <div class="list-wrapper" *ngIf="!pageIsLoading">
             <table class="table">
                 <thead>
                     <tr>
@@ -22,8 +25,8 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr *ngFor="let product of products">
+                <tbody [hidden]="doneDeleteAllOnce" [@animateOut]="slideOut" (@animateOut.done)="endOfDeleteAllAnimation($event)">
+                    <tr *ngFor="let product of products" [@animateOut]="product.state" (@animateOut.done)="onEndDeleteProductAnimation()">
                         <td>
                             <img src="{{ product.imagePath }}" alt="Nike shoe" width=100px />
                         </td>
@@ -31,7 +34,7 @@
                             {{ product.name }}
                         </td>
                         <td class="vcenter">
-                            &euro;{{ product.price }}
+                          {{ product.price | currency:'EUR' }}
                         </td>
                         <td class="vcenter">
                             {{ product.stock }}
@@ -39,7 +42,7 @@
                         <td class="vcenter">
                             <a routerLink="/product/mutate/{{ product.id }}">Edit</a>&nbsp;|
                             &nbsp;<a routerLink="/product/details/{{ product.id }}">Details</a>&nbsp;|
-                            &nbsp;<a style="cursor: pointer;" (click)="deleteProduct(product.id)" >Delete</a>
+                            &nbsp;<a style="cursor: pointer;" (click)="deleteProduct(product)" >Delete</a>
                         </td>
                     </tr>
                 </tbody>
@@ -52,7 +55,7 @@
     <div class="col-md-12">
         <button
             class="btn btn-primary pull-right"
-            (click)="deleteAllProducts()">
+            (click)="startDeletingAllProducts()">
                 Delete all products
         </button>
     </div>

@@ -14,16 +14,16 @@
                         <td><img src="{{ cart.products.imagePath }}" alt="Shoe" height="150px" /></td>
                         <td>{{ cart.products.name }}</td>
 
-                        <td>&euro;{{ cart.products.price }}</td>
+                        <td>{{ cart.products.price | currency:'EUR' }}</td>
                         <td>
                             <input
                                 onKeyDown="return false"
                                 name="{{ cart.products.name }}"
-                                class="form-control" 
-                                min="1" 
-                                max="{{ cart.products.stock }}" 
-                                name="amount" 
-                                type="number" 
+                                class="form-control"
+                                min="1"
+                                max="{{ cart.products.stock }}"
+                                name="amount"
+                                type="number"
                                 value="{{ cart.carts.amount }}"
                                 (change)="updateTotalPrice($event)"/>
                         </td>
@@ -33,7 +33,7 @@
                         <td>
                             <button class="btn btn-warning pull-right" (click)="deleteCart(cart.carts)">delete</button>
                         </td>
-                    </tr>   
+                    </tr>
             </tbody>
         </table>
     </div>

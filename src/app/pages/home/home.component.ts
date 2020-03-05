@@ -16,9 +16,9 @@ export class HomeComponent implements OnInit {
   user: User = null;
   products: Product[] = [];
   pageToRedirectUserTo : string;
-  
+
   constructor(
-    private authenticationService: AuthenticationService, 
+    private authenticationService: AuthenticationService,
     private productService: ProductService,
     private router: Router
   ) {}
@@ -26,6 +26,13 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.productService.fetchAllProducts().subscribe(allProducts => {
       this.products = allProducts;
+      this.products.map((product) => ( product.state = 'normal' ))
+      // this.products.map((product) => (console.log(product)));
+
+      // for (let i = 0; allProducts.length; i++) {
+      //   allProducts[i].state = 'normal';
+      //   this.products.push(allProducts[i]);
+      // }
     })
     this.user = this.getLoggedInUser();
     if (this.userIsLoggedIn(this.user)) {

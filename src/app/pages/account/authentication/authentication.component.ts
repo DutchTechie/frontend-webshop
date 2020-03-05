@@ -67,6 +67,7 @@ export class AuthenticationComponent {
           this.authenticationMode = LOGIN;
           this.location.go("/login");
         }
+        this.errorMessage = null;
         this.authForm.reset();
     }
 

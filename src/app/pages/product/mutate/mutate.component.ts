@@ -21,6 +21,7 @@ export class MutateComponent implements OnInit {
   @Input() visitedDetailsPage: boolean;
   @Output() goBackToDetailsPage = new EventEmitter<boolean>();
   productForm: FormGroup;
+  pageIsLoading: boolean = false;
 
   constructor(private productService: ProductService, private router: Router) { }
 
@@ -28,10 +29,12 @@ export class MutateComponent implements OnInit {
     // if (this.product == null) {
     //   this.product = new Product();
     // }
+    this.pageIsLoading = true;
   }
 
   ngOnChanges() {
     this.initForm();
+    this.pageIsLoading = false;
   }
 
   redirectUser(page) {

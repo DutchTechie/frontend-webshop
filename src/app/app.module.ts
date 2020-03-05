@@ -19,6 +19,7 @@ import { MutateComponent } from './pages/product/mutate/mutate.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component'
 import { AppRoutingModule } from './app-routing.module';
 import { AuthorizationGuardService } from 'src/services/authorization-guard.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { AuthorizationGuardService } from 'src/services/authorization-guard.serv
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
   exports: [HeaderComponent], // TODO: Investigate this! It works, but why?
   providers: [AuthorizationGuardService],
