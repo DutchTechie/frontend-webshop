@@ -109,7 +109,7 @@ export class AdminComponent implements OnInit {
     }
     this.productService.fetchAllProducts().subscribe(data => {
       this.products = data;
-      this.products.map((product) => ( product.state = 'normal' ))
+      this.products.map((product) => ( product.state = 'normal', product.visible = true ))
       this.doneDeleteAllOnce = false;
     })
   }
@@ -150,6 +150,7 @@ export class AdminComponent implements OnInit {
       console.log(this.productToDelete);
       console.log(this.productToDelete.state);
       this.deletedOneProduct = true;
+      this.productToDelete.visible = false;
 
       this.productService.deleteProduct(this.productToDelete.id)
         .subscribe(data => {

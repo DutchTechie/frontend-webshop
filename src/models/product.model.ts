@@ -6,4 +6,5 @@ export class Product {
     public price: number;
     public stock: number;
     public state?: string;
+    public visible?: boolean;
 }

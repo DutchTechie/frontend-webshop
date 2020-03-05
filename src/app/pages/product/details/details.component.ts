@@ -25,24 +25,25 @@ export class DetailsComponent implements OnInit {
   ngOnInit(): void {
     const productId: any = this.activatedRoute.snapshot.paramMap;
     console.log(productId);
-    this.pageIsLoading = true;
   }
 
   // TODO: Don't have it here, put it in the parent component instead!
   ngOnChanges() {
+    this.pageIsLoading = true;
     this.activatedRoute.params.subscribe(
       (params: Params) => {
         if (this.product != null) {
           this.product.id = params['id'];
           console.log(this.product.id);
+          this.pageIsLoading = false;
         }
-        this.pageIsLoading = false;
       }
     );
   }
 
   handleMainButtonClick() {
     if (this.userIsAdmin(this.user)) {
+      this.pageIsLoading = false;
       this.switchToMode.emit(true);
     } else {
       this.addToCart(this.product.id);
