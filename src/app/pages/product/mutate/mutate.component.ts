@@ -19,6 +19,7 @@ export class MutateComponent implements OnInit {
   @Input() product: Product;
   @Input() user: User = null;
   @Input() visitedDetailsPage: boolean;
+  @Input() failedLoadingImage: boolean;
   @Output() goBackToDetailsPage = new EventEmitter<boolean>();
   productForm: FormGroup;
   pageIsLoading: boolean = false;
@@ -54,10 +55,10 @@ export class MutateComponent implements OnInit {
 
   private mutateProduct(product: Product) {
     let noImageFoundImagePath: string = "https://www.wiersmaverhuizingen.nl/wp-content/themes/consultix/images/no-image-found-360x260.png";
+    if (this.failedLoadingImage === true || product.imagePath === null) {
+      product.imagePath = noImageFoundImagePath;
+    }
     if (product.id == null) {
-      if (product.imagePath == null) {
-        product.imagePath = noImageFoundImagePath;
-      }
       this.addNewProduct(product);
     } else {
       this.updateCurrentProduct(product);

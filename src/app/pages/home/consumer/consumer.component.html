@@ -1,18 +1,22 @@
-<div class="row">
-    <div *ngIf="pageIsLoading">
+<div class="container-fluid">
+  <div class="row">
+    <div class="text-center">
+      <div *ngIf="pageIsLoading">
         <app-loading-spinner></app-loading-spinner>
+      </div>
     </div>
-    <div *ngIf="!pageIsLoading">
-      <div *ngFor="let product of products" class="col-md-3 my-card">
+    <div class="consumer-container" *ngIf="!pageIsLoading">
+      <div *ngFor="let product of products" class="col-md-2 my-card">
         <div routerLink="/product/details/{{ product.id }}">
-            <img src="{{ product.imagePath }}" alt="Nike shoe" height="150px" class="img-responsive" /><br>
-            <div class="my-card-container">
-                {{ product.name }}<br>
-                {{ product.price | currency:'EUR' }}<br>
-                {{ product.stock > 0? 'In stock' : 'Out of stock' }}
-            </div>
+          <img src="{{ product.imagePath }}" alt="Nike shoe" class="img-responsive" /><br>
+          <div class="my-card-container">
+            {{ product.name }}<br>
+            {{ product.price | currency:'EUR' }}<br>
+            {{ product.stock > 0? 'In stock' : 'Out of stock' }}
+          </div>
         </div>
         <button class="btn btn-info btn-block" (click)="addToCart(product.id)">Add to cart</button>
       </div>
     </div>
+  </div>
 </div>

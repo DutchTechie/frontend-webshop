@@ -26,6 +26,7 @@ export class ProductComponent {
   user: User = null;
   backToInfo = false;
   currentProduct: Product;
+  failedLoadingImage: boolean = false;
 
   @ViewChild('imagePath', {static: true}) imagePath: ElementRef;
 
@@ -43,7 +44,7 @@ export class ProductComponent {
       this.productService.fetchProduct(productId).subscribe(product => {
         this.currentProduct = product;
         console.log(product)
-        if (this.currentProduct.imagePath !== "" || this.currentProduct,this.imagePath == null) { // TODO: check for null?
+        if (this.currentProduct.imagePath !== "" || this.currentProduct.imagePath == null) { // TODO: check for null?
           this.defaultImageUri = this.currentProduct.imagePath;
         }
       });
@@ -51,13 +52,16 @@ export class ProductComponent {
 
     // todo
     this.updatedImageSub = this.productService.updatedImagePath.subscribe(data => {
+      this.failedLoadingImage = false;
       this.defaultImageUri = data;
     });
   }
 
   onError() {
+    this.failedLoadingImage = true;
+    // console.log("Onerror ")
     this.defaultImageUri = this.noImageFoundImagePath;
-    this.currentProduct.imagePath = null;
+    this.currentProduct.imagePath = this.noImageFoundImagePath //null;
   }
 
   private determineProductPageMode(): string {

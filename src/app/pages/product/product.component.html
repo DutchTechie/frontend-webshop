@@ -1,3 +1,4 @@
+<div class="container">
 <div class="row">
     <div class="col-md-6">
         <img
@@ -19,11 +20,13 @@
             *ngIf="productPageMode === 'DETAILS'">
         </app-details>
         <app-mutate
-            [product]="currentProduct"
-            [visitedDetailsPage]="visitedDetailsPage"
-            (goBackToDetailsPage)="handleOnBackPressed($event)"
-            [user]="user"
-            *ngIf="productPageMode === 'MUTATE'">
+          [failedLoadingImage]="failedLoadingImage"
+          [product]="currentProduct"
+          [visitedDetailsPage]="visitedDetailsPage"
+          (goBackToDetailsPage)="handleOnBackPressed($event)"
+          [user]="user"
+          *ngIf="productPageMode === 'MUTATE'">
         </app-mutate>
     </div>
+</div>
 </div>

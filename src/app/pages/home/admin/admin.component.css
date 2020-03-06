@@ -1,7 +1,18 @@
 .list-wrapper {
-    height: 400px;
-    overflow-y: scroll;
+  height: 400px;
+  overflow-y: auto;
 }
+
+.container-fluid {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/* .fixed-header thead tr {
+  padding-left: 50px;
+} */
 
 .fixed-header thead th {
   position: sticky;
@@ -11,8 +22,8 @@
 }
 
 .table-cell-container {
-    position: relative;
-    border: 1px solid;
+  position: relative;
+  border: 1px solid;
 }
 
 .vcenter {
