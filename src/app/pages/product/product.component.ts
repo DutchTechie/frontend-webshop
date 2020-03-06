@@ -43,6 +43,7 @@ export class ProductComponent {
     if (productId !== null) {
       this.productService.fetchProduct(productId).subscribe(product => {
         this.currentProduct = product;
+        console.log("Fetch the following product: ");
         console.log(product)
         if (this.currentProduct.imagePath !== "" || this.currentProduct.imagePath == null) { // TODO: check for null?
           this.defaultImageUri = this.currentProduct.imagePath;

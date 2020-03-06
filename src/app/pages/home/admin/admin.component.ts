@@ -154,7 +154,7 @@ export class AdminComponent implements OnInit {
 
       this.productService.deleteProduct(this.productToDelete.id)
         .subscribe(data => {
-          console.log(data);
+          console.log(`The data being deleted is:\t${data}`);
           this.productToDelete = null;
           this.fetchAllProducts();
         })

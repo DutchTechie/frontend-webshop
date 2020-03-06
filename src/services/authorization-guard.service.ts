@@ -6,6 +6,8 @@ import { AuthenticationService } from './authentication.service';
 
 // TODO: Add auth service
 
+// TODO: Use the product service as an example and update this service.
+
 @Injectable()
 export class AuthorizationGuardService implements CanActivate {
   private userSubscription: Subscription;

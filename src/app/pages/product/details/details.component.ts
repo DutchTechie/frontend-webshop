@@ -24,7 +24,7 @@ export class DetailsComponent implements OnInit {
 
   ngOnInit(): void {
     const productId: any = this.activatedRoute.snapshot.paramMap;
-    console.log(productId);
+    // console.log(productId);
   }
 
   // TODO: Don't have it here, put it in the parent component instead!
