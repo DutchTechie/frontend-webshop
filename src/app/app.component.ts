@@ -1,5 +1,7 @@
 import { Component, NgModule } from '@angular/core';
-import { AuthenticationService } from '../services/authentication.service';
+import { Store } from '@ngrx/store';
+import * as fromApp from './app.reducer'
+import * as AuthActions from '../reducers/authentication.actions';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +9,9 @@ import { AuthenticationService } from '../services/authentication.service';
 })
 
 export class AppComponent {
-  constructor(private authService: AuthenticationService) { }
+  constructor(private store: Store<fromApp.AppState>) {}
 
   ngOnInit(): void {
-    this.authService.autoLogin()
+    this.store.dispatch(new AuthActions.AutoLogin());
   }
 }

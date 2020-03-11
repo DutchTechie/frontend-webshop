@@ -1,31 +1,30 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.component';
-import { AuthenticationComponent } from './pages/account/authentication/authentication.component';
-import { AccountComponent } from './pages/account/user-information/account.component';
-import { ProductComponent } from './pages/product/product.component';
-import { CheckoutComponent } from './pages/checkout/checkout.component';
-import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component'
-import { AuthorizationGuardService } from 'src/services/authorization-guard.service';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { PageNotFoundComponent } from './miscellaneous/page-not-found/page-not-found.component';
+
+// why unit test?
+
+// Guard against breaking changes
+// Analyze code behavrior (expected and unexpected)
+// Reveal design mistakes
 
 const appRoutes : Routes = [
-    { path: '', component: HomeComponent },
-    { path: 'product/:mode', component: ProductComponent, canActivate: [AuthorizationGuardService] },
-    { path: 'product/:mode/:id', component: ProductComponent, canActivate: [AuthorizationGuardService] },
-    { path: 'account', component: AccountComponent, canActivate: [AuthorizationGuardService] },
-    { path: 'signup', component: AuthenticationComponent, canActivate: [AuthorizationGuardService] },
-    { path: 'login', component: AuthenticationComponent, canActivate: [AuthorizationGuardService] },
-    { path: 'cart', component: ShoppingCartComponent, canActivate: [AuthorizationGuardService] },
-    { path: 'checkout', component: CheckoutComponent, canActivate: [AuthorizationGuardService] },
+    { path: "", redirectTo: "/products", pathMatch: "full" },
+    {
+      path: "products",
+      loadChildren: () =>
+        import("./product/product.module").then(m => m.ProductModule)
+    },
+    {
+      path: "login",
+      loadChildren: () => import("./authentication/authentication.module").then(m => m.AuthenticationModule)
+    },
     { path: 'not-found', component: PageNotFoundComponent },
     { path: '**', redirectTo: '/not-found' }
   ]
 
   @NgModule({
-    imports: [
-      RouterModule.forRoot(appRoutes),
-    ],
+    imports: [RouterModule.forRoot(appRoutes, { preloadingStrategy: PreloadAllModules })],
     exports: [RouterModule],
   })
-  export class AppRoutingModule { }
+  export class AppRoutingModule {}

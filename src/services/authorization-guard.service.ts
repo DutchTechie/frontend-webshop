@@ -3,21 +3,49 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Rout
 import { Observable, Subscription } from 'rxjs';
 import { User } from 'src/models/user.model';
 import { AuthenticationService } from './authentication.service';
+import { Store } from '@ngrx/store';
+import * as fromApp from '../app/app.reducer';
+import { take, map } from 'rxjs/operators';
 
 // TODO: Add auth service
 
 // TODO: Use the product service as an example and update this service.
 
-@Injectable()
+@Injectable({  providedIn: 'root' })
 export class AuthorizationGuardService implements CanActivate {
   private userSubscription: Subscription;
   user: User = null
 
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private store: Store<fromApp.AppState>
   ) { }
 
+
+  canActivate(route: ActivatedRouteSnapshot,
+    router: RouterStateSnapshot):
+    | boolean
+    | UrlTree
+    | Promise<boolean | UrlTree>
+    | Observable<boolean | UrlTree> {
+    return this.store.select('authentication').pipe(
+      take(1),
+      map(authState => {
+        return authState.user;
+      }),
+      map(user => {
+        const isAuth = !!user;
+        if (isAuth) {
+          return true;
+        }
+        return this.router.createUrlTree(['/login']);
+      })
+    )
+  }
+
+
+  /*
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
   : boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
 
@@ -65,13 +93,21 @@ export class AuthorizationGuardService implements CanActivate {
     }
 
     return true;
-  }
+  }*/
 
   private getLoggedInUser(): User {
     let userToAsssignValueTo: User = null;
-    this.userSubscription = this.authenticationService.user.subscribe(user => {
-      userToAsssignValueTo = user;
-    });
+
+    // return this.store.select('authentication').pipe(
+    //   take(1),
+    //   map(authState => {
+    //     return authState.user;
+    //   }),
+    // )
+
+    // this.userSubscription = this.authenticationService.user.subscribe(user => {
+    //   userToAsssignValueTo = user;
+    // });
     return userToAsssignValueTo;
   }
 

@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="row">
+      <div class="col-md-6">
+          <img
+              (error)="onError()"
+              #imagePath
+              src="{{ defaultImageUri }}"
+              alt="No image found"
+              class="img-responsive"
+          />
+      </div>
+      <div class="col-md-6">
+          <!-- get the following header to change according to the mode -->
+          <h2>{{ (currentProduct == null) ? 'Create a new product' : currentProduct.name }}</h2>
+          <br>
+          <app-product-details
+              (switchToMode)="switchToMutateMode()"
+              [product]="currentProduct"
+              [user]="user"
+              *ngIf="productPageMode === 'DETAILS'">
+          </app-product-details>
+          <app-product-mutation
+            [failedLoadingImage]="failedLoadingImage"
+            [product]="currentProduct"
+            [visitedDetailsPage]="visitedDetailsPage"
+            (goBackToDetailsPage)="handleOnBackPressed($event)"
+            (productToMutate)="handleProductToMutate($event)"
+            [user]="user"
+            *ngIf="productPageMode === 'MUTATE'">
+          </app-product-mutation>
+      </div>
+  </div>
+  </div>

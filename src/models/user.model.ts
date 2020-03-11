@@ -1,7 +1,7 @@
 export class User {
     constructor (
         public userId: string,
-        public userEmail: string,
+        public email: string,
         public isAdmin: boolean
     ) {}
 }
