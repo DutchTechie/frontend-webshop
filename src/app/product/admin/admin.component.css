@@ -10,10 +10,6 @@
   margin-left: auto;
 }
 
-/* .fixed-header thead tr {
-  padding-left: 50px;
-} */
-
 .fixed-header thead th {
   position: sticky;
   top: 0;

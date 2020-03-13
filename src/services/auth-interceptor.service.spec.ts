@@ -1,16 +1,17 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { AuthInterceptorService } from './auth-interceptor.service';
+import { AuthenticationInterceptorService } from './auth-interceptor.service';
 
 describe('Service: AuthInterceptor', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AuthInterceptorService]
+      providers: [AuthenticationInterceptorService]
     });
   });
 
-  it('should ...', inject([AuthInterceptorService], (service: AuthInterceptorService) => {
+  it('should ...', inject([AuthenticationInterceptorService],
+    (service: AuthenticationInterceptorService) => {
     expect(service).toBeTruthy();
   }));
 });

@@ -1,16 +1,19 @@
+/*****************************************************************************
+@author
+******************************************************************************/
+
+//=============================================================================
+
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Product } from 'src/models/product.model';
 import { User } from 'src/models/user.model';
-import { ProductService } from 'src/services/product.service';
+
 import {
   trigger,
   state,
   style,
   animate,
-  transition,
-  keyframes,
-  group,
-  // ...
+  transition
 } from '@angular/animations';
 import { slideOutAnimation } from 'src/app/shared/animations/fade-out.animation';
 import { changeState } from 'src/app/shared/animations/change-state.animation';
@@ -35,6 +38,8 @@ const animateOut = [
   ])
 ]
 
+//=============================================================================
+
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -42,10 +47,11 @@ const animateOut = [
   animations: [slideOutAnimation, changeState, animateOut]
 })
 
+//=============================================================================
+
 export class AdminComponent implements OnInit {
   @Input() productSubs: Observable<Product[]>
   @Input() user: User;
-  @Output() pageToRedirectUser = new EventEmitter<string>();
   @Output() productToDelete = new EventEmitter<number>();
   @Output() deleteAllProducts = new EventEmitter<void>();
   @Output() fetchAllProductsEmitter = new EventEmitter<void>();
@@ -68,27 +74,17 @@ export class AdminComponent implements OnInit {
     console.log("test called");
   }
 
-  constructor(
-    private productService: ProductService
-  ) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    this.pageIsLoading = true;
-  }
+  ngOnInit(): void {}
 
-  ngOnChanges() {
-    this.pageIsLoading = false;
-  }
+  ngOnChanges() {}
 
   private userIsAdmin(user: User): boolean {
     if (user === null) {
       return false;
     }
     return (user.isAdmin === true);
-  }
-
-  redirectUser() {
-    this.pageToRedirectUser.emit('/login');
   }
 
   fetchAllProducts() {
@@ -135,3 +131,5 @@ export class AdminComponent implements OnInit {
     return confirm('Are you sure?');
   }
 }
+
+//=============================================================================

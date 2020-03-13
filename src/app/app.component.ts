@@ -1,4 +1,11 @@
-import { Component, NgModule } from '@angular/core';
+/********************************************************
+Main app component that checks whether or night a user is
+allready logged in.
+
+@author
+*********************************************************/
+
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromApp from './app.reducer'
 import * as AuthActions from '../reducers/authentication.actions';
@@ -8,6 +15,8 @@ import * as AuthActions from '../reducers/authentication.actions';
   templateUrl: './app.component.html'
 })
 
+//=======================================================
+
 export class AppComponent {
   constructor(private store: Store<fromApp.AppState>) {}
 
@@ -15,3 +24,5 @@ export class AppComponent {
     this.store.dispatch(new AuthActions.AutoLogin());
   }
 }
+
+//=======================================================

@@ -1,14 +1,26 @@
+/*****************************************************************************
+@author
+******************************************************************************/
+
+//=============================================================================
+
 import { ShoppingCartService } from 'src/services/shopping-cart.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { User } from 'src/models/user.model';
 import { Product } from 'src/models/product.model';
 import { Observable } from 'rxjs';
+import { AuthenticationService } from 'src/services/authentication.service';
+import { Router } from '@angular/router';
+
+//=============================================================================
 
 @Component({
   selector: 'app-consumer',
   templateUrl: './consumer.component.html',
   styleUrls: ['./consumer.component.css']
 })
+
+//=============================================================================
 
 export class ConsumerComponent implements OnInit {
   @Input() productSubs: Observable<Product[]>
@@ -17,32 +29,28 @@ export class ConsumerComponent implements OnInit {
   pageIsLoading: boolean = false;
 
   constructor(
-    private shoppingCartService: ShoppingCartService
+    private shoppingCartService: ShoppingCartService,
+    private authenticationService: AuthenticationService,
+    private router: Router
   ) { }
 
-  ngOnInit(): void {
-    this.pageIsLoading = true; // TODO: Move the loading spinner in the home component
-  }
+  ngOnInit(): void {}
 
-  ngOnChanges() {
-    this.pageIsLoading = false;
-  }
+  ngOnChanges() {}
 
   addToCart(productId) {
     if(this.user != null) {
-      if (this.user.isAdmin === false) {
-        let id = this.user.userId;
+      if (this.authenticationService.userIsConsumer(this.user)) {
+        const id = this.user.userId;
         this.shoppingCartService.addToCart(id, productId)
           .subscribe(data => console.log(data));
       } else {
-        this.redirectUser('/'); // TODO: Implement error message when home
+        this.router.navigate(['']);
       }
     } else {
-      this.redirectUser('/login');
+      this.router.navigate(['account']);
     }
   }
-
-  redirectUser(page: string) {
-    this.pageToRedirectUser.emit(page);
-  }
 }
+
+//=============================================================================

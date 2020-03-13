@@ -7,6 +7,7 @@ export interface State {
   editedProductIndex: number;
   productError: string;
   loading: boolean;
+  redirect: boolean;
 }
 
 const initialState: State = {
@@ -14,7 +15,8 @@ const initialState: State = {
   currentProduct: null,
   editedProductIndex: -1,
   productError: null,
-  loading: false
+  loading: false,
+  redirect: false
 };
 
 export function productReducer(state = initialState, action: Actions.ProductActions) {
@@ -96,6 +98,13 @@ export function productReducer(state = initialState, action: Actions.ProductActi
         ...state,
         loading: false,
         productError: action.payload
+      }
+
+    case Actions.MUTATE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        redirect: true
       }
 
     default:

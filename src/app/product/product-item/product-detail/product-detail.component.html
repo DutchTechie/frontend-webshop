@@ -1,15 +1,11 @@
 <div>
-  <div *ngIf="pageIsLoading">
-    <app-loading-spinner></app-loading-spinner>
-  </div>
-  <form #productForm="ngForm" *ngIf="!pageIsLoading">
+  <form #productForm="ngForm">
       <div class="form-group">
           <button
-              (click)="handleMainButtonClick()"
+              (click)="handleButtonClick()"
               type="button"
               class="btn btn-default btn-lg btn-block">
-                  <!-- Check if the user is an admin or consumer -->
-                  {{ userIsAdmin(user)? 'Edit' : 'Add to cart' }}
+                  {{ userIsAdmin() ? 'Edit' : 'Add To Cart' }}
           </button>
       </div>
       <div class="form-group">

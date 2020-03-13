@@ -13,8 +13,6 @@ const initialState: State = {
   loading: false
 }
 
-// The spread operator (...) allows us to copy objects and change a few
-// properties
 export function authenticationReducer(
   state = initialState,
   action: AuthenticationActions.AuthenticationActions

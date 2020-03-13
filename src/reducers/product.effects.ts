@@ -5,6 +5,7 @@ import * as ProductActions from './product.actions';
 import { switchMap, map, tap, catchError } from 'rxjs/operators';
 import { Product } from 'src/models/product.model';
 import { of } from 'rxjs';
+import { Router } from '@angular/router';
 
 export interface ProductResponseData {
   id: string,
@@ -49,17 +50,20 @@ const handleError = (errorResponse: any) => {
   return of(new ProductActions.MutateFail(errorMessage));
 }
 
+const handleSucessfulMutation = () => {
+  return new ProductActions.MutateSuccess(true);
+}
+
 const getCorrectMutationRequest = (http: HttpClient, product: Product) => {
+  const productsUri = `http://localhost:8080/products`;
   if (product.id) {
-    console.log("Updating an existing product.");
     return http.put<ProductResponseData>(
-      `http://localhost:8080/products`,
+      productsUri,
       product
     )
   }
-  console.log("Creating a new product.");
   return http.post<ProductResponseData>(
-    `http://localhost:8080/products`,
+    productsUri,
     product
   )
 }
@@ -134,7 +138,7 @@ export class ProductEffects {
       return getCorrectMutationRequest(this.http, data.payload)
       .pipe(
         map(() => {
-          return new ProductActions.MutateSuccess(true); // ProductActions.MUTATE_SUCCESS;
+          return handleSucessfulMutation();
           }),
           catchError(errorResponse => {
             return handleError(errorResponse);

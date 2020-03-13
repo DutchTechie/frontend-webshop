@@ -155,19 +155,12 @@ export class AuthenticationEffects {
     })
   )
 
-  // TODO: Create an authorize action reducer
-  // @Effect()
-  // authorizeAdmin = this.actions$.pipe(
-  //   ofType(AuthActions.)
-  // )
-
   @Effect({ dispatch: false })
   authenticationLogout = this.actions$.pipe(
     ofType(AuthActions.LOGOUT),
     tap(() => {
-      // TODO: Implement a timer
       localStorage.removeItem('userData');
-      this.router.navigate(['/login']);
+      this.router.navigate(['']);
     })
   )
 }

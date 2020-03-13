@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { User } from 'src/models/user.model';
 import * as fromApp from '../app.reducer';
 import * as AuthenticationActions from '../../reducers/authentication.actions';
+import { AuthenticationService } from 'src/services/authentication.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -12,38 +12,30 @@ import * as AuthenticationActions from '../../reducers/authentication.actions';
   styleUrls: ['./header.component.css']
 })
 
-export class HeaderComponent implements OnInit, OnDestroy {
-  private userSub: Subscription = null;
+export class HeaderComponent implements OnInit {
   isAuthenticated: boolean = false;
-  isAdmin: boolean = false;
   user: User = null;
 
   constructor(
+    private authenticationService: AuthenticationService,
     private store: Store<fromApp.AppState>
   ) {}
 
   ngOnInit(): void {
-    this.userSub = this.store
-      .select('authentication')
-      .pipe(map(authState => {
-        return authState.user;
-      }))
-      .subscribe(user => {
-        this.isAuthenticated = !!user;
-        this.isAdmin = (user != null)? user.isAdmin : false;
-        this.user = user;
-      });
+    this.authenticationService.getApplicationUser().subscribe(user => {
+      this.user = user;
+    })
   }
 
   onLogout() {
     this.store.dispatch(new AuthenticationActions.Logout());
   }
 
-  onClickAccount() {
-    // this.authService.handleOnAccountLinkClicked()
+  userIsConsumer() {
+    return this.authenticationService.userIsConsumer(this.user);
   }
 
-  ngOnDestroy() {
-    this.userSub.unsubscribe()
+  onClickAccount() {
+    // this.authService.handleOnAccountLinkClicked()
   }
 }

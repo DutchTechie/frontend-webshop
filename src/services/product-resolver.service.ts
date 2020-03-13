@@ -24,7 +24,6 @@ export class ProductResolverService implements Resolve<Product[]> {
         return productState.products;
       }),
       switchMap(products => {
-        console.log("I AM BEING CALLED!!");
         if (products.length === 0) {
           this.store.dispatch(new ProductActions.FetchProducts());
           return this.actions$.pipe(

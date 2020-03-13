@@ -4,13 +4,18 @@ import { AuthenticationComponent } from './authentication.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './../shared/shared.module'
 import { RouterModule } from '@angular/router';
+import { AuthGuard } from 'src/services/auth.guard';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    RouterModule.forChild([{ path: '', component: AuthenticationComponent }]),
+    RouterModule.forChild([
+      { path: '', redirectTo: 'login' },
+      { path: 'login', component: AuthenticationComponent },
+      { path: 'signup', component: AuthenticationComponent }
+    ]),
     SharedModule
   ],
   declarations: [AuthenticationComponent]

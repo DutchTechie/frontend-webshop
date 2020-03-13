@@ -1,8 +1,21 @@
+/********************************************************
+Represents details of a particular product. When a
+consumer visits this page, he/she may add a product to
+the sopping cart. If an administrator visits the page, the
+view will switch to amin mode and provide the option to
+edit the product.
+
+@author
+*********************************************************/
+
+//=======================================================
+
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from 'src/models/product.model';
+import { AuthenticationService } from 'src/services/authentication.service';
 import { User } from 'src/models/user.model';
-import { ShoppingCartService } from 'src/services/shopping-cart.service';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+
+//=======================================================
 
 @Component({
   selector: 'app-product-details',
@@ -10,69 +23,43 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./product-detail.component.css']
 })
 
+//=======================================================
+
 export class ProductDetailComponent implements OnInit {
   @Input() product: Product;
-  @Input() user: User = null;
-  @Output() pageToRedirectUser = new EventEmitter<string>();
-  @Output() switchToMode = new EventEmitter<boolean>();
-  pageIsLoading: boolean = false;
+  @Output() switchToEditMode = new EventEmitter();
+  user: User = null;
 
-  constructor(
-    private shoppingCartService: ShoppingCartService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute) { }
+  constructor(private authenticationService: AuthenticationService) {}
 
   ngOnInit(): void {
-    const productId: any = this.activatedRoute.snapshot.paramMap;
-    // console.log(productId);
+    this.initializeUser();
   }
 
-  // TODO: Don't have it here, put it in the parent component instead!
-  ngOnChanges() {
-    // this.pageIsLoading = true;
-    // this.activatedRoute.params.subscribe(
-    //   (params: Params) => {
-    //     if (this.product != null) {
-    //       this.product.id = params['id'];
-    //       console.log(this.product.id);
-    //       this.pageIsLoading = false;
-    //     }
-    //   }
-    // );
+  initializeUser() {
+    this.authenticationService.getApplicationUser().subscribe(user => {
+      this.user = user;
+    });
   }
 
-  handleMainButtonClick() {
-    if (this.userIsAdmin(this.user)) {
-      this.pageIsLoading = false;
-      this.switchToMode.emit(true);
+  ngOnChanges() {}
+
+  handleButtonClick() {
+    if (this.userIsAdmin()) {
+      this.switchToEditMode.emit();
     } else {
-      this.addToCart(this.product.id);
+      this.addToCart(+this.product.id);
     }
   }
 
-  userIsAdmin(user: User): boolean {
-    return true;
-    // if (user === null) {
-    //   return false;
-    // }
-    // return (user.isAdmin === true);
+  userIsAdmin() {
+    return this.authenticationService.userIsAdmin(this.user);
   }
 
-  // TODO: Make this globally accessible
-  addToCart(productId) {
-    if(this.user != null) {
-      if (this.user.isAdmin === false) {
-        let id = this.user.userId;
-        this.shoppingCartService.addToCart(id, productId)
-          .subscribe(data => console.log(data));
-      }
-      this.redirectUser('/');
-    } else {
-      this.redirectUser('/login');
-    }
-  }
-
-  redirectUser(page) {
-    this.router.navigate([page]);
+  addToCart(productId: number) {
+    console.log(productId)
+    // TODO: Create a service for adding product id to cart.
   }
 }
+
+//=======================================================

@@ -4,13 +4,6 @@
         <div class="login-form">
             <h3>{{  (authenticationMode === 'LOGIN') ? 'Login' : 'Sign up' }}</h3>
             <br />
-            <!-- <div class="alert alert-danger" *ngIf="errorMessage">
-                <p>{{ errorMessage }}</p>
-            </div> -->
-            <div *ngIf="pageIsLoading">
-                <app-loading-spinner></app-loading-spinner>
-            </div>
-
             <form [formGroup]="authForm" (ngSubmit)="onSubmit()" *ngIf="!pageIsLoading">
               <div formGroupName="userData">
                 <div class="form-group">

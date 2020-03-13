@@ -11,28 +11,28 @@
 
       <!-- Login link -->
       <li routerLinkActive="active" >
-        <a routerLink="/login" *ngIf="!isAuthenticated" style="cursor: pointer;">
+        <a routerLink="/account" *ngIf="user === null" style="cursor: pointer;">
           <span class="glyphicon glyphicon-user" aria-hidden="true">
           </span>
         </a>
       </li>
 
       <!-- account -->
-      <li *ngIf="isAuthenticated" routerLinkActive="active">
+      <li *ngIf="user !== null" routerLinkActive="active">
         <a (click)="onClickAccount()" style="cursor: pointer;">
           {{ user.email }}
         </a>
       </li>
 
-      <!-- Login link -->
-      <li *ngIf="isAuthenticated" routerLinkActive="active">
+      <!-- Logout link -->
+      <li *ngIf="user !== null" routerLinkActive="active">
         <a (click)="onLogout()" style="cursor: pointer;">
           Logout
         </a>
       </li>
 
       <!-- cart link -->
-      <li *ngIf="!isAdmin" routerLinkActive="active">
+      <li *ngIf="userIsConsumer()" routerLinkActive="active">
         <a routerLink="/cart">
           <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
         </a>

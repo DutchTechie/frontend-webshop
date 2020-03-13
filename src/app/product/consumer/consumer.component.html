@@ -7,7 +7,7 @@
     </div>
     <div class="consumer-container" *ngIf="!pageIsLoading">
       <div *ngFor="let product of (productSubs | async)" class="col-md-2 my-card">
-        <div class="no-highlight" routerLink="/products/product/details/{{ product.id }}">
+        <div class="no-highlight" routerLink="product/details/{{ product.id }}">
           <img src="{{ product.imagePath }}" alt="Nike shoe" class="img-responsive" /><br>
           <div class="my-card-container">
             {{ product.name }}<br>

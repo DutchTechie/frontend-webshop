@@ -1,12 +1,18 @@
+/********************************************************
+@author
+*********************************************************/
+
+//=======================================================
 import { Component, OnInit } from '@angular/core';
 import { Subscription, Observable, of } from 'rxjs';
 import { User } from '../../models/user.model';
 import { Product } from '../../models/product.model';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../app.reducer'
 import * as ProductActions from '../../reducers/product.actions'
-import { map, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { AuthenticationService } from 'src/services/authentication.service';
+//=======================================================
 
 @Component({
   selector: 'app-home',
@@ -14,48 +20,46 @@ import { map, take } from 'rxjs/operators';
   styleUrls: ['./product.component.css']
 })
 
+//=======================================================
+
 export class ProductComponent implements OnInit {
   pageToRedirectUserTo : string;
   private storeSub: Subscription;
   errorMessage : string = null;
-  productSubs: Observable <Product[]>
+  productSubs: Observable <Array<Product>>;
   user: User = null;
 
   constructor(
-    private router: Router,
+    private authenticationService: AuthenticationService,
     private store: Store<fromApp.AppState>
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(new ProductActions.FetchProducts())
+    this.initializeUser();
+    this.fetchAllProducts();
+  }
 
-    // TODO: Add loading to home component instead
-    this.storeSub = this.store
-      .select('products')
-      .pipe(map(productsState => productsState.products))
-      .subscribe((products: Product[]) => {
-        this.productSubs = of(products);
-    })
+  initializeUser() {
+    this.authenticationService.getApplicationUser().subscribe(user => {
+      this.user = user;
+    });
   }
 
   fetchAllProducts() {
-    console.log("The fetch all products in the home component is being called.")
     this.store.dispatch(new ProductActions.FetchProducts())
     this.store
       .select('products')
       .pipe(map(productsState => productsState.products))
-      .subscribe((products: Product[]) => {
+      .subscribe((products: Array<Product>) => {
         this.productSubs = of(products);
-        console.log(this.productSubs)
-    })
+        console.log(this.productSubs);
+    });
   }
 
-  showErrorAlert(errorMessage) {
-    console.log(errorMessage);
-  }
+  showErrorAlert(errorMessage) { console.log(errorMessage);}
 
   deleteProduct(id) {
-    this.store.dispatch(new ProductActions.DeleteProduct(id))
+    this.store.dispatch(new ProductActions.DeleteProduct(id));
   }
 
   deleteAllProducts() {
@@ -63,19 +67,13 @@ export class ProductComponent implements OnInit {
     this.store.dispatch(new ProductActions.DeleteAllProduct());
   }
 
-  // TODO: We can probably soon get rid of this code since we're using
-  // ngrx
-  userIsConsumer(user: User) {
-    return false;
+  userIsConsumer(): boolean {
+    return this.authenticationService.userIsConsumer(this.user);
   }
 
   ngOnDestroy() {
-    if (this.storeSub) {
-      this.storeSub.unsubscribe();
-    }
-  }
-
-  redirectUser(pageToRedirectUserTo) {
-    this.router.navigate([pageToRedirectUserTo]);
+    if (this.storeSub) { this.storeSub.unsubscribe();}
   }
 }
+
+//=======================================================

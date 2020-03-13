@@ -42,8 +42,8 @@
                             {{ product.stock }}
                         </td>
                         <td class="text-center vcenter">
-                            <a routerLink="/products/product/mutate/{{ product.id }}">Edit</a>&nbsp;|
-                            &nbsp;<a routerLink="/products/product/details/{{ product.id }}">Details</a>&nbsp;|
+                            <a routerLink="/product/mutate/{{ product.id }}">Edit</a>&nbsp;|
+                            &nbsp;<a routerLink="/product/details/{{ product.id }}">Details</a>&nbsp;|
                             &nbsp;<a style="cursor: pointer;" (click)="deleteProduct(product)" >Delete</a>
                         </td>
                     </tr>
