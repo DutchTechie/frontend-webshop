@@ -10,11 +10,12 @@ editing an existing one.
 import { Store } from '@ngrx/store';
 import * as fromApp from '../../../app.reducer';
 import * as ProductActions from '../../../../reducers/product.actions';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from 'src/models/product.model';
 import { ProductService } from 'src/services/product.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as PRODUCT_ROUTES from '../../product.routes';
 
 //=============================================================================
 
@@ -23,13 +24,11 @@ import { Router } from '@angular/router';
   templateUrl: './product-mutation.component.html',
   styleUrls: ['./product-mutation.component.css']
 })
-
-//=============================================================================
-
 export class ProductMutationComponent implements OnInit {
   @Input() newOrExistingProduct: Product;
   @Input() visitedDetailsPage: boolean;
   @Input() failedLoadingImage: boolean;
+  @Output() switchToDetailsMode: EventEmitter<void> = new EventEmitter()
   productForm: FormGroup;
 
   constructor(
@@ -73,9 +72,22 @@ export class ProductMutationComponent implements OnInit {
 
   //=============================================================================
 
+  // when on button click, it gets updated, however, the form does not wait for the image to validate the
+  // image path. Therefore, it submits values regardless of their validity.
+
+  // conclusion: the submit function must wait until the image has been validated. Then, it is free to submit
+  // the form.
+
+  // Does it also wait when you simply submit when on focus on one input?
+  // No. The input simply submits the default image. In other words, we simply need to wait
+  // for the validation in the onsubmit function. No where else.
   onSubmit() {
+    console.log("I have been submitted.");
     const productFormIsValid = this.productForm.valid;
     const productValueSubmittedByUser = this.productForm.value;
+    this.productService.updatedImagePath.subscribe((data) => {
+      console.log(data)
+    })
 
     if  (productFormIsValid) {
       const productToMutate = {
@@ -89,7 +101,7 @@ export class ProductMutationComponent implements OnInit {
   private mutateProduct(product: Product) {
     this.store.dispatch(new ProductActions.StartMutatingProduct(product));
     this.store.select('products').subscribe(productState => {
-      if (productState.redirect) { this.router.navigate(['/']); }
+      if (productState.redirect) { this.router.navigate([PRODUCT_ROUTES.ABSOLUTE_PATH_DEFAULT]); }
     });
   }
 
@@ -101,10 +113,9 @@ export class ProductMutationComponent implements OnInit {
     const verifyVisitedDetailsPage = (userVisitedDetailsPage && currentProductIsNotNew);
 
     if (verifyVisitedDetailsPage) {
-      const productDetailsUrl = `/product/details/${this.newOrExistingProduct.id}`;
-      this.router.navigate([productDetailsUrl]);
+      this.switchToDetailsMode.emit();
     } else {
-      this.router.navigate(["/"]);
+      this.router.navigate([PRODUCT_ROUTES.ABSOLUTE_PATH_DEFAULT]);
     }
   }
 }

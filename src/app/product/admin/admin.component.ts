@@ -4,39 +4,15 @@
 
 //=============================================================================
 
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Store } from '@ngrx/store';
+import * as fromApp from '../../app.reducer'
+import * as ProductActions from '../../../reducers/product.actions'
 import { Product } from 'src/models/product.model';
-import { User } from 'src/models/user.model';
-
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition
-} from '@angular/animations';
 import { slideOutAnimation } from 'src/app/shared/animations/fade-out.animation';
 import { changeState } from 'src/app/shared/animations/change-state.animation';
 import { Observable } from 'rxjs';
-
-const animateOut = [
-  trigger('animateOut', [
-    state('normal', style({
-      opacity: 1,
-      transform: 'translateX(0)'
-    })),
-    state('slideOut', style({
-      opacity: 1,
-      transform: 'translateX(0)'
-    })),
-    transition('normal => slideOut', [
-      animate(400, style({
-        transform: 'translateX(100px)',
-        opacity: 0
-      }))
-    ])
-  ])
-]
+import { animateOut } from '../../shared/animations/animate-out.animation';
 
 //=============================================================================
 
@@ -46,56 +22,28 @@ const animateOut = [
   styleUrls: ['./admin.component.css'],
   animations: [slideOutAnimation, changeState, animateOut]
 })
-
-//=============================================================================
-
 export class AdminComponent implements OnInit {
   @Input() productSubs: Observable<Product[]>
-  @Input() user: User;
-  @Output() productToDelete = new EventEmitter<number>();
-  @Output() deleteAllProducts = new EventEmitter<void>();
   @Output() fetchAllProductsEmitter = new EventEmitter<void>();
-  pageIsLoading: boolean = false;
-
-  doneDeleteAllOnce = false;
-
-  isOpen = true;
-  slideOut = 'normal';
-  calledEndAnimationOnce = false;
+  slideOut: string = 'normal';
+  calledEndAnimationOnce: boolean = false;
   product: Product = null;
-  deletedOneProduct = false;
+  hideAllProductsPriorToDeletingThem: boolean = false;
 
-  toggle() {
-    this.isOpen = !this.isOpen;
-  }
-
-  test() {
-    this.slideOut = 'slideOut';
-    console.log("test called");
-  }
-
-  constructor() {}
+  constructor(private store: Store<fromApp.AppState>) {}
 
   ngOnInit(): void {}
 
-  ngOnChanges() {}
-
-  private userIsAdmin(user: User): boolean {
-    if (user === null) {
-      return false;
-    }
-    return (user.isAdmin === true);
-  }
-
   fetchAllProducts() {
     this.fetchAllProductsEmitter.emit();
+    this.hideAllProductsPriorToDeletingThem = false;
   }
 
-  endOfDeleteAllAnimation(event) {
+  endOfDeleteAllAnimation() {
     if (this.calledEndAnimationOnce == true) {
-      this.doneDeleteAllOnce = true;
+      this.hideAllProductsPriorToDeletingThem = true;
       this.calledEndAnimationOnce = false;
-      this.deleteAllProducts.emit();
+      this.deleteAllProducts();
     }
   }
 
@@ -108,15 +56,13 @@ export class AdminComponent implements OnInit {
 
   onEndDeleteProductAnimation() {
     if (this.product !== null) {
-      this.deletedOneProduct = true;
       this.product.visible = false;
-      this.productToDelete.emit(+this.product.id);
+      this.deleteProduct(+this.product.id);
       this.product = null;
     }
   }
 
-  deleteProduct(product) {
-    this.deletedOneProduct = false;
+  startDeletingProduct(product) {
     if (this.adminIsSureToDelete()) {
       if (product.state === 'normal') {
         product.state = 'slideOut';
@@ -125,6 +71,14 @@ export class AdminComponent implements OnInit {
       }
       this.product = product;
     }
+  }
+
+  deleteProduct(id) {
+    this.store.dispatch(new ProductActions.DeleteProduct(id));
+  }
+
+  deleteAllProducts() {
+    this.store.dispatch(new ProductActions.DeleteAllProduct());
   }
 
   private adminIsSureToDelete(): boolean {

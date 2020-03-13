@@ -1,3 +1,9 @@
+/*****************************************************************************
+@author
+******************************************************************************/
+
+//=============================================================================
+
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { HttpClient } from '@angular/common/http';
@@ -5,7 +11,8 @@ import * as ProductActions from './product.actions';
 import { switchMap, map, tap, catchError } from 'rxjs/operators';
 import { Product } from 'src/models/product.model';
 import { of } from 'rxjs';
-import { Router } from '@angular/router';
+
+//=============================================================================
 
 export interface ProductResponseData {
   id: string,
@@ -25,14 +32,8 @@ const handleFetching = (
   stock: number
 ) => {
   const product = new Product(
-    id,
-    name,
-    description,
-    imagePath,
-    price,
-    stock,
-    'normal',
-    true)
+    id, name, description, imagePath, price, stock, 'normal', true
+  )
 
   return new ProductActions.FetchSuccess(
     product
@@ -68,8 +69,11 @@ const getCorrectMutationRequest = (http: HttpClient, product: Product) => {
   )
 }
 
+//=============================================================================
+
 @Injectable()
 export class ProductEffects {
+
   constructor(
     private actions$: Actions,
     private http: HttpClient
@@ -130,7 +134,6 @@ export class ProductEffects {
     })
   )
 
-  // TODO: Add a redirect method
   @Effect()
   startMutatingProduct = this.actions$.pipe(
     ofType(ProductActions.START_MUTATE),
@@ -151,13 +154,11 @@ export class ProductEffects {
   fetchAllProducts = this.actions$.pipe(
     ofType(ProductActions.FETCH_PRODUCTS),
     switchMap(() => {
-      console.log("I am being called")
       return this.http.get<Product[]>(
         `http://localhost:8080/products`
       );
     }),
     map(products => {
-      // console.log(products)
       return products.map(product => {
         return {
           ...product,
@@ -171,3 +172,5 @@ export class ProductEffects {
     })
   );
 }
+
+//==============================================================================

@@ -1,5 +1,13 @@
+/*****************************************************************************
+@author
+******************************************************************************/
+
+//=============================================================================
+
 import { Product } from 'src/models/product.model';
 import * as Actions from './product.actions';
+
+//=============================================================================
 
 export interface State {
   products: Array<Product>;
@@ -18,6 +26,8 @@ const initialState: State = {
   loading: false,
   redirect: false
 };
+
+//=============================================================================
 
 export function productReducer(state = initialState, action: Actions.ProductActions) {
   switch (action.type) {
@@ -49,41 +59,6 @@ export function productReducer(state = initialState, action: Actions.ProductActi
         products: []
       }
 
-    case Actions.ADD_PRODUCT:
-      return {
-        ...state,
-        products: [...state.products, action.payload],
-        productError: null
-      };
-    case Actions.START_EDIT:
-      return {
-        ...state,
-        editedProductIndex: action.payload,
-        editedProduct: {...state.products[action.payload]},
-        loading: false,
-        productError: null
-      };
-    case Actions.STOP_EDIT:
-      return {
-        ...state,
-        editedProduct: null,
-        editedProductIndex: -1,
-        loading: false,
-        productError: null
-      };
-    case Actions.UPDATE_PRODUCT:
-      const productToUpdate = state.products[action.payload.id];
-      const updatedProduct = {
-        ...productToUpdate,
-        ...action.payload
-      }
-      const updatedProducts = [...state.products];
-      updatedProducts[action.payload.id] = updatedProduct;
-      return {
-        ...state,
-        products: updatedProducts,
-        productError: null
-      };
     case Actions.DELETE_PRODUCT:
       return {
         ...state,
@@ -111,3 +86,5 @@ export function productReducer(state = initialState, action: Actions.ProductActi
       return state;
   }
 }
+
+//=============================================================================

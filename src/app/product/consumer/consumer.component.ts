@@ -11,6 +11,8 @@ import { Product } from 'src/models/product.model';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { Router } from '@angular/router';
+import * as PRODUCT_ROUTES from '../product.routes';
+import * as AUTH_ROUTES from '../../authentication/auth.routes';
 
 //=============================================================================
 
@@ -19,9 +21,6 @@ import { Router } from '@angular/router';
   templateUrl: './consumer.component.html',
   styleUrls: ['./consumer.component.css']
 })
-
-//=============================================================================
-
 export class ConsumerComponent implements OnInit {
   @Input() productSubs: Observable<Product[]>
   @Input() user: User;
@@ -45,10 +44,10 @@ export class ConsumerComponent implements OnInit {
         this.shoppingCartService.addToCart(id, productId)
           .subscribe(data => console.log(data));
       } else {
-        this.router.navigate(['']);
+        this.router.navigate([PRODUCT_ROUTES.ABSOLUTE_PATH_DEFAULT]);
       }
     } else {
-      this.router.navigate(['account']);
+      this.router.navigate([AUTH_ROUTES.ABSOLUTE_PATH_DEFAULT]);
     }
   }
 }

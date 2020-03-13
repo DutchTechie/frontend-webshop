@@ -15,6 +15,7 @@ import { Product } from '../../../models/product.model';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../../app.reducer';
 import { map, switchMap } from 'rxjs/operators';
+import { Location } from '@angular/common'
 
 export const MUTATE: string = 'MUTATE';
 export const DETAILS: string = 'DETAILS';
@@ -26,9 +27,6 @@ export const DETAILS: string = 'DETAILS';
   templateUrl: './product-item.component.html',
   styleUrls: ['./product-item.component.css']
 })
-
-//=============================================================================
-
 export class ProductItemComponent {
   private storeSub: Subscription;
   visitedDetailsPage: boolean = false;
@@ -40,6 +38,7 @@ export class ProductItemComponent {
   @ViewChild('imagePath', {static: true}) imagePath: ElementRef;
 
   constructor(
+    private location: Location,
     private router: Router,
     private productService: ProductService,
     private activatedRoute: ActivatedRoute,
@@ -48,6 +47,10 @@ export class ProductItemComponent {
   ngOnInit(): void {
     const mode = this.activatedRoute.snapshot.paramMap.get('mode');
     this.productPageMode = mode.toUpperCase();
+
+    console.log(this.productPageMode)
+
+
     const productId: number = +this.activatedRoute.snapshot.paramMap.get('id');
     this.resolveProductByIdUsingAddressBar(productId);
     this.updateImageSubscription();
@@ -83,32 +86,33 @@ export class ProductItemComponent {
 
   private updateImageSubscription() {
     this.updatedImageSub = this.productService.updatedImagePath.subscribe(data => {
-      this.failedLoadingImage = false;
-      this.currentProduct.imagePath = data;
+      console.log("Updated imagepath has been called!!")
+      // this.currentProduct.imagePath = data;
     });
   }
 
   onError() {
     this.failedLoadingImage = true;
     this.loadImageNotfound();
+    console.log("Detecting error!!!")
   }
 
   loadImageNotfound() {
     const noImageFoundImagePath = "https://www.wiersmaverhuizingen.nl/wp-content/themes/consultix/images/no-image-found-360x260.png";
     this.currentProduct.imagePath = noImageFoundImagePath;
+    // this.productService.updatedImagePath.next(imagePath);
   }
 
   handleSwitchToEditMode() {
+    this.router.navigate([`/product/mutate/${this.currentProduct.id}`]);
     this.visitedDetailsPage = true;
     this.productPageMode = MUTATE;
   }
 
-  handleOnBackPressed(event) {
-    if (event) {
-      this.productPageMode = DETAILS;
-    } else {
-      this.router.navigate(['']);
-    }
+  handleSwitchToDetailsMode() {
+    this.router.navigate([`/product/details/${this.currentProduct.id}`]);
+    this.visitedDetailsPage = false;
+    this.productPageMode = DETAILS;
   }
 
   ngOnDestroy() {

@@ -66,9 +66,7 @@ export class AuthenticationEffects {
           null
         )
         .pipe(
-          // tap allows you to perform actions or side-effects
           tap(responseData => {
-            console.log(responseData);
             // TODO: Set logout timer
           }),
           map(resData => {
@@ -122,10 +120,7 @@ export class AuthenticationEffects {
   authenticationRedirect = this.actions$.pipe(
     ofType(AuthActions.AUTHENTICATE_SUCCESS),
     tap((authSuccessAction: AuthActions.AuthenticateSuccess) => {
-      if (authSuccessAction.payload.redirect) {
-        this.router.navigate(['/']);
-      }
-      console.log("I am being called")
+      if (authSuccessAction.payload.redirect) { this.router.navigate(['/']); }
     })
   );
 

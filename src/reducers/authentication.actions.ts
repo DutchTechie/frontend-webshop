@@ -1,3 +1,9 @@
+/*****************************************************************************
+@author
+******************************************************************************/
+
+//=============================================================================
+
 import { Action } from '@ngrx/store';
 
 export const LOGIN_START = '[Authentication] Login Start';
@@ -7,6 +13,8 @@ export const AUTO_LOGIN = '[Authentication] Auto Login';
 export const AUTHENTICATE_SUCCESS = '[Authentication] Login';
 export const AUTHENTICATE_FAIL = '[Authentication] Login Fail';
 export const CLEAR_ERROR = '[Authentication] Clear Error';
+
+//=============================================================================
 
 export class AuthenticateSuccess implements Action {
   readonly type = AUTHENTICATE_SUCCESS;
@@ -59,3 +67,5 @@ export type AuthenticationActions =
   | SignupStart
   | ClearError
   | AutoLogin
+
+//=============================================================================

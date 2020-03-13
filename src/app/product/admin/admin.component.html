@@ -1,12 +1,7 @@
 <div class="container-fluid">
   <div class="row">
       <div class="col-md-12">
-        <div class="text-center vcenter">
-          <div *ngIf="pageIsLoading">
-            <app-loading-spinner></app-loading-spinner>
-          </div>
-        </div>
-          <div class="list-wrapper" *ngIf="!pageIsLoading">
+          <div class="list-wrapper">
               <table class="table table-striped borderless fixed-header">
                   <thead>
                       <tr>
@@ -18,9 +13,9 @@
                       </tr>
                   </thead>
                   <tbody
-                  [hidden]="doneDeleteAllOnce"
+                  [hidden]="hideAllProductsPriorToDeletingThem"
                   [@animateOut]="slideOut"
-                  (@animateOut.done)="endOfDeleteAllAnimation($event)">
+                  (@animateOut.done)="endOfDeleteAllAnimation()">
 
                     <tr
                     class="text-left"
@@ -42,9 +37,9 @@
                             {{ product.stock }}
                         </td>
                         <td class="text-center vcenter">
-                            <a routerLink="/product/mutate/{{ product.id }}">Edit</a>&nbsp;|
-                            &nbsp;<a routerLink="/product/details/{{ product.id }}">Details</a>&nbsp;|
-                            &nbsp;<a style="cursor: pointer;" (click)="deleteProduct(product)" >Delete</a>
+                            <a routerLink="product/mutate/{{ product.id }}">Edit</a>&nbsp;|
+                            &nbsp;<a routerLink="product/details/{{ product.id }}">Details</a>&nbsp;|
+                            &nbsp;<a style="cursor: pointer;" (click)="startDeletingProduct(product)" >Delete</a>
                         </td>
                     </tr>
                   </tbody>

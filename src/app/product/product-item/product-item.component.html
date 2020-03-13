@@ -22,7 +22,8 @@
         *ngIf="productPageMode === 'MUTATE'"
         [failedLoadingImage]="failedLoadingImage"
         [newOrExistingProduct]="currentProduct"
-        [visitedDetailsPage]="visitedDetailsPage">
+        [visitedDetailsPage]="visitedDetailsPage"
+        (switchToDetailsMode)="handleSwitchToDetailsMode()">
       </app-product-mutation>
     </div>
   </div>

@@ -13,6 +13,7 @@ import { Location } from '@angular/common';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../app.reducer'
 import * as AuthenticationActions from '../../reducers/authentication.actions'
+import * as AUTH_ROUTES from '../authentication/auth.routes';
 
 const LOGIN: string = 'LOGIN';
 const SIGNUP: string = 'SIGNUP';
@@ -59,8 +60,7 @@ export class AuthenticationComponent {
         'email' : new FormControl(null, [Validators.required, Validators.required ], this.forbiddenEmails),
         'password' : new FormControl(null, [Validators.required, Validators.minLength(6)])
       })
-    })
-    console.log(path)
+    });
     if (path === "signup") {
       this.authenticationMode = SIGNUP;
     } else {
@@ -82,19 +82,17 @@ export class AuthenticationComponent {
   onSwitchMode() {
       if (this.authenticationMode === LOGIN) {
         this.authenticationMode = SIGNUP;
-        this.location.go("/account/signup");
+        this.location.go(AUTH_ROUTES.ABSOLUTE_PATH_SIGNUP);
       } else {
         this.authenticationMode = LOGIN;
-        this.location.go("/account/login");
+        this.location.go(AUTH_ROUTES.ABSOLUTE_PATH_LOGIN);
       }
       this.errorMessage = null;
       this.authForm.reset();
   }
 
   ngOnDestroy() {
-      if (this.storeSub) {
-        this.storeSub.unsubscribe();
-      }
+      if (this.storeSub) { this.storeSub.unsubscribe();}
   }
 
   onSubmit() {

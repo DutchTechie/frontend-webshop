@@ -10,14 +10,15 @@ import { ProductComponent } from './product.component'
 import { ProductResolverService } from '../../services/product-resolver.service'
 import { ProductItemComponent } from './product-item/product-item.component';
 import { AuthGuard } from 'src/services/auth.guard';
+import * as ROUTES from './product.routes';
 
 //=============================================================================
 
 const appRoutes : Routes = [
-  { path: '', component: ProductComponent, canActivate: [AuthGuard] },
-  { path: 'product/:mode', component: ProductItemComponent, canActivate: [AuthGuard] },
-  { path: 'product/:mode/:id', component: ProductItemComponent, resolve: [ProductResolverService], canActivate: [AuthGuard] }
-]
+  { path: ROUTES.DEFAULT_PATH, component: ProductComponent, canActivate: [AuthGuard] },
+  { path: ROUTES.CREATE_NEW_PRODUCT_PATH, component: ProductItemComponent, canActivate: [AuthGuard] },
+  { path: ROUTES.MUTATE_OR_DETAILS_PATH, component: ProductItemComponent, resolve: [ProductResolverService], canActivate: [AuthGuard] }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],

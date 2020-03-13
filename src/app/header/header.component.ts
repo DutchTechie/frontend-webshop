@@ -1,17 +1,23 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+/*****************************************************************************
+@author
+******************************************************************************/
+
+//=============================================================================
+
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { User } from 'src/models/user.model';
 import * as fromApp from '../app.reducer';
 import * as AuthenticationActions from '../../reducers/authentication.actions';
 import { AuthenticationService } from 'src/services/authentication.service';
-import { Observable } from 'rxjs';
+
+//=============================================================================
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-
 export class HeaderComponent implements OnInit {
   isAuthenticated: boolean = false;
   user: User = null;
@@ -39,3 +45,5 @@ export class HeaderComponent implements OnInit {
     // this.authService.handleOnAccountLinkClicked()
   }
 }
+
+//=============================================================================
