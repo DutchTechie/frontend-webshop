@@ -13,6 +13,10 @@ import { AuthenticationService } from 'src/services/authentication.service';
 import { Router } from '@angular/router';
 import * as PRODUCT_ROUTES from '../product.routes';
 import * as AUTH_ROUTES from '../../authentication/auth.routes';
+import * as fromApp from '../../app.reducer';
+import * as ShoppingCartActions from '../../../reducers/shopping-cart.actions';
+import { Store } from '@ngrx/store';
+import { Cart } from 'src/models/cart.model';
 
 //=============================================================================
 
@@ -28,21 +32,26 @@ export class ConsumerComponent implements OnInit {
   pageIsLoading: boolean = false;
 
   constructor(
-    private shoppingCartService: ShoppingCartService,
     private authenticationService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private store: Store<fromApp.AppState>
   ) { }
 
   ngOnInit(): void {}
 
   ngOnChanges() {}
 
-  addToCart(productId) {
+  addToCart(productId: string) {
     if(this.user != null) {
       if (this.authenticationService.userIsConsumer(this.user)) {
-        const id = this.user.userId;
-        this.shoppingCartService.addToCart(id, productId)
-          .subscribe(data => console.log(data));
+        const userId: string = this.user.userId;
+        const cart: Cart = new Cart(
+          userId,
+          productId,
+          1
+        );
+        console.log("dispatching shopping cart action")
+        this.store.dispatch(new ShoppingCartActions.AddOrUpdateCart(cart));
       } else {
         this.router.navigate([PRODUCT_ROUTES.ABSOLUTE_PATH_DEFAULT]);
       }

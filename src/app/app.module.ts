@@ -16,6 +16,8 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import * as fromApp from './app.reducer';
+import { ShoppingCartEffects } from 'src/reducers/shopping-cart.effects';
+import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
 
 @NgModule({
   declarations: [
@@ -25,9 +27,10 @@ import * as fromApp from './app.reducer';
   ],
   imports: [
     BrowserModule,
+    ShoppingCartModule,
     HttpClientModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([AuthenticationEffects, ProductEffects]), // TODO:
+    EffectsModule.forRoot([AuthenticationEffects, ProductEffects, ShoppingCartEffects]), // TODO:
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot(),
     CoreModule,

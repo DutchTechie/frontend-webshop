@@ -13,6 +13,7 @@ import { take, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import * as PRODUCT_ROUTES from '../app/product/product.routes';
 import * as AUTH_ROUTES from '../app/authentication/auth.routes';
+import * as SHOPPING_CART_ROUTES from '../app/shopping-cart/shopping-cart.routes';
 
 //=============================================================================
 
@@ -54,6 +55,17 @@ export class AuthGuard {
                 return false;
               }
               return true;
+
+            case SHOPPING_CART_ROUTES.SHOPPING_CART_PATH:
+              if (user !== null) {
+                if (user.isAdmin == false) {
+                  return true;
+                }
+                this.router.navigate([PRODUCT_ROUTES.ABSOLUTE_PATH_DEFAULT]);
+                return false;
+              }
+              this.router.navigate([PRODUCT_ROUTES.ABSOLUTE_PATH_DEFAULT]);
+              return false;
 
             default:
               console.log(currentPath)

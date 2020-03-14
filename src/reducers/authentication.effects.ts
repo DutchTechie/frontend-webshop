@@ -70,12 +70,12 @@ export class AuthenticationEffects {
             // TODO: Set logout timer
           }),
           map(resData => {
-            return handleAuthentication(
-              resData.id,
-              resData.email,
-              resData.admin,
-              false
-            );
+            return new AuthActions.AuthenticateSuccess({
+              userId: resData.id,
+              email: resData.email,
+              isAdmin: resData.admin,
+              redirect: false
+            });
           }),
           catchError(errorResponse => {
             return handleError(errorResponse);

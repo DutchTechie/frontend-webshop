@@ -6,6 +6,7 @@ editing an existing one.
 ******************************************************************************/
 
 //=============================================================================
+
 import { Component, OnInit } from '@angular/core';
 import { Subscription, Observable, of } from 'rxjs';
 import { User } from '../../models/user.model';
@@ -15,6 +16,7 @@ import * as fromApp from '../app.reducer'
 import * as ProductActions from '../../reducers/product.actions'
 import { map } from 'rxjs/operators';
 import { AuthenticationService } from 'src/services/authentication.service';
+
 //=============================================================================
 
 @Component({
@@ -22,12 +24,11 @@ import { AuthenticationService } from 'src/services/authentication.service';
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css']
 })
-
 export class ProductComponent implements OnInit {
   pageToRedirectUserTo : string;
   private storeSub: Subscription;
   errorMessage : string = null;
-  productSubs: Observable <Product []>;
+  productSubs: Observable<Product []>;
   user: User = null;
 
   constructor(
@@ -51,7 +52,7 @@ export class ProductComponent implements OnInit {
     this.store
       .select('products')
       .pipe(map(productsState => productsState.products))
-      .subscribe((products: Array<Product>) => {
+      .subscribe((products: Product[]) => {
         this.productSubs = of(products);
     });
   }

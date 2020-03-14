@@ -14,7 +14,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 //=============================================================================
 
 const shoppingCartRoutes : Routes = [
-  { path: '', redirectTo: ROUTES.SHOPPING_CART_PATH },
+  { path: 'cart', redirectTo: ROUTES.SHOPPING_CART_PATH },
   { path: ROUTES.SHOPPING_CART_PATH, component: ShoppingCartComponent, canActivate: [AuthGuard] },
   { path: ROUTES.CHECKOUT_PATH, component: CheckoutComponent, canActivate: [AuthGuard] }
 ];

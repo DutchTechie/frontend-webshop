@@ -12,7 +12,6 @@ import { ProductItemComponent } from './product-item/product-item.component';
 
 @NgModule({
   imports: [
-    CommonModule,
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
