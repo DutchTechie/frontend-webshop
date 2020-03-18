@@ -24,6 +24,7 @@ export class AuthenticationService {
   constructor(private store: Store<fromApp.AppState>) { }
 
   getApplicationUser(): Observable<User> {
+    console.log("User is getting fetched")
     return this.store.select('authentication').pipe(map(authenticationState => {
       return authenticationState.user
     }));

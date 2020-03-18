@@ -21,7 +21,7 @@
                     [hidden]="!shoppingCartItem.visible"
                     [@animateOut]="shoppingCartItem.state"
                     (@animateOut.done)="onEndDeleteShoppingCartItemAnimation()"
-                    *ngFor="let shoppingCartItem of (shoppingCartItemSubs | async)"
+                    *ngFor="let shoppingCartItem of (shoppingCartState | async).shoppingCart"
 
                     class="text-left">
                       <td></td>

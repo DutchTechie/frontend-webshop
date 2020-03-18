@@ -19,6 +19,9 @@ export const FETCH_SHOPPING_CART = '[ShoppingCart] Fetch Shopping Cart';
 export const FETCH_START = '[ShoppingCart] Fetch Cart Start';
 export const FETCH_SUCCESS = '[ShoppingCart] Fetch Shopping Cart Success';
 
+
+export const ADD_TO_CART = '[Cart] Add To Cart';
+export const UPDATE_CART = '[Cart] Update Cart';
 export const ADD_OR_UPDATE_CART = '[Cart] Start Adding New Cart Or Updating Cart';
 export const ADD_OR_UPDATE_CART_FAIL = '[Cart] Adding New Cart Or Updating Cart Fail';
 export const ADD_OR_UPDATE_CART_SUCCESS = '[Cart] Adding New Cart Or Updating Cart Success';
@@ -50,12 +53,14 @@ export class StartCheckAvailableProductsSuccess implements Action {
 
 export class SetShoppingCart implements Action {
   readonly type = SET_SHOPPING_CART;
+
+  constructor(public payload: [ShoppingCart]) {}
 }
 
 export class FetchShoppingCart implements Action {
   readonly type = FETCH_SHOPPING_CART;
 
-  constructor(public payload: number) { console.log(payload) }
+  constructor(public payload: number) {}
 }
 
 export class FetchStart implements Action {
@@ -65,15 +70,28 @@ export class FetchStart implements Action {
 export class FetchSuccess implements Action {
   readonly type = FETCH_SUCCESS;
 
-  constructor(public payload: [ShoppingCart]) {}
+  constructor(public payload: ShoppingCart[]) {}
 }
 
 //=============================================================================
 
+// TODO: Delete this class when done adding add and update
 export class AddOrUpdateCart implements Action {
   readonly type = ADD_OR_UPDATE_CART;
 
   constructor(public payload: Cart) { console.log(payload) }
+}
+
+export class AddToCart implements Action {
+  readonly type = ADD_TO_CART;
+
+  constructor(public payload: Cart) {}
+}
+
+export class UpdateCart implements Action {
+  readonly type = UPDATE_CART;
+
+  constructor(public payload: Cart ) {}
 }
 
 export class AddOrUpdateCartFail implements Action {

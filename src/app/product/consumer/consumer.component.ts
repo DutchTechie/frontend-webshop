@@ -51,7 +51,10 @@ export class ConsumerComponent implements OnInit {
           1
         );
         console.log("dispatching shopping cart action")
-        this.store.dispatch(new ShoppingCartActions.AddOrUpdateCart(cart));
+
+        // TODO: Make action more efficient by using withLatestFrom
+        this.store.dispatch(new ShoppingCartActions.AddToCart(cart));
+        this.store.dispatch(new ShoppingCartActions.FetchShoppingCart(+this.user.userId))
       } else {
         this.router.navigate([PRODUCT_ROUTES.ABSOLUTE_PATH_DEFAULT]);
       }

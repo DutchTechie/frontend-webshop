@@ -21,6 +21,8 @@ import { Cart } from 'src/models/cart.model';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { User } from 'src/models/user.model';
 
+import * as fromShoppingCart from '../../reducers/shopping-cart.reducer';
+
 //=============================================================================
 
 @Component({
@@ -30,42 +32,32 @@ import { User } from 'src/models/user.model';
   animations: [slideOutAnimation, changeState, animateOut]
 })
 export class ShoppingCartComponent implements OnInit {
+  shoppingCartState: Observable<fromShoppingCart.State>;
   hideAllProductsPriorToDeletingThem: boolean = false;
   calledEndAnimationOnce: boolean = false;
   slideOut: string = 'normal';
   shoppingCartItem: ShoppingCart = null;
-  shoppingCart: ShoppingCart[];
   shoppingCartItemSubs: Observable<ShoppingCart[]>
   totalPrice : number = 0;
   user: User = null;
 
   constructor(
     private authenticationService : AuthenticationService,
-    private store: Store<fromApp.AppState>) {}
+    private store: Store<fromApp.AppState>
+    ) {}
 
   ngOnInit(): void {
     this.initializeApplicationUser();
-    this.fetchShoppingCart();
+    this.shoppingCartState = this.store.select('shoppingCart');
   }
 
   initializeApplicationUser() {
-    this.authenticationService.getApplicationUser().subscribe((appUser) => {
-      this.user = appUser;
-    });
+    this.authenticationService.getApplicationUser().subscribe((appUser) => { this.user = appUser;});
   }
 
   fetchShoppingCart() {
     this.totalPrice = 0;
     this.store.dispatch(new ShoppingCartActions.FetchShoppingCart(+this.user.userId));
-    this.store
-      .select('shoppingCart')
-      .pipe(map(shoppingCartState => shoppingCartState.shoppingCart))
-      .subscribe((shoppingCart: ShoppingCart[]) => {
-        this.shoppingCartItemSubs = of(shoppingCart);
-        shoppingCart.forEach((shoppingCartItem) => {
-          this.totalPrice += shoppingCartItem.carts.amount * shoppingCartItem.products.price;
-        })
-    });
   }
 
   fetchAllProducts() {
@@ -97,20 +89,19 @@ export class ShoppingCartComponent implements OnInit {
 
   startDeletingShoppingCartItem(cartItem: ShoppingCart) {
     if (this.consumerIsSureToDelete()) {
-
-      console.log("user is ready to delete")
       if (cartItem.state === 'normal') {
         cartItem.state = 'slideOut';
-      } else {
+      }
+      else {
         cartItem.state = 'normal';
       }
       this.shoppingCartItem = cartItem;
     }
   }
 
-  deleteShoppingCartItem(userid: number, productId: number) {
+  deleteShoppingCartItem(userId: number, productId: number) {
     this.store.dispatch(new ShoppingCartActions.DeleteCartItem({
-      userId: userid,
+      userId: userId,
       productId: productId
     }));
   }
@@ -124,20 +115,20 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   updateCart(cart: Cart) {
-    this.store.dispatch(new ShoppingCartActions.AddOrUpdateCart(cart));
+    this.store.dispatch(new ShoppingCartActions.UpdateCart(cart));
   }
 
   updateTotalPrice(event) {
     this.totalPrice = 0
-    this.shoppingCartItemSubs.subscribe((shoppingCartItems) => {
-      shoppingCartItems.forEach(cart => {
+    this.shoppingCartState.subscribe((state) => {
+      state.shoppingCart.forEach(cart => {
         if (event.srcElement != null) {
           if (event.srcElement.name == cart.products.name) {
             cart.carts.amount = event.target.value;
             this.updateCart(cart.carts)
           }
         }
-        this.totalPrice += cart.carts.amount * cart.products.price
+        // this.totalPrice += cart.carts.amount * cart.products.price
       });
     });
   }

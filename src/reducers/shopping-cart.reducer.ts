@@ -29,7 +29,6 @@ export function shoppingCartReducer(state = initialState, action: Actions.Shoppi
   switch (action.type) {
 
     case Actions.ADD_OR_UPDATE_CART_SUCCESS:
-      console.log("Add to cart success");
       return {
         ...state,
         loading: false

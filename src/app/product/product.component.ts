@@ -25,8 +25,8 @@ import { AuthenticationService } from 'src/services/authentication.service';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-  pageToRedirectUserTo : string;
   private storeSub: Subscription;
+  pageToRedirectUserTo : string;
   errorMessage : string = null;
   productSubs: Observable<Product []>;
   user: User = null;
