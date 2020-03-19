@@ -29,6 +29,7 @@ export const DETAILS: string = 'DETAILS';
 })
 export class ProductItemComponent {
   private storeSub: Subscription;
+  noImageFoundImagePath: string = "https://www.wiersmaverhuizingen.nl/wp-content/themes/consultix/images/no-image-found-360x260.png";
   visitedDetailsPage: boolean = false;
   productPageMode: string = null;
   updatedImageSub: Subscription;
@@ -38,7 +39,6 @@ export class ProductItemComponent {
   @ViewChild('imagePath', {static: true}) imagePath: ElementRef;
 
   constructor(
-    private location: Location,
     private router: Router,
     private productService: ProductService,
     private activatedRoute: ActivatedRoute,
@@ -47,12 +47,12 @@ export class ProductItemComponent {
   ngOnInit(): void {
     const mode = this.activatedRoute.snapshot.paramMap.get('mode');
     this.productPageMode = mode.toUpperCase();
-
-    console.log(this.productPageMode)
-
-
     const productId: number = +this.activatedRoute.snapshot.paramMap.get('id');
     this.resolveProductByIdUsingAddressBar(productId);
+    if (!productId) {
+      this.currentProduct = new Product();
+      this.currentProduct.imagePath = this.noImageFoundImagePath;
+    }
     this.updateImageSubscription();
   }
 
@@ -76,7 +76,7 @@ export class ProductItemComponent {
         ).subscribe(product => {
           if (!product) {
             this.loadImageNotfound();
-            this.router.navigate(['/']); // TODO: Update error message
+            // this.router.navigate(['/']); // TODO: Update error message
           } else {
             this.currentProduct = product;
           }
@@ -86,8 +86,7 @@ export class ProductItemComponent {
 
   private updateImageSubscription() {
     this.updatedImageSub = this.productService.updatedImagePath.subscribe(data => {
-      console.log("Updated imagepath has been called!!")
-      // this.currentProduct.imagePath = data;
+      this.currentProduct.imagePath = data;
     });
   }
 
@@ -98,8 +97,9 @@ export class ProductItemComponent {
   }
 
   loadImageNotfound() {
-    const noImageFoundImagePath = "https://www.wiersmaverhuizingen.nl/wp-content/themes/consultix/images/no-image-found-360x260.png";
-    this.currentProduct.imagePath = noImageFoundImagePath;
+    if (this.currentProduct) {
+      this.currentProduct.imagePath = this.noImageFoundImagePath;
+    }
     // this.productService.updatedImagePath.next(imagePath);
   }
 

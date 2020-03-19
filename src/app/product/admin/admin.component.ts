@@ -25,10 +25,11 @@ import { animateOut } from '../../shared/animations/animate-out.animation';
 export class AdminComponent implements OnInit {
   @Input() productSubs: Observable<Product[]>
   @Output() fetchAllProductsEmitter = new EventEmitter<void>();
-  slideOut: string = 'normal';
-  calledEndAnimationOnce: boolean = false;
-  product: Product = null;
   hideAllProductsPriorToDeletingThem: boolean = false;
+  calledEndAnimationOnce: boolean = false;
+  slideOut: string = 'normal';
+  product: Product = null;
+
 
   constructor(private store: Store<fromApp.AppState>) {}
 

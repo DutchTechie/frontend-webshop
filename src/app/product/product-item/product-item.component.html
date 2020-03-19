@@ -4,7 +4,7 @@
         <img
             (error)="onError()"
             #imagePath
-            src="{{ currentProduct.imagePath }}"
+            src="{{ (currentProduct == null) ? noImageFoundImagePath :currentProduct.imagePath }}"
             alt="No image found"
             class="img-responsive"
         />

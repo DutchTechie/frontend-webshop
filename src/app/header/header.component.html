@@ -34,6 +34,7 @@
       <!-- cart link -->
       <li *ngIf="userIsConsumer()" routerLinkActive="active">
         <a routerLink="/cart">
+          <span *ngIf="numberOfCarts > 0" class="badge">{{ numberOfCarts }}</span>
           <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
         </a>
       </li>

@@ -29,8 +29,9 @@ const handleError = (errorResponse: any) => {
   return of(new ShoppingCartActions.AddOrUpdateCartFail(errorMessage));
 }
 
-const handleSucessfulAddOrUpdateCart = () => {
-  return new ShoppingCartActions.AddOrUpdateCartSuccess();
+const handleSucessfulAddOrUpdateCart = (userId: number) => {
+  return new ShoppingCartActions.FetchShoppingCart(userId);
+  // return new ShoppingCartActions.AddOrUpdateCartSuccess();
 }
 
 const getCorrectRequest = (http: HttpClient, cart: Cart) => {
@@ -60,7 +61,7 @@ export class ShoppingCartEffects {
       return getCorrectRequest(this.http, data.payload)
       .pipe(
         map(() => {
-          return handleSucessfulAddOrUpdateCart();
+          return handleSucessfulAddOrUpdateCart(+data.payload.userId);
           }),
           catchError(errorResponse => {
             return handleError(errorResponse);
@@ -76,7 +77,7 @@ export class ShoppingCartEffects {
       return this.http.post<Cart>(SHOPPING_CART_URL, data.payload)
       .pipe(
         map(() => {
-          return handleSucessfulAddOrUpdateCart();
+          return handleSucessfulAddOrUpdateCart(+data.payload.userId);
           }),
           catchError(errorResponse => {
             return handleError(errorResponse);
@@ -94,7 +95,7 @@ export class ShoppingCartEffects {
       return this.http.put<Cart>(`${SHOPPING_CART_URL}/${userId}/${productId}`, data.payload)
       .pipe(
         map(() => {
-          return handleSucessfulAddOrUpdateCart();
+          return handleSucessfulAddOrUpdateCart(+userId);
           }),
           catchError(errorResponse => {
             return handleError(errorResponse);

@@ -47,13 +47,13 @@ export class ProductMutationComponent implements OnInit {
   //=============================================================================
 
   private getInitializedProduct(productToInitialize: Product) {
-    return (productToInitialize == null) ? new Product() : productToInitialize;
+    return productToInitialize;
   }
 
   initializeForm() {
     this.productForm = new FormGroup({
       'name': new FormControl(this.newOrExistingProduct.name, Validators.required),
-      'imagePath': new FormControl(this.newOrExistingProduct.imagePath, { updateOn: 'blur'}),
+      'imagePath': new FormControl(this.newOrExistingProduct.imagePath),//, { updateOn: 'blur'}),
       'description': new FormControl(this.newOrExistingProduct.description),
       'stock': new FormControl(this.newOrExistingProduct.stock, [ Validators.required, Validators.pattern(/^[0-9]+[0-9]*$/)]),  // TODO: Consider putting validator in misc
       'price': new FormControl(this.newOrExistingProduct.price, [ Validators.required, Validators.pattern(/^[0-9]+(.[0-9]{0,2})?$/)]),

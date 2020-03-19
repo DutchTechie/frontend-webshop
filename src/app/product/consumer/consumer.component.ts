@@ -4,7 +4,6 @@
 
 //=============================================================================
 
-import { ShoppingCartService } from 'src/services/shopping-cart.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { User } from 'src/models/user.model';
 import { Product } from 'src/models/product.model';
@@ -50,11 +49,9 @@ export class ConsumerComponent implements OnInit {
           productId,
           1
         );
-        console.log("dispatching shopping cart action")
 
         // TODO: Make action more efficient by using withLatestFrom
         this.store.dispatch(new ShoppingCartActions.AddToCart(cart));
-        this.store.dispatch(new ShoppingCartActions.FetchShoppingCart(+this.user.userId))
       } else {
         this.router.navigate([PRODUCT_ROUTES.ABSOLUTE_PATH_DEFAULT]);
       }

@@ -104,6 +104,7 @@ export class ShoppingCartComponent implements OnInit {
       userId: userId,
       productId: productId
     }));
+    this.store.dispatch(new ShoppingCartActions.FetchShoppingCart(userId));
   }
 
   deleteAllShoppingCartItems() {
@@ -116,6 +117,7 @@ export class ShoppingCartComponent implements OnInit {
 
   updateCart(cart: Cart) {
     this.store.dispatch(new ShoppingCartActions.UpdateCart(cart));
+    // this.store.dispatch(new ShoppingCartActions.FetchShoppingCart(+this.user.userId))
   }
 
   updateTotalPrice(event) {

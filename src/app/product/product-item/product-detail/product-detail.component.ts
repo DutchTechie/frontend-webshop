@@ -14,6 +14,12 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from 'src/models/product.model';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { User } from 'src/models/user.model';
+import { Cart } from 'src/models/cart.model';
+import { Store } from '@ngrx/store';
+
+import * as fromApp from '../../../app.reducer';
+import * as ShoppingCartActions from '../../../../reducers/shopping-cart.actions';
+import { Router } from '@angular/router';
 
 //=======================================================
 
@@ -22,15 +28,15 @@ import { User } from 'src/models/user.model';
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.css']
 })
-
-//=======================================================
-
 export class ProductDetailComponent implements OnInit {
   @Input() product: Product;
   @Output() switchToEditMode = new EventEmitter();
   user: User = null;
 
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(
+    private authenticationService: AuthenticationService,
+    private store: Store<fromApp.AppState>,
+    private router: Router) {}
 
   ngOnInit(): void {
     this.initializeUser();
@@ -48,7 +54,11 @@ export class ProductDetailComponent implements OnInit {
     if (this.userIsAdmin()) {
       this.switchToEditMode.emit();
     } else {
-      this.addToCart(+this.product.id);
+      if (this.user !== null) {
+        this.addToCart(this.product.id);
+      } else {
+        this.router.navigate(['account/login']);
+      }
     }
   }
 
@@ -56,8 +66,14 @@ export class ProductDetailComponent implements OnInit {
     return this.authenticationService.userIsAdmin(this.user);
   }
 
-  addToCart(productId: number) {
-    console.log(productId)
+  addToCart(productId: string) {
+    const userId: string = this.user.userId;
+        const cart: Cart = new Cart(
+          userId,
+          productId,
+          1
+        );
+    this.store.dispatch(new ShoppingCartActions.AddToCart(cart));
     // TODO: Create a service for adding product id to cart.
   }
 }
