@@ -14,6 +14,8 @@ import { of } from 'rxjs';
 
 //=============================================================================
 
+const PRODUCTS_URL:string = 'http://localhost:8080/products';
+
 export interface ProductResponseData {
   id: string,
   name: string,
@@ -35,17 +37,12 @@ const handleFetching = (
     id, name, description, imagePath, price, stock, 'normal', true
   )
 
-  return new ProductActions.FetchSuccess(
-    product
-  )
+  return new ProductActions.FetchSuccess(product)
 }
 
 const handleError = (errorResponse: any) => {
   let errorMessage = 'An unknown error occurred!';
   if (!errorResponse.error || !errorResponse.error.error) {
-    // What of does, is, it emits values in a sequence, depending on
-    // how many parameters you have. So, of(1, 2, 3)
-    // Subscribing to this, means you'll get the output: 1, 2, 3. That's all!
     return of(new ProductActions.MutateFail(errorMessage));
   }
   return of(new ProductActions.MutateFail(errorMessage));
@@ -56,15 +53,14 @@ const handleSucessfulMutation = () => {
 }
 
 const getCorrectMutationRequest = (http: HttpClient, product: Product) => {
-  const productsUri = `http://localhost:8080/products`;
   if (product.id) {
     return http.put<ProductResponseData>(
-      productsUri,
+      PRODUCTS_URL,
       product
     )
   }
   return http.post<ProductResponseData>(
-    productsUri,
+    PRODUCTS_URL,
     product
   )
 }
@@ -85,7 +81,7 @@ export class ProductEffects {
     switchMap((productData: ProductActions.DeleteProduct) => {
       let id: number = productData.payload;
       console.log(`Deleting product with id:\t${id}`);
-      return this.http.delete<Product>(`http://localhost:8080/products/${id}`)
+      return this.http.delete<Product>(`${PRODUCTS_URL}/${id}`)
         .pipe(
           catchError(errorResponse => {
             return handleError(errorResponse);
@@ -98,8 +94,7 @@ export class ProductEffects {
   productsDeleteAllProducts = this.actions$.pipe(
     ofType(ProductActions.DELETE_ALL_PRODUCTS),
     switchMap(() => {
-      console.log(`Deleting all products!`);
-      return this.http.delete(`http://localhost:8080/products`)
+      return this.http.delete(PRODUCTS_URL)
         .pipe(
           catchError(errorResponse => {
             return handleError(errorResponse);
@@ -113,9 +108,7 @@ export class ProductEffects {
     ofType(ProductActions.FETCH_START),
     switchMap((productData: ProductActions.FetchStart) => {
       return this.http
-        .get<Product>(
-          `http://localhost:8080/products/${productData.payload}`
-        )
+        .get<Product>(`${PRODUCTS_URL}/${productData.payload}`)
         .pipe(
           map(responseData => {
             return handleFetching(
@@ -154,9 +147,7 @@ export class ProductEffects {
   fetchAllProducts = this.actions$.pipe(
     ofType(ProductActions.FETCH_PRODUCTS),
     switchMap(() => {
-      return this.http.get<Product[]>(
-        `http://localhost:8080/products`
-      );
+      return this.http.get<Product[]>(PRODUCTS_URL);
     }),
     map(products => {
       return products.map(product => {

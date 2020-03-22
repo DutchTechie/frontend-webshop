@@ -7,9 +7,8 @@ import { of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-// Note that whatever data you recieve from the server has specific
-// properties. Therefore, you can create an interface that matches
-// that of the object you'll recieve
+const USERS_URL:string = 'http://localhost:8080/users';
+
 export interface AuthenticationResponseData {
   id: string;
   email: string;
@@ -35,9 +34,6 @@ const handleAuthentication = (
 const handleError = (errorResponse: any) => {
   let errorMessage = 'An unknown error occurred!';
   if (!errorResponse.error || !errorResponse.error.error) {
-    // What of does, is, it emits values in a sequence, depending on
-    // how many parameters you have. So, of(1, 2, 3)
-    // Subscribing to this, means you'll get the output: 1, 2, 3. That's all!
     return of(new AuthActions.AuthenticateFail(errorMessage));
   }
   return of(new AuthActions.AuthenticateFail(errorMessage));
@@ -53,16 +49,13 @@ export class AuthenticationEffects {
   ) {}
 
   @Effect()
-  authenticationSignup = this.actions$.pipe(  // pipe lets you combine multiple functions into a single function
-    // ofType filters an Observable of Actions into an observable
-    // this observable is of the type of the actions whose type strings are passed to it.
+  authenticationSignup = this.actions$.pipe(
     ofType(AuthActions.SIGNUP_START),
-    // use switchmap to switch to a new observable
     switchMap((signupAction: AuthActions.SignupStart) => {
       const userCredentials = `${signupAction.payload.email}/${signupAction.payload.password}`;
       return this.http
         .post<AuthenticationResponseData>(
-          `http://localhost:8080/users/signup/${userCredentials}`,
+          `${USERS_URL}/signup/${userCredentials}`,
           null
         )
         .pipe(
@@ -91,7 +84,7 @@ export class AuthenticationEffects {
       const userCredentials = `${authenticationData.payload.email}/${authenticationData.payload.password}`;
       return this.http
         .post<AuthenticationResponseData>(
-          `http://localhost:8080/users/login/${userCredentials}`,
+          `${USERS_URL}/login/${userCredentials}`,
           null
         )
         .pipe(

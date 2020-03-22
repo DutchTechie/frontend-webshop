@@ -15,9 +15,10 @@ import { SharedModule } from './shared/shared.module';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import * as fromApp from './app.reducer';
 import { ShoppingCartEffects } from 'src/app/shopping-cart/store/shopping-cart.effects';
 import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
+
+import * as fromApp from './app.reducer';
 
 @NgModule({
   declarations: [
