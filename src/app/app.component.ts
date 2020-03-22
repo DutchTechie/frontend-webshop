@@ -9,7 +9,6 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromApp from './app.reducer'
 import * as AuthActions from './auth/store/auth.actions';
-import * as ShoppingCartActions from './shopping-cart/store/shopping-cart.actions';
 import { AuthenticationService } from 'src/app/auth/services/auth.service';
 import { User } from 'src/models/user.model';
 import { Observable } from 'rxjs';

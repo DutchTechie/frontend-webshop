@@ -1,3 +1,9 @@
+/*****************************************************************************
+@author
+******************************************************************************/
+
+//=============================================================================
+
 import { Actions, ofType, Effect } from '@ngrx/effects'
 import * as AuthActions from './auth.actions'
 import { switchMap, catchError, tap, map } from 'rxjs/operators';
@@ -6,6 +12,8 @@ import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+
+//=============================================================================
 
 const USERS_URL:string = 'http://localhost:8080/users';
 
@@ -33,7 +41,6 @@ const handleAuthentication = (
 
 const handleError = (errorResponse: any) => {
   let errorMessage = 'An unknown error occurred!';
-  console.log(errorResponse)
   if (!errorResponse.error || !errorResponse.error.error) {
     return of(new AuthActions.AuthenticateFail(errorMessage));
   }
@@ -60,16 +67,8 @@ export class AuthenticationEffects {
           null
         )
         .pipe(
-          tap(responseData => {
-            // TODO: Set logout timer
-          }),
-          map(resData => {
-            return new AuthActions.AuthenticateSuccess({
-              userId: resData.id,
-              email: resData.email,
-              isAdmin: resData.admin,
-              redirect: false
-            });
+          map(() => {
+            return new AuthActions.SignUpSuccess();
           }),
           catchError(errorResponse => {
             return handleError(errorResponse);
@@ -90,7 +89,6 @@ export class AuthenticationEffects {
         )
         .pipe(
           map(responseData => {
-            console.log(responseData);
             return handleAuthentication(
               responseData.id,
               responseData.email,
@@ -149,3 +147,5 @@ export class AuthenticationEffects {
     })
   )
 }
+
+//=============================================================================

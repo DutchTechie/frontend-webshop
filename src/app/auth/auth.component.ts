@@ -7,7 +7,7 @@
 import { Component } from '@angular/core'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { IUserCredentials } from './interfaces/IUserCredentials.component';
-import { Subscription, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Store } from '@ngrx/store';
@@ -28,7 +28,6 @@ const SIGNUP: string = 'SIGNUP';
     styleUrls: ['./auth.component.css']
 })
 export class AuthenticationComponent {
-  // shoppingCartState: Observable<fromShoppingCart.State>;
   authState: Observable<fromAuth.State>;
   authenticationMode: string = LOGIN;
   authForm: FormGroup;
@@ -68,17 +67,13 @@ export class AuthenticationComponent {
       if (this.authenticationMode === LOGIN) {
         this.authenticationMode = SIGNUP;
         this.location.go(AUTH_ROUTES.ABSOLUTE_PATH_SIGNUP);
-        this.store.dispatch(new AuthenticationActions.ClearError());
       } else {
         this.authenticationMode = LOGIN;
         this.location.go(AUTH_ROUTES.ABSOLUTE_PATH_LOGIN);
-        this.store.dispatch(new AuthenticationActions.ClearError());
       }
+      this.store.dispatch(new AuthenticationActions.ClearError());
+      this.store.dispatch(new AuthenticationActions.ClearSignUpStatus());
       this.authForm.reset();
-  }
-
-  ngOnDestroy() {
-      // if (this.storeSub) { this.storeSub.unsubscribe();}
   }
 
   onSubmit() {
@@ -105,6 +100,7 @@ export class AuthenticationComponent {
   }
 
   private submitLoginForm(userCredentials: IUserCredentials) {
+    this.store.dispatch(new AuthenticationActions.ClearSignUpStatus());
     this.store.dispatch(
       new AuthenticationActions.LoginStart({
         email: userCredentials.email,
