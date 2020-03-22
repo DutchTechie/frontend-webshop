@@ -8,14 +8,14 @@ editing an existing one.
 //=============================================================================
 
 import { Component, OnInit } from '@angular/core';
-import { Subscription, Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { User } from '../../models/user.model';
-import { Product } from '../../models/product.model';
 import { Store } from '@ngrx/store';
-import * as fromApp from '../app.reducer'
-import * as ProductActions from './store/product.actions'
-import { map } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/auth/services/auth.service';
+
+import * as fromApp from '../app.reducer';
+import * as ProductActions from './store/product.actions';
+import * as fromProduct from './store/product.reducer';
 
 //=============================================================================
 
@@ -25,11 +25,9 @@ import { AuthenticationService } from 'src/app/auth/services/auth.service';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-  private storeSub: Subscription;
   pageToRedirectUserTo : string;
-  errorMessage : string = null;
-  productSubs: Observable<Product []>;
   user: User = null;
+  productState: Observable<fromProduct.State>
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -37,6 +35,7 @@ export class ProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.productState = this.store.select('products');
     this.initializeUser();
     this.fetchAllProducts();
   }
@@ -49,15 +48,7 @@ export class ProductComponent implements OnInit {
 
   fetchAllProducts() {
     this.store.dispatch(new ProductActions.FetchProducts())
-    this.store
-      .select('products')
-      .pipe(map(productsState => productsState.products))
-      .subscribe((products: Product[]) => {
-        this.productSubs = of(products);
-    });
   }
-
-  showErrorAlert(errorMessage) { console.log(errorMessage);}
 
   userIsConsumer(): boolean {
     return this.authenticationService.userIsConsumer(this.user);
@@ -65,10 +56,6 @@ export class ProductComponent implements OnInit {
 
   userIsAdmin(): boolean {
     return this.authenticationService.userIsAdmin(this.user);
-  }
-
-  ngOnDestroy() {
-    if (this.storeSub) { this.storeSub.unsubscribe();}
   }
 }
 

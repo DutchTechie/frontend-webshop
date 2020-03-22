@@ -11,7 +11,6 @@ import * as ProductActions from '../store/product.actions'
 import { Product } from 'src/models/product.model';
 import { slideOutAnimation } from 'src/app/shared/animations/fade-out.animation';
 import { changeState } from 'src/app/shared/animations/change-state.animation';
-import { Observable } from 'rxjs';
 import { animateOut } from '../../shared/animations/animate-out.animation';
 
 //=============================================================================
@@ -23,13 +22,12 @@ import { animateOut } from '../../shared/animations/animate-out.animation';
   animations: [slideOutAnimation, changeState, animateOut]
 })
 export class AdminComponent implements OnInit {
-  @Input() productSubs: Observable<Product[]>
+  @Input() products: Product[];
   @Output() fetchAllProductsEmitter = new EventEmitter<void>();
   hideAllProductsPriorToDeletingThem: boolean = false;
   calledEndAnimationOnce: boolean = false;
   slideOut: string = 'normal';
   product: Product = null;
-
 
   constructor(private store: Store<fromApp.AppState>) {}
 
@@ -65,11 +63,7 @@ export class AdminComponent implements OnInit {
 
   startDeletingProduct(product) {
     if (this.adminIsSureToDelete()) {
-      if (product.state === 'normal') {
-        product.state = 'slideOut';
-      } else {
-        product.state = 'normal';
-      }
+      product.state = (product.state === 'normal') ? 'slideOut' : 'normal';
       this.product = product;
     }
   }

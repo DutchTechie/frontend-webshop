@@ -40,31 +40,30 @@ export function productReducer(state = initialState, action: Actions.ProductActi
         currentProduct: currentProduct
       };
 
+    case Actions.FETCH_PRODUCTS:
     case Actions.FETCH_START:
       return {
         ...state,
-        loading: false,
+        loading: true,
         productError: null
       }
 
     case Actions.SET_PRODUCTS:
       return {
         ...state,
-        products: [...action.payload]
+        products: [...action.payload],
+        loading: false
       };
 
     case Actions.DELETE_ALL_PRODUCTS_SUCCESS:
       return {
         ...state,
-        products: []
+        products: [],
       }
 
     case Actions.DELETE_PRODUCT:
       return {
         ...state,
-        products: state.products.filter((product) => {
-          return +product.id !== action.payload;
-        }),
         productError: null
       };
 

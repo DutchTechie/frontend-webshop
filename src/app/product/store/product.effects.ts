@@ -80,7 +80,7 @@ export class ProductEffects {
     ofType(ProductActions.DELETE_PRODUCT),
     switchMap((productData: ProductActions.DeleteProduct) => {
       let id: number = productData.payload;
-      console.log(`Deleting product with id:\t${id}`);
+
       return this.http.delete<Product>(`${PRODUCTS_URL}/${id}`)
         .pipe(
           catchError(errorResponse => {

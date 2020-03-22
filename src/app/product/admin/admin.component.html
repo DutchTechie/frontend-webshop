@@ -16,10 +16,11 @@
                   [hidden]="hideAllProductsPriorToDeletingThem"
                   [@animateOut]="slideOut"
                   (@animateOut.done)="endOfDeleteAllAnimation()">
+
                     <tr
                     class="text-left"
                     [hidden]="!product.visible"
-                    *ngFor="let product of (productSubs | async)"
+                    *ngFor="let product of products"
                     [@animateOut]="product.state"
                     (@animateOut.done)="onEndDeleteProductAnimation()">
                       <td></td>

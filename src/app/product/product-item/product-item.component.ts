@@ -9,12 +9,13 @@ corresponding id, if any, in the address bar.
 
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { ProductService } from '../services/product.service';
 import { Product } from '../../../models/product.model';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../../app.reducer';
 import { map, switchMap } from 'rxjs/operators';
+import * as fromProduct from '../store/product.reducer';
 
 export const MUTATE: string = 'MUTATE';
 export const DETAILS: string = 'DETAILS';
@@ -27,13 +28,13 @@ export const DETAILS: string = 'DETAILS';
   styleUrls: ['./product-item.component.css']
 })
 export class ProductItemComponent {
-  private storeSub: Subscription;
   noImageFoundImagePath: string = "https://www.wiersmaverhuizingen.nl/wp-content/themes/consultix/images/no-image-found-360x260.png";
   visitedDetailsPage: boolean = false;
   productPageMode: string = null;
   updatedImageSub: Subscription;
   currentProduct: Product;
   failedLoadingImage: boolean = false;
+  productState: Observable<fromProduct.State>
 
   @ViewChild('imagePath', {static: true}) imagePath: ElementRef;
 
@@ -65,6 +66,7 @@ export class ProductItemComponent {
           }),
           switchMap(productId => {
             id = productId;
+            this.productState = this.store.select('products');
             return this.store.select('products');
           }),
           map(productState => {
@@ -89,16 +91,12 @@ export class ProductItemComponent {
   }
 
   onError() {
-    this.failedLoadingImage = true;
     this.loadImageNotfound();
-    console.log("Detecting error!!!")
+    this.failedLoadingImage = true;
   }
 
   loadImageNotfound() {
-    if (this.currentProduct) {
-      this.currentProduct.imagePath = this.noImageFoundImagePath;
-    }
-    // this.productService.updatedImagePath.next(imagePath);
+    if (this.currentProduct) { this.currentProduct.imagePath = this.noImageFoundImagePath; }
   }
 
   handleSwitchToEditMode() {
@@ -114,9 +112,6 @@ export class ProductItemComponent {
   }
 
   ngOnDestroy() {
-    if (this.storeSub) {
-      this.storeSub.unsubscribe();
-    }
     if (this.updatedImageSub != null) {
       this.updatedImageSub.unsubscribe();
     }

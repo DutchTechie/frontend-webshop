@@ -7,7 +7,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { User } from 'src/models/user.model';
 import { Product } from 'src/models/product.model';
-import { Observable } from 'rxjs';
 import { AuthenticationService } from 'src/app/auth/services/auth.service';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -26,7 +25,7 @@ import * as ShoppingCartActions from '../../shopping-cart/store/shopping-cart.ac
   styleUrls: ['./consumer.component.css']
 })
 export class ConsumerComponent implements OnInit {
-  @Input() productSubs: Observable<Product[]>
+  @Input() products: Product[];
   @Input() user: User;
 
   constructor(

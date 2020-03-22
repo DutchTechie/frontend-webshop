@@ -3,19 +3,24 @@
   <p class="text-center">Bootstrap is the most popular HTML, CSS, and JS framework for developing responsive,
   mobile-first projects on the web.</p>
 </div>
-<div *ngIf="userIsConsumer() === true">
-
-  <!-- consumer component -->
-  <app-consumer
-      [user]="user"
-      [productSubs]="productSubs">
-  </app-consumer>
+<div class="text-center" style="margin-top: 100px;" *ngIf="(productState | async).loading">
+  <app-loading-spinner></app-loading-spinner>
 </div>
-<div *ngIf="userIsAdmin() === true">
+<div *ngIf="!(productState | async).loading">
+  <div *ngIf="userIsConsumer() === true">
 
-  <!-- admin component -->
-  <app-admin
-      [productSubs]="productSubs"
-      (fetchAllProductsEmitter)="fetchAllProducts()">
-  </app-admin>
+    <!-- consumer component -->
+    <app-consumer
+        [user]="user"
+        [products]="(productState | async).products">
+    </app-consumer>
+  </div>
+  <div *ngIf="userIsAdmin() === true">
+
+    <!-- admin component -->
+    <app-admin
+        [products]="(productState | async).products"
+        (fetchAllProductsEmitter)="fetchAllProducts()">
+    </app-admin>
+  </div>
 </div>
