@@ -8,12 +8,12 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { User } from 'src/models/user.model';
 import { Product } from 'src/models/product.model';
 import { Observable } from 'rxjs';
-import { AuthenticationService } from 'src/services/authentication.service';
+import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 import { Router } from '@angular/router';
 import * as PRODUCT_ROUTES from '../product.routes';
 import * as AUTH_ROUTES from '../../authentication/auth.routes';
 import * as fromApp from '../../app.reducer';
-import * as ShoppingCartActions from '../../../reducers/shopping-cart.actions';
+import * as ShoppingCartActions from '../../shopping-cart/store/shopping-cart.actions';
 import { Store } from '@ngrx/store';
 import { Cart } from 'src/models/cart.model';
 
@@ -44,11 +44,7 @@ export class ConsumerComponent implements OnInit {
     if(this.user != null) {
       if (this.authenticationService.userIsConsumer(this.user)) {
         const userId: string = this.user.userId;
-        const cart: Cart = new Cart(
-          userId,
-          productId,
-          1
-        );
+        const cart: Cart = new Cart(userId, productId, 1);
 
         // TODO: Make action more efficient by using withLatestFrom
         this.store.dispatch(new ShoppingCartActions.AddToCart(cart));

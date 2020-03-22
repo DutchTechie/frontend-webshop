@@ -8,9 +8,9 @@ allready logged in.
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromApp from './app.reducer'
-import * as AuthActions from '../reducers/authentication.actions';
-import * as ShoppingCartActions from '../reducers/shopping-cart.actions';
-import { AuthenticationService } from 'src/services/authentication.service';
+import * as AuthActions from './authentication/store/authentication.actions';
+import * as ShoppingCartActions from './shopping-cart/store/shopping-cart.actions';
+import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 import { User } from 'src/models/user.model';
 import { Observable } from 'rxjs';
 
@@ -34,9 +34,9 @@ export class AppComponent {
     this.user$.subscribe(user => {
       this.user = user;
     });
-    if (this.user !== null) {
-      this.store.dispatch(new ShoppingCartActions.FetchShoppingCart(+this.user.userId))
-    }
+
+
+    ///
   }
 }
 

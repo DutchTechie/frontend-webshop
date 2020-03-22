@@ -6,17 +6,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { StoreModule } from '@ngrx/store';
 import { CoreModule } from './core.module';
 import { EffectsModule } from '@ngrx/effects';
-import { AuthenticationEffects } from 'src/reducers/authentication.effects';
+import { AuthenticationEffects } from 'src/app/authentication/store/authentication.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { environment } from '../environments/environment';
-import { ProductEffects } from 'src/reducers/product.effects';
+import { ProductEffects } from 'src/app/product/store/product.effects';
 import { SharedModule } from './shared/shared.module';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import * as fromApp from './app.reducer';
-import { ShoppingCartEffects } from 'src/reducers/shopping-cart.effects';
+import { ShoppingCartEffects } from 'src/app/shopping-cart/store/shopping-cart.effects';
 import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
 
 @NgModule({

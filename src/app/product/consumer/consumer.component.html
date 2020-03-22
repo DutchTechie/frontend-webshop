@@ -5,6 +5,7 @@
         <app-loading-spinner></app-loading-spinner>
       </div>
     </div> -->
+    <!-- TODO: Use state instead -->
     <div class="consumer-container" *ngIf="!pageIsLoading">
       <div *ngFor="let product of (productSubs | async)" class="col-md-2 my-card">
         <div class="no-highlight" routerLink="product/details/{{ product.id }}">

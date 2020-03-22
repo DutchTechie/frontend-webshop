@@ -7,9 +7,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProductComponent } from './product.component'
-import { ProductResolverService } from '../../services/product-resolver.service'
+import { ProductResolverService } from './services/product-resolver.service'
 import { ProductItemComponent } from './product-item/product-item.component';
-import { AuthGuard } from 'src/services/auth.guard';
+import { AuthGuard } from 'src/app/auth.guard';
 import * as ROUTES from './product.routes';
 
 //=============================================================================

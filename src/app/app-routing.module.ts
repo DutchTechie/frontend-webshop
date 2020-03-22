@@ -7,7 +7,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { PageNotFoundComponent } from './miscellaneous/page-not-found/page-not-found.component';
-import { AuthGuard } from 'src/services/auth.guard';
+import { AuthGuard } from 'src/app/auth.guard';
 import * as PRODUCT_ROUTES from './product/product.routes';
 import * as AUTH_ROUTES from './authentication/auth.routes';
 import * as SHOPPING_CART_ROUTES from './shopping-cart/shopping-cart.routes'

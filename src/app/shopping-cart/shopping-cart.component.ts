@@ -10,7 +10,7 @@ editing an existing one.
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../app.reducer';
-import * as ShoppingCartActions from '../../reducers/shopping-cart.actions';
+import * as ShoppingCartActions from './store/shopping-cart.actions';
 import { slideOutAnimation } from '../shared/animations/fade-out.animation';
 import { changeState } from '../shared/animations/change-state.animation';
 import { animateOut } from '../shared/animations/animate-out.animation';
@@ -18,10 +18,10 @@ import { map } from 'rxjs/operators';
 import { ShoppingCart } from 'src/models/shopping-cart.model';
 import { Observable, of } from 'rxjs';
 import { Cart } from 'src/models/cart.model';
-import { AuthenticationService } from 'src/services/authentication.service';
+import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 import { User } from 'src/models/user.model';
 
-import * as fromShoppingCart from '../../reducers/shopping-cart.reducer';
+import * as fromShoppingCart from './store/shopping-cart.reducer';
 
 //=============================================================================
 
@@ -37,7 +37,6 @@ export class ShoppingCartComponent implements OnInit {
   calledEndAnimationOnce: boolean = false;
   slideOut: string = 'normal';
   shoppingCartItem: ShoppingCart = null;
-  shoppingCartItemSubs: Observable<ShoppingCart[]>
   totalPrice : number = 0;
   user: User = null;
 
@@ -48,6 +47,9 @@ export class ShoppingCartComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeApplicationUser();
+    // if (this.user !== null) {
+    //   this.store.dispatch(new ShoppingCartActions.FetchShoppingCart(+this.user.userId))
+    // }
     this.shoppingCartState = this.store.select('shoppingCart');
   }
 

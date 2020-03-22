@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import * as fromApp from '../app/app.reducer';
-import * as ProductActions from '../reducers/product.actions';
+import * as fromApp from '../../app.reducer';
+import * as ProductActions from '../store/product.actions';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Product } from 'src/models/product.model';
 import { take, map, switchMap } from 'rxjs/operators';

@@ -4,11 +4,11 @@
 
 //=============================================================================
 
-import { switchMap, map, tap, catchError } from 'rxjs/operators';
+import { switchMap, map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import * as ShoppingCartActions from './shopping-cart.actions';
 import { Cart } from 'src/models/cart.model';
 import { ShoppingCart } from 'src/models/shopping-cart.model';
@@ -31,7 +31,6 @@ const handleError = (errorResponse: any) => {
 
 const handleSucessfulAddOrUpdateCart = (userId: number) => {
   return new ShoppingCartActions.FetchShoppingCart(userId);
-  // return new ShoppingCartActions.AddOrUpdateCartSuccess();
 }
 
 const getCorrectRequest = (http: HttpClient, cart: Cart) => {
@@ -92,6 +91,7 @@ export class ShoppingCartEffects {
     switchMap((data: ShoppingCartActions.UpdateCart) => {
       let userId: string = data.payload.userId;
       let productId: string = data.payload.productId;
+
       return this.http.put<Cart>(`${SHOPPING_CART_URL}/${userId}/${productId}`, data.payload)
       .pipe(
         map(() => {
@@ -142,6 +142,12 @@ export class ShoppingCartEffects {
       )
     })
   )
+
+  // @Effect({dispatch: false})
+  // clearCart = this.actions$.pipe(
+  //   ofType(ShoppingCartActions.CLEAR_CART),
+
+  // )
 
   @Effect({dispatch: false})
   productsDeleteAllProducts = this.actions$.pipe(

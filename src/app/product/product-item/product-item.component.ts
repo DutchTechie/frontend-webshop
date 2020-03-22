@@ -10,7 +10,7 @@ corresponding id, if any, in the address bar.
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ProductService } from '../../../services/product.service';
+import { ProductService } from '../services/product.service';
 import { Product } from '../../../models/product.model';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../../app.reducer';
@@ -76,7 +76,6 @@ export class ProductItemComponent {
         ).subscribe(product => {
           if (!product) {
             this.loadImageNotfound();
-            // this.router.navigate(['/']); // TODO: Update error message
           } else {
             this.currentProduct = product;
           }

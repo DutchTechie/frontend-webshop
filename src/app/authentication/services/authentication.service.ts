@@ -6,7 +6,7 @@
 
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as fromApp from '../app/app.reducer'
+import * as fromApp from '../../app.reducer'
 import { User } from 'src/models/user.model';
 import { map } from 'rxjs/operators';
 import { of, Subscription, Observable } from 'rxjs';

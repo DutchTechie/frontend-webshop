@@ -5,19 +5,19 @@ editing an existing one.
 @author
 ******************************************************************************/
 
-//=============================================================================
+// =============================================================================
 
 import { Store } from '@ngrx/store';
 import * as fromApp from '../../../app.reducer';
-import * as ProductActions from '../../../../reducers/product.actions';
+import * as ProductActions from '../../store/product.actions';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from 'src/models/product.model';
-import { ProductService } from 'src/services/product.service';
+import { ProductService } from 'src/app/product/services/product.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as PRODUCT_ROUTES from '../../product.routes';
 
-//=============================================================================
+// =============================================================================
 
 @Component({
   selector: 'app-product-mutation',
@@ -39,21 +39,16 @@ export class ProductMutationComponent implements OnInit {
   ngOnInit(): void {}
 
   ngOnChanges() {
-    this.newOrExistingProduct = this.getInitializedProduct(this.newOrExistingProduct);
     this.initializeForm();
     this.keepUpdatingProductImage('imagePath');
   }
 
-  //=============================================================================
-
-  private getInitializedProduct(productToInitialize: Product) {
-    return productToInitialize;
-  }
+  // =============================================================================
 
   initializeForm() {
     this.productForm = new FormGroup({
       'name': new FormControl(this.newOrExistingProduct.name, Validators.required),
-      'imagePath': new FormControl(this.newOrExistingProduct.imagePath),//, { updateOn: 'blur'}),
+      'imagePath': new FormControl(this.newOrExistingProduct.imagePath),
       'description': new FormControl(this.newOrExistingProduct.description),
       'stock': new FormControl(this.newOrExistingProduct.stock, [ Validators.required, Validators.pattern(/^[0-9]+[0-9]*$/)]),  // TODO: Consider putting validator in misc
       'price': new FormControl(this.newOrExistingProduct.price, [ Validators.required, Validators.pattern(/^[0-9]+(.[0-9]{0,2})?$/)]),
@@ -66,28 +61,13 @@ export class ProductMutationComponent implements OnInit {
     });
   }
 
-  updateImage(imagePath: string) {
-    this.productService.updatedImagePath.next(imagePath);
-  }
+  updateImage(imagePath: string) { this.productService.updatedImagePath.next(imagePath); }
 
-  //=============================================================================
+  // =============================================================================
 
-  // when on button click, it gets updated, however, the form does not wait for the image to validate the
-  // image path. Therefore, it submits values regardless of their validity.
-
-  // conclusion: the submit function must wait until the image has been validated. Then, it is free to submit
-  // the form.
-
-  // Does it also wait when you simply submit when on focus on one input?
-  // No. The input simply submits the default image. In other words, we simply need to wait
-  // for the validation in the onsubmit function. No where else.
   onSubmit() {
-    console.log("I have been submitted.");
     const productFormIsValid = this.productForm.valid;
     const productValueSubmittedByUser = this.productForm.value;
-    this.productService.updatedImagePath.subscribe((data) => {
-      console.log(data)
-    })
 
     if  (productFormIsValid) {
       const productToMutate = {
@@ -105,7 +85,7 @@ export class ProductMutationComponent implements OnInit {
     });
   }
 
-  //=============================================================================
+  // =============================================================================
 
   handleOnBackPressed() {
     const userVisitedDetailsPage: boolean = this.visitedDetailsPage == true;
@@ -120,4 +100,4 @@ export class ProductMutationComponent implements OnInit {
   }
 }
 
-//=============================================================================
+// =============================================================================

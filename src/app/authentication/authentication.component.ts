@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../app.reducer'
-import * as AuthenticationActions from '../../reducers/authentication.actions'
+import * as AuthenticationActions from './store/authentication.actions'
 import * as AUTH_ROUTES from '../authentication/auth.routes';
 
 const LOGIN: string = 'LOGIN';
@@ -119,7 +119,6 @@ export class AuthenticationComponent {
   }
 
   private submitLoginForm(userCredentials: IUserCredentials) {
-    console.log("attempting to login!");
     this.store.dispatch(
       new AuthenticationActions.LoginStart({
         email: userCredentials.email,

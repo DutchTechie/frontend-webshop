@@ -24,6 +24,7 @@ export function authenticationReducer(
         action.payload.email,
         action.payload.isAdmin
       );
+
       return {
         ...state,
         user: user,

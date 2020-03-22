@@ -7,7 +7,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../../app.reducer'
-import * as ProductActions from '../../../reducers/product.actions'
+import * as ProductActions from '../store/product.actions'
 import { Product } from 'src/models/product.model';
 import { slideOutAnimation } from 'src/app/shared/animations/fade-out.animation';
 import { changeState } from 'src/app/shared/animations/change-state.animation';

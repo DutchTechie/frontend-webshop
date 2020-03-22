@@ -95,10 +95,6 @@ export class AuthenticationEffects {
           null
         )
         .pipe(
-          tap(responseData => {
-            // TODO: Add a timer
-            console.log(responseData);
-          }),
           map(responseData => {
             console.log(responseData);
             return handleAuthentication(

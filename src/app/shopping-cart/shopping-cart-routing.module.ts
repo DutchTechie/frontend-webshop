@@ -6,7 +6,7 @@
 
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from 'src/services/auth.guard';
+import { AuthGuard } from 'src/app/auth.guard';
 import * as ROUTES from './shopping-cart.routes';
 import { ShoppingCartComponent } from './shopping-cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';

@@ -12,13 +12,13 @@ edit the product.
 
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from 'src/models/product.model';
-import { AuthenticationService } from 'src/services/authentication.service';
+import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 import { User } from 'src/models/user.model';
 import { Cart } from 'src/models/cart.model';
 import { Store } from '@ngrx/store';
 
 import * as fromApp from '../../../app.reducer';
-import * as ShoppingCartActions from '../../../../reducers/shopping-cart.actions';
+import * as ShoppingCartActions from '../../../shopping-cart/store/shopping-cart.actions';
 import { Router } from '@angular/router';
 
 //=======================================================
@@ -68,13 +68,8 @@ export class ProductDetailComponent implements OnInit {
 
   addToCart(productId: string) {
     const userId: string = this.user.userId;
-        const cart: Cart = new Cart(
-          userId,
-          productId,
-          1
-        );
+    const cart: Cart = new Cart(userId, productId, 1);
     this.store.dispatch(new ShoppingCartActions.AddToCart(cart));
-    // TODO: Create a service for adding product id to cart.
   }
 }
 

@@ -55,6 +55,13 @@ export function shoppingCartReducer(state = initialState, action: Actions.Shoppi
           shoppingCart: [...action.payload]
         };
 
+      case Actions.CLEAR_CART:
+        return {
+          shoppingCart: [],
+          shoppingCartError: null,
+          loading: false
+        }
+
     default:
       return state;
   }

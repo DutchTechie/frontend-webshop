@@ -19,7 +19,7 @@ export const FETCH_SHOPPING_CART = '[ShoppingCart] Fetch Shopping Cart';
 export const FETCH_START = '[ShoppingCart] Fetch Cart Start';
 export const FETCH_SUCCESS = '[ShoppingCart] Fetch Shopping Cart Success';
 
-
+export const CLEAR_CART = '[Cart] Clear cart';
 export const ADD_TO_CART = '[Cart] Add To Cart';
 export const UPDATE_CART = '[Cart] Update Cart';
 export const ADD_OR_UPDATE_CART = '[Cart] Start Adding New Cart Or Updating Cart';
@@ -33,21 +33,26 @@ export const DELETE_ALL_CART_ITEMS_SUCCESS = '[Cart] Delete All Cart Items Succe
 
 //=============================================================================
 
-export class StartCheckAvailableProducts implements Action {
-  readonly type = START_CHECK_AVAILABLE_PRODUCTS;
+export class ClearCart implements Action {
+  readonly type = CLEAR_CART;
 }
 
-export class StartCheckAvailableProductsFail implements Action {
-  readonly type = START_CHECK_AVAILABLE_PRODUCTS_FAIL;
-}
 
-export class RemoveUnusableCarts implements Action {
-  readonly type = REMOVE_UNUSABLE_CARTS;
-}
+// export class StartCheckAvailableProducts implements Action {
+//   readonly type = START_CHECK_AVAILABLE_PRODUCTS;
+// }
 
-export class StartCheckAvailableProductsSuccess implements Action {
-  readonly type = START_CHECK_AVAILABLE_PRODUCTS_SUCCESS;
-}
+// export class StartCheckAvailableProductsFail implements Action {
+//   readonly type = START_CHECK_AVAILABLE_PRODUCTS_FAIL;
+// }
+
+// export class RemoveUnusableCarts implements Action {
+//   readonly type = REMOVE_UNUSABLE_CARTS;
+// }
+
+// export class StartCheckAvailableProductsSuccess implements Action {
+//   readonly type = START_CHECK_AVAILABLE_PRODUCTS_SUCCESS;
+// }
 
 //=============================================================================
 
@@ -129,10 +134,10 @@ export class ClearError implements Action {
 }
 
 export type ShoppingCartActions =
-  | StartCheckAvailableProducts
-  | StartCheckAvailableProductsFail
-  | RemoveUnusableCarts
-  | StartCheckAvailableProductsSuccess
+  // | StartCheckAvailableProducts
+  // | StartCheckAvailableProductsFail
+  // | RemoveUnusableCarts
+  // | StartCheckAvailableProductsSuccess
   | SetShoppingCart
   | FetchShoppingCart
   | FetchStart
@@ -144,5 +149,6 @@ export type ShoppingCartActions =
   | DeleteCartItem
   | DeleteAllCartItems
   | DeleteAllCartItemsSuccess
+  | ClearCart
 
 //=============================================================================

@@ -8,9 +8,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { User } from 'src/models/user.model';
 import * as fromApp from '../app.reducer';
-import * as AuthenticationActions from '../../reducers/authentication.actions';
-import * as ShoppingCartActions from '../../reducers/shopping-cart.actions';
-import { AuthenticationService } from 'src/services/authentication.service';
+import * as AuthenticationActions from '../authentication/store/authentication.actions';
+import * as ShoppingCartActions from '../shopping-cart/store/shopping-cart.actions';
+import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
 import { Observable, of, Subscription } from 'rxjs';
 
 //=============================================================================
@@ -32,6 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+
     this.userSub = this.authenticationService.getApplicationUser().subscribe(user => {
       this.user = user;
       if(this.user !== null) {
@@ -40,6 +41,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
       }
     })
+
+    if (this.user !== null) {
+      this.store.dispatch(new ShoppingCartActions.FetchShoppingCart(+this.user.userId))
+    }
 
   }
 
@@ -54,6 +59,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onLogout() {
+    this.store.dispatch(new ShoppingCartActions.ClearCart())
     this.store.dispatch(new AuthenticationActions.Logout());
     this.numberOfCarts = 0;
   }
@@ -68,7 +74,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     if (this.userSub) {
-      console.log("User is being destroyed")
       this.userSub.unsubscribe();
     }
   }
