@@ -28,6 +28,7 @@ import * as ROUTES from './auth.routes';
   ],
   declarations: [AuthenticationComponent]
 })
+
 export class AuthenticationModule { }
 
 //=============================================================================

@@ -15,7 +15,6 @@ import { Product } from '../../../models/product.model';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../../app.reducer';
 import { map, switchMap } from 'rxjs/operators';
-import { Location } from '@angular/common'
 
 export const MUTATE: string = 'MUTATE';
 export const DETAILS: string = 'DETAILS';

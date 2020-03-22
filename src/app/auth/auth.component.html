@@ -4,7 +4,10 @@
         <div class="login-form">
             <h3>{{  (authenticationMode === 'LOGIN') ? 'Login' : 'Sign up' }}</h3>
             <br />
-            <form [formGroup]="authForm" (ngSubmit)="onSubmit()" *ngIf="!pageIsLoading">
+            <div class="alert alert-danger" *ngIf="(authState | async).authError">
+              {{ (authState | async).authError["error"] }}
+            </div>
+            <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
               <div formGroupName="userData">
                 <div class="form-group">
                     <input

@@ -34,9 +34,6 @@ export class AppComponent {
     this.user$.subscribe(user => {
       this.user = user;
     });
-
-
-    ///
   }
 }
 

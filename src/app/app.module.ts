@@ -1,3 +1,9 @@
+/*****************************************************************************
+@author
+******************************************************************************/
+
+//=============================================================================
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
@@ -19,6 +25,8 @@ import { ShoppingCartEffects } from 'src/app/shopping-cart/store/shopping-cart.e
 import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
 
 import * as fromApp from './app.reducer';
+
+//=============================================================================
 
 @NgModule({
   declarations: [
@@ -42,4 +50,7 @@ import * as fromApp from './app.reducer';
   providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
+
+//=============================================================================

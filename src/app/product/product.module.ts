@@ -1,5 +1,10 @@
+/*****************************************************************************
+@author
+******************************************************************************/
+
+//=============================================================================
+
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ProductComponent } from './product.component';
 import { SharedModule } from './../shared/shared.module';
 import { AdminComponent } from './admin/admin.component';
@@ -9,6 +14,8 @@ import { ProductMutationComponent } from './product-item/product-mutation/produc
 import { ProductRoutingModule } from './product-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductItemComponent } from './product-item/product-item.component';
+
+//=============================================================================
 
 @NgModule({
   imports: [
@@ -26,4 +33,7 @@ import { ProductItemComponent } from './product-item/product-item.component';
     ProductMutationComponent
   ]
 })
+
 export class ProductModule { }
+
+//=============================================================================

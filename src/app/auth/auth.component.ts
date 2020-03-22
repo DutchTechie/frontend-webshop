@@ -6,13 +6,15 @@
 
 import { Component } from '@angular/core'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
-import { IUserCredentials } from '../../interfaces/IUserCredentials.component';
+import { IUserCredentials } from './interfaces/IUserCredentials.component';
 import { Subscription, Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Store } from '@ngrx/store';
-import * as fromApp from '../app.reducer'
-import * as AuthenticationActions from './store/auth.actions'
+
+import * as fromApp from '../app.reducer';
+import * as fromAuth from './store/auth.reducer';
+import * as AuthenticationActions from './store/auth.actions';
 import * as AUTH_ROUTES from '../auth/auth.routes';
 
 const LOGIN: string = 'LOGIN';
@@ -25,15 +27,11 @@ const SIGNUP: string = 'SIGNUP';
     templateUrl: './auth.component.html',
     styleUrls: ['./auth.component.css']
 })
-
-//=============================================================================
-
 export class AuthenticationComponent {
+  // shoppingCartState: Observable<fromShoppingCart.State>;
+  authState: Observable<fromAuth.State>;
   authenticationMode: string = LOGIN;
-  pageIsLoading: boolean = false;
-  errorMessage : string = null;
   authForm: FormGroup;
-  private storeSub: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -55,44 +53,32 @@ export class AuthenticationComponent {
 
   ngOnInit() {
     const path: string = this.route.routeConfig.path;
+    this.authenticationMode = (path === "signup") ? SIGNUP : LOGIN;
+    this.authState = this.store.select('authentication');
+
     this.authForm = new FormGroup({
       'userData' : new FormGroup({
         'email' : new FormControl(null, [Validators.required, Validators.required ], this.forbiddenEmails),
         'password' : new FormControl(null, [Validators.required, Validators.minLength(6)])
       })
     });
-    if (path === "signup") {
-      this.authenticationMode = SIGNUP;
-    } else {
-      this.authenticationMode = LOGIN;
-    }
-    this.storeSub = this.store.select('authentication').subscribe(authenticationState => {
-      this.pageIsLoading = authenticationState.loading;
-      this.errorMessage = authenticationState.authError;
-      if (this.errorMessage) {
-        this.showErrorAlert(this.errorMessage);
-      }
-    })
-  }
-
-  showErrorAlert(errorMessage) {
-    console.log(errorMessage);
   }
 
   onSwitchMode() {
       if (this.authenticationMode === LOGIN) {
         this.authenticationMode = SIGNUP;
         this.location.go(AUTH_ROUTES.ABSOLUTE_PATH_SIGNUP);
+        this.store.dispatch(new AuthenticationActions.ClearError());
       } else {
         this.authenticationMode = LOGIN;
         this.location.go(AUTH_ROUTES.ABSOLUTE_PATH_LOGIN);
+        this.store.dispatch(new AuthenticationActions.ClearError());
       }
-      this.errorMessage = null;
       this.authForm.reset();
   }
 
   ngOnDestroy() {
-      if (this.storeSub) { this.storeSub.unsubscribe();}
+      // if (this.storeSub) { this.storeSub.unsubscribe();}
   }
 
   onSubmit() {

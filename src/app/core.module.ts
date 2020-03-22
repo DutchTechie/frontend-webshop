@@ -1,3 +1,9 @@
+/*****************************************************************************
+@author
+******************************************************************************/
+
+//=============================================================================
+
 import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 // import { LoggingInterceptor } from './miscellaneous/logging.interceptor';
@@ -14,3 +20,5 @@ import { AuthInterceptorService } from './services/AuthInterceptorService.servic
   ]
 })
 export class CoreModule {}
+
+//=============================================================================

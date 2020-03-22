@@ -33,10 +33,11 @@ const handleAuthentication = (
 
 const handleError = (errorResponse: any) => {
   let errorMessage = 'An unknown error occurred!';
+  console.log(errorResponse)
   if (!errorResponse.error || !errorResponse.error.error) {
     return of(new AuthActions.AuthenticateFail(errorMessage));
   }
-  return of(new AuthActions.AuthenticateFail(errorMessage));
+  return of(new AuthActions.AuthenticateFail(errorResponse.error));
 }
 
 @Injectable()

@@ -1,3 +1,9 @@
+/*****************************************************************************
+@author
+******************************************************************************/
+
+//=============================================================================
+
 import { Injectable } from '@angular/core';
 import { Actions, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
@@ -7,6 +13,8 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/r
 import { Product } from 'src/models/product.model';
 import { take, map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+
+//=============================================================================
 
 @Injectable({
   providedIn: 'root'
@@ -37,3 +45,5 @@ export class ProductResolverService implements Resolve<Product[]> {
     )
   }
 }
+
+//=============================================================================

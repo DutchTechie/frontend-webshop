@@ -7,7 +7,7 @@ editing an existing one.
 
 //=============================================================================
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../app.reducer';
 import * as ShoppingCartActions from './store/shopping-cart.actions';
@@ -31,7 +31,7 @@ import * as fromShoppingCart from './store/shopping-cart.reducer';
   styleUrls: ['./shopping-cart.component.css'],
   animations: [slideOutAnimation, changeState, animateOut]
 })
-export class ShoppingCartComponent implements OnInit {
+export class ShoppingCartComponent implements OnInit, OnDestroy {
   shoppingCartState: Observable<fromShoppingCart.State>;
   hideAllProductsPriorToDeletingThem: boolean = false;
   calledEndAnimationOnce: boolean = false;
@@ -44,6 +44,8 @@ export class ShoppingCartComponent implements OnInit {
     private authenticationService : AuthenticationService,
     private store: Store<fromApp.AppState>
     ) {}
+
+  ngOnDestroy(): void {}
 
   ngOnInit(): void {
     this.initializeApplicationUser();

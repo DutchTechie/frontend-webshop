@@ -1,3 +1,9 @@
+/*****************************************************************************
+@author
+******************************************************************************/
+
+//=============================================================================
+
 import { ActionReducerMap } from '@ngrx/store';
 import * as fromProducts from './product/store/product.reducer';
 import * as fromAuthentication from './auth/store/auth.reducer';
@@ -15,3 +21,5 @@ export const appReducer: ActionReducerMap<AppState> = {
   authentication: fromAuthentication.authenticationReducer,
   shoppingCart: fromShoppingCart.shoppingCartReducer
 }
+
+//=============================================================================

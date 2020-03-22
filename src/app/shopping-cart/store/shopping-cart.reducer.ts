@@ -4,9 +4,7 @@
 
 //=============================================================================
 
-import { Product } from 'src/models/product.model';
 import * as Actions from './shopping-cart.actions';
-import { Cart } from 'src/models/cart.model';
 import { ShoppingCart } from 'src/models/shopping-cart.model';
 
 //=============================================================================
