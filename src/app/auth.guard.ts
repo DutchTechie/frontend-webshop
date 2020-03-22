@@ -6,13 +6,13 @@
 
 import { Injectable } from '@angular/core';
 import * as fromApp from './app.reducer';
-import * as fromAuth from './authentication/store/authentication.reducer';
+import * as fromAuth from './auth/store/auth.reducer';
 import { Store } from '@ngrx/store';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree } from '@angular/router';
 import { take, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import * as PRODUCT_ROUTES from './product/product.routes';
-import * as AUTH_ROUTES from './authentication/auth.routes';
+import * as AUTH_ROUTES from './auth/auth.routes';
 import * as SHOPPING_CART_ROUTES from './shopping-cart/shopping-cart.routes';
 
 //=============================================================================

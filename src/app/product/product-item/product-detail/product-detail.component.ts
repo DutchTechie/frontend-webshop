@@ -12,7 +12,7 @@ edit the product.
 
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from 'src/models/product.model';
-import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
+import { AuthenticationService } from 'src/app/auth/services/auth.service';
 import { User } from 'src/models/user.model';
 import { Cart } from 'src/models/cart.model';
 import { Store } from '@ngrx/store';

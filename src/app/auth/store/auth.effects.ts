@@ -1,5 +1,5 @@
 import { Actions, ofType, Effect } from '@ngrx/effects'
-import * as AuthActions from './authentication.actions'
+import * as AuthActions from './auth.actions'
 import { switchMap, catchError, tap, map } from 'rxjs/operators';
 import { User } from 'src/models/user.model';
 import { HttpClient } from '@angular/common/http';

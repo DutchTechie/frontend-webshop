@@ -12,8 +12,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../app.reducer'
-import * as AuthenticationActions from './store/authentication.actions'
-import * as AUTH_ROUTES from '../authentication/auth.routes';
+import * as AuthenticationActions from './store/auth.actions'
+import * as AUTH_ROUTES from '../auth/auth.routes';
 
 const LOGIN: string = 'LOGIN';
 const SIGNUP: string = 'SIGNUP';
@@ -22,8 +22,8 @@ const SIGNUP: string = 'SIGNUP';
 
 @Component ({
     selector: 'app-authentication',
-    templateUrl: './authentication.component.html',
-    styleUrls: ['./authentication.component.css']
+    templateUrl: './auth.component.html',
+    styleUrls: ['./auth.component.css']
 })
 
 //=============================================================================

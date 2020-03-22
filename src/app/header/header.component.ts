@@ -8,9 +8,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { User } from 'src/models/user.model';
 import * as fromApp from '../app.reducer';
-import * as AuthenticationActions from '../authentication/store/authentication.actions';
+import * as AuthenticationActions from '../auth/store/auth.actions';
 import * as ShoppingCartActions from '../shopping-cart/store/shopping-cart.actions';
-import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
+import { AuthenticationService } from 'src/app/auth/services/auth.service';
 import { Observable, of, Subscription } from 'rxjs';
 
 //=============================================================================

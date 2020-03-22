@@ -1,6 +1,6 @@
 import { ActionReducerMap } from '@ngrx/store';
 import * as fromProducts from './product/store/product.reducer';
-import * as fromAuthentication from './authentication/store/authentication.reducer';
+import * as fromAuthentication from './auth/store/auth.reducer';
 import * as fromShoppingCart from './shopping-cart/store/shopping-cart.reducer';
 
 

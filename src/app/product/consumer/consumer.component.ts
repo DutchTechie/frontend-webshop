@@ -4,18 +4,19 @@
 
 //=============================================================================
 
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { User } from 'src/models/user.model';
 import { Product } from 'src/models/product.model';
 import { Observable } from 'rxjs';
-import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
+import { AuthenticationService } from 'src/app/auth/services/auth.service';
 import { Router } from '@angular/router';
-import * as PRODUCT_ROUTES from '../product.routes';
-import * as AUTH_ROUTES from '../../authentication/auth.routes';
-import * as fromApp from '../../app.reducer';
-import * as ShoppingCartActions from '../../shopping-cart/store/shopping-cart.actions';
 import { Store } from '@ngrx/store';
 import { Cart } from 'src/models/cart.model';
+
+import * as PRODUCT_ROUTES from '../product.routes';
+import * as AUTH_ROUTES from '../../auth/auth.routes';
+import * as fromApp from '../../app.reducer';
+import * as ShoppingCartActions from '../../shopping-cart/store/shopping-cart.actions';
 
 //=============================================================================
 
@@ -27,8 +28,6 @@ import { Cart } from 'src/models/cart.model';
 export class ConsumerComponent implements OnInit {
   @Input() productSubs: Observable<Product[]>
   @Input() user: User;
-  @Output() pageToRedirectUser = new EventEmitter<string>();
-  pageIsLoading: boolean = false;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -37,8 +36,6 @@ export class ConsumerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {}
-
-  ngOnChanges() {}
 
   addToCart(productId: string) {
     if(this.user != null) {

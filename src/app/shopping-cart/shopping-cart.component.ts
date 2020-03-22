@@ -18,7 +18,7 @@ import { map } from 'rxjs/operators';
 import { ShoppingCart } from 'src/models/shopping-cart.model';
 import { Observable, of } from 'rxjs';
 import { Cart } from 'src/models/cart.model';
-import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
+import { AuthenticationService } from 'src/app/auth/services/auth.service';
 import { User } from 'src/models/user.model';
 
 import * as fromShoppingCart from './store/shopping-cart.reducer';

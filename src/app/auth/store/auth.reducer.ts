@@ -1,5 +1,5 @@
 import { User } from 'src/models/user.model';
-import * as AuthenticationActions from './authentication.actions';
+import * as AuthenticationActions from './auth.actions';
 
 export interface State {
   user: User;

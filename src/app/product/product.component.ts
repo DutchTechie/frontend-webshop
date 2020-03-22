@@ -15,7 +15,7 @@ import { Store } from '@ngrx/store';
 import * as fromApp from '../app.reducer'
 import * as ProductActions from './store/product.actions'
 import { map } from 'rxjs/operators';
-import { AuthenticationService } from 'src/app/authentication/services/authentication.service';
+import { AuthenticationService } from 'src/app/auth/services/auth.service';
 
 //=============================================================================
 

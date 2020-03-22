@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { StoreModule } from '@ngrx/store';
 import { CoreModule } from './core.module';
 import { EffectsModule } from '@ngrx/effects';
-import { AuthenticationEffects } from 'src/app/authentication/store/authentication.effects';
+import { AuthenticationEffects } from 'src/app/auth/store/auth.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { environment } from '../environments/environment';
