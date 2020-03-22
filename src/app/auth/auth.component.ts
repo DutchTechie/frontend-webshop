@@ -72,7 +72,7 @@ export class AuthenticationComponent {
         this.location.go(AUTH_ROUTES.ABSOLUTE_PATH_LOGIN);
       }
       this.store.dispatch(new AuthenticationActions.ClearError());
-      this.store.dispatch(new AuthenticationActions.ClearSignUpStatus());
+      this.store.dispatch(new AuthenticationActions.ClearSuccessStatus());
       this.authForm.reset();
   }
 
@@ -100,7 +100,7 @@ export class AuthenticationComponent {
   }
 
   private submitLoginForm(userCredentials: IUserCredentials) {
-    this.store.dispatch(new AuthenticationActions.ClearSignUpStatus());
+    this.store.dispatch(new AuthenticationActions.ClearSuccessStatus());
     this.store.dispatch(
       new AuthenticationActions.LoginStart({
         email: userCredentials.email,

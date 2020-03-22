@@ -3,15 +3,15 @@ import * as AuthenticationActions from './auth.actions';
 
 export interface State {
   user: User;
-  authError: string;
-  signUpStatus: string;
+  errorStatus: string;
+  successStatus: string;
   loading: boolean;
 }
 
 const initialState: State = {
   user: null,
-  authError: null,
-  signUpStatus: null,
+  errorStatus: null,
+  successStatus: null,
   loading: false
 }
 
@@ -30,7 +30,7 @@ export function authenticationReducer(
       return {
         ...state,
         user: user,
-        authError: null,
+        errorStatus: null,
         loading: false
       };
 
@@ -44,7 +44,7 @@ export function authenticationReducer(
     case AuthenticationActions.SIGNUP_START:
       return {
         ...state,
-        authError: null,
+        errorStatus: null,
         loading: true
       };
 
@@ -52,28 +52,28 @@ export function authenticationReducer(
       return {
         ...state,
         user: null,
-        authError: action.payload,
+        errorStatus: action.payload,
         loading: false
       };
 
     case AuthenticationActions.SIGN_UP_SUCCESS:
       return {
         ...state,
-        signUpStatus: "Thanks! Your account has been successfully created.",
+        successStatus: "Thanks! Your account has been successfully created.",
         loading: false,
-        authError: null
+        errorStatus: null
       };
 
     case AuthenticationActions.CLEAR_ERROR:
       return {
         ...state,
-        authError: null
+        errorStatus: null
       };
 
-    case AuthenticationActions.CLEAR_SIGN_UP_STATUS:
+    case AuthenticationActions.CLEAR_SUCCESS_STATUS:
       return {
         ...state,
-        signUpStatus: null
+        successStatus: null
       };
 
     default:

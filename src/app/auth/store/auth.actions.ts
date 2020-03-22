@@ -6,15 +6,15 @@
 
 import { Action } from '@ngrx/store';
 
-export const LOGIN_START = '[Authentication] Login Start';
-export const LOGOUT = '[Authentication] Logout';
-export const SIGNUP_START = '[Authentication] Signup Start';
-export const AUTO_LOGIN = '[Authentication] Auto Login';
-export const SIGN_UP_SUCCESS = '[Authentication] Sign Up Success';
-export const AUTHENTICATE_SUCCESS = '[Authentication] Login';
-export const AUTHENTICATE_FAIL = '[Authentication] Login Fail';
-export const CLEAR_ERROR = '[Authentication] Clear Error';
-export const CLEAR_SIGN_UP_STATUS = '[Authentication] Clear Sign Up Status';
+export const LOGIN_START = '[Auth] Login Start';
+export const LOGOUT = '[Auth] Logout';
+export const SIGNUP_START = '[Auth] Signup Start';
+export const AUTO_LOGIN = '[Auth] Auto Login';
+export const SIGN_UP_SUCCESS = '[Auth] Sign Up Success';
+export const AUTHENTICATE_SUCCESS = '[Auth] Login';
+export const AUTHENTICATE_FAIL = '[Auth] Login Fail';
+export const CLEAR_ERROR = '[Auth] Clear Error';
+export const CLEAR_SUCCESS_STATUS = '[Auth] Clear Success Status';
 
 //=============================================================================
 
@@ -22,8 +22,8 @@ export class SignUpSuccess implements Action {
   readonly type = SIGN_UP_SUCCESS;
 }
 
-export class ClearSignUpStatus implements Action {
-  readonly type = CLEAR_SIGN_UP_STATUS;
+export class ClearSuccessStatus implements Action {
+  readonly type = CLEAR_SUCCESS_STATUS;
 }
 
 export class AuthenticateSuccess implements Action {
@@ -78,6 +78,6 @@ export type AuthenticationActions =
   | ClearError
   | AutoLogin
   | SignUpSuccess
-  | ClearSignUpStatus
+  | ClearSuccessStatus
 
 //=============================================================================

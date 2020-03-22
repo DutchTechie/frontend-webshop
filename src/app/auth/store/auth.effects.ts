@@ -40,9 +40,9 @@ const handleAuthentication = (
 };
 
 const handleError = (errorResponse: any) => {
-  let errorMessage = 'An unknown error occurred!';
+  let unknownErrorMessage: string = 'An unknown error occurred!';
   if (!errorResponse.error || !errorResponse.error.error) {
-    return of(new AuthActions.AuthenticateFail(errorMessage));
+    return of(new AuthActions.AuthenticateFail(unknownErrorMessage));
   }
   return of(new AuthActions.AuthenticateFail(errorResponse.error));
 }

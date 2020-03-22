@@ -8,12 +8,12 @@
               <app-loading-spinner></app-loading-spinner>
             </div>
             <div *ngIf="!(authState | async).loading">
-              <div class="alert alert-danger" *ngIf="(authState | async).authError">
+              <div class="alert alert-danger" *ngIf="(authState | async).errorStatus">
                 <h4>There was a problem</h4>
-                {{ (authState | async).authError["error"] }}
+                {{ (authState | async).errorStatus["error"] }}
               </div>
-              <div class="alert alert-info" *ngIf="(authState | async).signUpStatus">
-                <h4>{{ (authState | async).signUpStatus }}</h4>
+              <div class="alert alert-info" *ngIf="(authState | async).successStatus">
+                <h4>{{ (authState | async).successStatus }}</h4>
               </div>
               <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
                 <div formGroupName="userData">
