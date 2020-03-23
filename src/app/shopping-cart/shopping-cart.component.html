@@ -25,10 +25,10 @@
 
                     class="text-left">
                       <td></td>
-                      <td class="text-right" (click)="goToDetailsPage(shoppingCartItem.products.id)">
+                      <td style="cursor: pointer;" class="text-right" (click)="goToDetailsPage(shoppingCartItem.products.id)">
                         <img src="{{ shoppingCartItem.products.imagePath }}" alt="Nike shoe" height=100px />
                       </td>
-                      <td class="vcenter text-center" (click)="goToDetailsPage(shoppingCartItem.products.id)">
+                      <td style="cursor: pointer;" class="vcenter text-center" (click)="goToDetailsPage(shoppingCartItem.products.id)">
                         {{ shoppingCartItem.products.name }}
                       </td>
                       <td class="vcenter">

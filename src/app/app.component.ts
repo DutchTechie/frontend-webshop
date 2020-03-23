@@ -19,7 +19,6 @@ import { Observable } from 'rxjs';
 //=============================================================================
 
 export class AppComponent {
-  user$: Observable<User> = null;
   user: User = null;
 
   constructor(private store: Store<fromApp.AppState>) {}

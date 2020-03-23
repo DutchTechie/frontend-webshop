@@ -87,10 +87,12 @@ export class ShoppingCartEffects {
       ).pipe(
         map((shoppingCart: ShoppingCart[]) => {
           return shoppingCart.map(shoppingCartItem => {
-            return {
-              ...shoppingCartItem,
-              state: 'normal',
-              visible: true
+            if (shoppingCartItem != null) {
+              return {
+                ...shoppingCartItem,
+                state: 'normal',
+                visible: true
+              }
             }
           })
         }),

@@ -25,7 +25,7 @@ const initialState: State = {
 
 //=============================================================================
 
-export function shoppingCartReducer(state = initialState, action: Actions.ShoppingCartActions):State {
+export function shoppingCartReducer(state = initialState, action: Actions.ShoppingCartActions) {
   switch (action.type) {
 
     case Actions.ADD_OR_UPDATE_CART_SUCCESS:
