@@ -5,13 +5,16 @@
 //=============================================================================
 
 import { Actions, ofType, Effect } from '@ngrx/effects'
-import * as AuthActions from './auth.actions'
+import * as AuthActions from './auth.actions';
+import * as fromApp from '../../app.reducer';
 import { switchMap, catchError, tap, map } from 'rxjs/operators';
 import { User } from 'src/models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { FetchShoppingCart } from 'src/app/shopping-cart/store/shopping-cart.actions';
+import { Store } from '@ngrx/store';
 
 //=============================================================================
 
@@ -51,6 +54,7 @@ const handleError = (errorResponse: any) => {
 export class AuthenticationEffects {
 
   constructor(
+    private store: Store<fromApp.AppState>,
     private actions$: Actions,
     private http: HttpClient,
     private router: Router
@@ -89,6 +93,10 @@ export class AuthenticationEffects {
         )
         .pipe(
           map(responseData => {
+            console.log(responseData.id);
+            if(!responseData.admin) {
+              this.store.dispatch(new FetchShoppingCart(+responseData.id));
+            }
             return handleAuthentication(
               responseData.id,
               responseData.email,
@@ -102,7 +110,6 @@ export class AuthenticationEffects {
         )
     })
   )
-
 
   @Effect({ dispatch: false })
   authenticationRedirect = this.actions$.pipe(
@@ -129,6 +136,9 @@ export class AuthenticationEffects {
         userData.email,
         userData.isAdmin
       );
+      if(!loadedUser.isAdmin) {
+        this.store.dispatch(new FetchShoppingCart(+loadedUser.userId));
+      }
       return new AuthActions.AuthenticateSuccess({
         email: loadedUser.email,
         userId: loadedUser.userId,

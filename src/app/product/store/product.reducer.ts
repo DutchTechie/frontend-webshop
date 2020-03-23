@@ -10,7 +10,7 @@ import * as Actions from './product.actions';
 //=============================================================================
 
 export interface State {
-  products: Array<Product>;
+  products: Product [];
   currentProduct: Product;
   editedProductIndex: number;
   productError: string;

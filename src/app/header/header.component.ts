@@ -4,14 +4,15 @@
 
 //=============================================================================
 
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { User } from 'src/models/user.model';
 import * as fromApp from '../app.reducer';
 import * as AuthenticationActions from '../auth/store/auth.actions';
 import * as ShoppingCartActions from '../shopping-cart/store/shopping-cart.actions';
-import { AuthenticationService } from 'src/app/auth/services/auth.service';
-import { Observable, of, Subscription } from 'rxjs';
+
+import * as fromAuth from '../auth/store/auth.reducer';
+import * as fromShoppingCart from '../shopping-cart/store/shopping-cart.reducer';
+import { Observable, of } from 'rxjs';
 
 //=============================================================================
 
@@ -20,62 +21,20 @@ import { Observable, of, Subscription } from 'rxjs';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit, OnDestroy {
-  isAuthenticated: boolean = false;
-  numberOfCarts: number = 0;
-  user: User = null;
-  userSub: Subscription;
+export class HeaderComponent implements OnInit {
+  authState: Observable<fromAuth.State>;
+  shoppingCartState: Observable<fromShoppingCart.State>;
 
-  constructor(
-    private authenticationService: AuthenticationService,
-    private store: Store<fromApp.AppState>
-  ) {}
+  constructor(private store: Store<fromApp.AppState>) {}
 
   ngOnInit(): void {
-
-    this.userSub = this.authenticationService.getApplicationUser().subscribe(user => {
-      this.user = user;
-      if(this.user !== null) {
-        if (!this.user.isAdmin) {
-          this.updateShoppingCartNumber();
-        }
-      }
-    })
-
-    if (this.user !== null) {
-      this.store.dispatch(new ShoppingCartActions.FetchShoppingCart(+this.user.userId))
-    }
-
-  }
-
-  updateShoppingCartNumber() {
-    this.store.select('shoppingCart').subscribe(shoppingCartState => {
-      let numberOfCarts: number = 0;
-      shoppingCartState.shoppingCart.forEach(item => {
-        numberOfCarts += item.carts.amount;
-      })
-      this.numberOfCarts = numberOfCarts;
-    })
+    this.authState = this.store.select('authentication');
+    this.shoppingCartState = this.store.select('shoppingCart');
   }
 
   onLogout() {
     this.store.dispatch(new ShoppingCartActions.ClearCart())
     this.store.dispatch(new AuthenticationActions.Logout());
-    this.numberOfCarts = 0;
-  }
-
-  userIsConsumer() {
-    return this.authenticationService.userIsConsumer(this.user);
-  }
-
-  onClickAccount() {
-    // this.authService.handleOnAccountLinkClicked()
-  }
-
-  ngOnDestroy() {
-    if (this.userSub) {
-      this.userSub.unsubscribe();
-    }
   }
 }
 

@@ -11,30 +11,32 @@
 
       <!-- Login link -->
       <li routerLinkActive="active" >
-        <a routerLink="/account" *ngIf="user === null" style="cursor: pointer;">
+        <a routerLink="/account" *ngIf="(authState | async).user === null" style="cursor: pointer;">
           <span class="glyphicon glyphicon-user" aria-hidden="true">
           </span>
         </a>
       </li>
 
       <!-- account -->
-      <li *ngIf="user !== null" routerLinkActive="active">
-        <a (click)="onClickAccount()" style="cursor: pointer;">
-          {{ user.email }}
+      <li *ngIf="(authState | async).user !== null" routerLinkActive="active">
+        <a style="cursor: pointer;">
+          {{ (authState | async).user.email }}
         </a>
       </li>
 
       <!-- Logout link -->
-      <li *ngIf="user !== null" routerLinkActive="active">
+      <li *ngIf="(authState | async).user !== null" routerLinkActive="active">
         <a (click)="onLogout()" style="cursor: pointer;">
           Logout
         </a>
       </li>
 
       <!-- cart link -->
-      <li *ngIf="userIsConsumer()" routerLinkActive="active">
+      <li *ngIf="(shoppingCartState | async).numberOfItems > 0" routerLinkActive="active">
         <a routerLink="/cart">
-          <span *ngIf="numberOfCarts > 0" class="badge">{{ numberOfCarts }}</span>
+          <span class="badge">
+            {{ (shoppingCartState | async).numberOfItems }}
+          </span>
           <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
         </a>
       </li>
