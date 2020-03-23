@@ -56,7 +56,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
         this.router.navigate(['/']);
       } else {
         this.totalPrice = 0;
-        state.shoppingCart.forEach(item => {
+        state.shoppingCartItems.forEach(item => {
           this.totalPrice += item.carts.amount * item.products.price;
         })
       }
@@ -64,14 +64,18 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   }
 
   createRange(number: number): number[] {
-    var items: number[] = [];
+    let items: number[] = [];
 
-    for(var i = 1; i <= number; i++){ items.push(i);}
+    for(let i = 1; i <= number; i++){ items.push(i);}
     return items;
   }
 
   initializeApplicationUser() {
     this.authenticationService.getApplicationUser().subscribe((appUser) => { this.user = appUser;});
+  }
+
+  goToDetailsPage(id: number) {
+    this.router.navigate([`product/details/${id}`]);
   }
 
   fetchShoppingCart() {

@@ -21,7 +21,7 @@ export class ShoppingCartService {
     const observable = this.store.select('shoppingCart');
     observable.subscribe((shoppingCartState) => {
       let count = 0;
-      shoppingCartState.shoppingCart.forEach((cart) => {
+      shoppingCartState.shoppingCartItems.forEach((cart) => {
         count += cart.carts.amount;
       })
       console.log(count);

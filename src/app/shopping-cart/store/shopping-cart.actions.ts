@@ -10,7 +10,6 @@ import { ShoppingCart } from 'src/models/shopping-cart.model';
 
 export const SET_SHOPPING_CART = '[ShoppingCart] Set Shopping Cart';
 export const FETCH_SHOPPING_CART = '[ShoppingCart] Fetch Shopping Cart';
-export const FETCH_START = '[ShoppingCart] Fetch Cart Start';
 export const FETCH_SUCCESS = '[ShoppingCart] Fetch Shopping Cart Success';
 
 export const CLEAR_CART = '[Cart] Clear cart';
@@ -39,10 +38,6 @@ export class FetchShoppingCart implements Action {
   readonly type = FETCH_SHOPPING_CART;
 
   constructor(public payload: number) {}
-}
-
-export class FetchStart implements Action {
-  readonly type = FETCH_START;
 }
 
 export class FetchSuccess implements Action {
@@ -98,7 +93,6 @@ export class ClearError implements Action {
 export type ShoppingCartActions =
   | SetShoppingCart
   | FetchShoppingCart
-  | FetchStart
   | FetchSuccess
   | AddOrUpdateCartFail
   | AddOrUpdateCartSuccess

@@ -21,14 +21,14 @@
                     [hidden]="!shoppingCartItem.visible"
                     [@animateOut]="shoppingCartItem.state"
                     (@animateOut.done)="onEndDeleteShoppingCartItemAnimation()"
-                    *ngFor="let shoppingCartItem of (shoppingCartState | async).shoppingCart"
+                    *ngFor="let shoppingCartItem of (shoppingCartState | async).shoppingCartItems"
 
                     class="text-left">
                       <td></td>
-                      <td class="text-right">
+                      <td class="text-right" (click)="goToDetailsPage(shoppingCartItem.products.id)">
                         <img src="{{ shoppingCartItem.products.imagePath }}" alt="Nike shoe" height=100px />
                       </td>
-                      <td class="vcenter text-center">
+                      <td class="vcenter text-center" (click)="goToDetailsPage(shoppingCartItem.products.id)">
                         {{ shoppingCartItem.products.name }}
                       </td>
                       <td class="vcenter">

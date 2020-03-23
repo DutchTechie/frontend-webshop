@@ -11,21 +11,21 @@ import { ShoppingCart } from 'src/models/shopping-cart.model';
 
 export interface State {
   numberOfItems: number;
-  shoppingCart: ShoppingCart[];
+  shoppingCartItems: ShoppingCart[];
   shoppingCartError: string;
   loading: boolean;
 }
 
 const initialState: State = {
   numberOfItems: 0,
-  shoppingCart: [],
+  shoppingCartItems: [],
   shoppingCartError: null,
   loading: false
 };
 
 //=============================================================================
 
-export function shoppingCartReducer(state = initialState, action: Actions.ShoppingCartActions) {
+export function shoppingCartReducer(state = initialState, action: Actions.ShoppingCartActions):State {
   switch (action.type) {
 
     case Actions.ADD_OR_UPDATE_CART_SUCCESS:
@@ -45,7 +45,7 @@ export function shoppingCartReducer(state = initialState, action: Actions.Shoppi
         return {
           ...state,
           loading: true,
-          productError: null
+          shoppingCartError: null
         }
 
       case Actions.FETCH_SUCCESS:
@@ -60,13 +60,13 @@ export function shoppingCartReducer(state = initialState, action: Actions.Shoppi
           ...state,
           loading: false,
           numberOfItems: numberOfItemsCounted,
-          shoppingCart: fetchedShoppingCartItems
+          shoppingCartItems: fetchedShoppingCartItems
         };
 
       case Actions.CLEAR_CART:
         return {
           numberOfItems: 0,
-          shoppingCart: [],
+          shoppingCartItems: [],
           shoppingCartError: null,
           loading: false
         }
