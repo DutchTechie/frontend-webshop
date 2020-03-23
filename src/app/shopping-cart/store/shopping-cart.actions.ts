@@ -115,5 +115,6 @@ export type ShoppingCartActions =
   | DeleteCartItem
   | DeleteAllCartItems
   | ClearCart
+  | UpdateCart
 
 //=============================================================================

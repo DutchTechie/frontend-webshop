@@ -23,6 +23,7 @@
     "@ngrx/router-store": "^8.6.0",
     "@ngrx/store": "^8.6.0",
     "bootstrap": "^3.4.1",
+    "jquery": "^3.4.1",
     "npm-check": "^5.9.2",
     "rxjs": "~6.5.4",
     "tslib": "^1.11.1",

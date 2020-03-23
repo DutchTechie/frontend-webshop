@@ -56,17 +56,6 @@ export class AuthGuard {
               }
               return true;
 
-            case SHOPPING_CART_ROUTES.SHOPPING_CART_PATH:
-              if (user !== null) {
-                if (user.isAdmin == false) {
-                  return true;
-                }
-                this.router.navigate([PRODUCT_ROUTES.ABSOLUTE_PATH_DEFAULT]);
-                return false;
-              }
-              this.router.navigate([PRODUCT_ROUTES.ABSOLUTE_PATH_DEFAULT]);
-              return false;
-
             default:
               console.log(currentPath)
               return true;

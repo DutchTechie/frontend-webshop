@@ -9,19 +9,19 @@ editing an existing one.
 
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as fromApp from '../app.reducer';
-import * as ShoppingCartActions from './store/shopping-cart.actions';
 import { slideOutAnimation } from '../shared/animations/fade-out.animation';
 import { changeState } from '../shared/animations/change-state.animation';
 import { animateOut } from '../shared/animations/animate-out.animation';
 import { ShoppingCart } from 'src/models/shopping-cart.model';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Cart } from 'src/models/cart.model';
 import { AuthenticationService } from 'src/app/auth/services/auth.service';
 import { User } from 'src/models/user.model';
-
-import * as fromShoppingCart from './store/shopping-cart.reducer';
 import { Router } from '@angular/router';
+
+import * as fromApp from '../app.reducer';
+import * as fromShoppingCart from './store/shopping-cart.reducer';
+import * as ShoppingCartActions from './store/shopping-cart.actions';
 
 //=============================================================================
 
@@ -56,6 +56,13 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
         this.router.navigate(['/']);
       }
     })
+  }
+
+  createRange(number: number): number[] {
+    var items: number[] = [];
+
+    for(var i = 1; i <= number; i++){ items.push(i);}
+    return items;
   }
 
   initializeApplicationUser() {
@@ -96,12 +103,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   startDeletingShoppingCartItem(cartItem: ShoppingCart) {
     if (this.consumerIsSureToDelete()) {
-      if (cartItem.state === 'normal') {
-        cartItem.state = 'slideOut';
-      }
-      else {
-        cartItem.state = 'normal';
-      }
+      cartItem.state = (cartItem.state === 'normal') ? 'slideOut' : 'normal';
       this.shoppingCartItem = cartItem;
     }
   }
@@ -122,6 +124,11 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   }
 
   updateCart(cart: Cart) {
+    this.store.dispatch(new ShoppingCartActions.UpdateCart(cart));
+  }
+
+  updateCartAmount(cart: Cart, amount: number) {
+    cart.amount = amount;
     this.store.dispatch(new ShoppingCartActions.UpdateCart(cart));
   }
 

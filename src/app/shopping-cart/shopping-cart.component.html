@@ -35,15 +35,17 @@
                         {{ shoppingCartItem.products.price | currency: 'EUR' }}
                       </td>
                       <td class="vcenter">
-                        <input
-                          onKeyDown="return false"
-                          class="form-control"
-                          min="1"
-                          max="{{ shoppingCartItem.products.stock }}"
-                          name="{{ shoppingCartItem.products.name }}"
-                          type="number"
-                          value="{{ shoppingCartItem.carts.amount }}"
-                          (change)="updateTotalPrice($event)"/>
+
+                        <select id="cars" class="btn btn-default btn-block" (change)="updateCartAmount(shoppingCartItem.carts, $event.target.value)">
+                          <option
+                          style="background-color: white;"
+                            *ngFor="let amount of createRange(shoppingCartItem.products.stock)"
+                            value="{{ amount }}"
+                            [selected]="amount == shoppingCartItem.carts.amount">
+                              {{ amount }}
+                          </option>
+                        </select>
+
                       </td>
                       <td class="vcenter">
                         {{ shoppingCartItem.products.price * shoppingCartItem.carts.amount | currency: 'EUR' }}
