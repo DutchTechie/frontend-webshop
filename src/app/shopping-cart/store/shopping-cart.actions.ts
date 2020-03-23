@@ -16,7 +16,6 @@ export const FETCH_SUCCESS = '[ShoppingCart] Fetch Shopping Cart Success';
 export const CLEAR_CART = '[Cart] Clear cart';
 export const ADD_TO_CART = '[Cart] Add To Cart';
 export const UPDATE_CART = '[Cart] Update Cart';
-export const ADD_OR_UPDATE_CART = '[Cart] Start Adding New Cart Or Updating Cart';
 export const ADD_OR_UPDATE_CART_FAIL = '[Cart] Adding New Cart Or Updating Cart Fail';
 export const ADD_OR_UPDATE_CART_SUCCESS = '[Cart] Adding New Cart Or Updating Cart Success';
 export const CLEAR_ERROR = '[Cart] Clear Error';
@@ -53,13 +52,6 @@ export class FetchSuccess implements Action {
 }
 
 //=============================================================================
-
-// TODO: Delete this class when done adding add and update
-export class AddOrUpdateCart implements Action {
-  readonly type = ADD_OR_UPDATE_CART;
-
-  constructor(public payload: Cart) { console.log(payload) }
-}
 
 export class AddToCart implements Action {
   readonly type = ADD_TO_CART;
@@ -108,7 +100,6 @@ export type ShoppingCartActions =
   | FetchShoppingCart
   | FetchStart
   | FetchSuccess
-  | AddOrUpdateCart
   | AddOrUpdateCartFail
   | AddOrUpdateCartSuccess
   | ClearError

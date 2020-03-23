@@ -33,15 +33,6 @@ const handleSucessfulAddOrUpdateCart = (userId: number) => {
   return new ShoppingCartActions.FetchShoppingCart(userId);
 }
 
-const getCorrectRequest = (http: HttpClient, cart: Cart) => {
-  if (cart.userId) {
-    return http.post<Cart>(
-      SHOPPING_CART_URL,
-      cart
-    )
-  }
-}
-
 //=============================================================================
 
 @Injectable()
@@ -51,22 +42,6 @@ export class ShoppingCartEffects {
     private actions$: Actions,
     private http: HttpClient
   ) {}
-
-  @Effect()
-  startAddingOrUpdatingCart = this.actions$.pipe(
-    ofType(ShoppingCartActions.ADD_OR_UPDATE_CART),
-    switchMap((data: ShoppingCartActions.AddOrUpdateCart) => {
-      return getCorrectRequest(this.http, data.payload)
-      .pipe(
-        map(() => {
-          return handleSucessfulAddOrUpdateCart(+data.payload.userId);
-          }),
-          catchError(errorResponse => {
-            return handleError(errorResponse);
-          })
-        )
-    })
-  )
 
   @Effect()
   addToCart = this.actions$.pipe(

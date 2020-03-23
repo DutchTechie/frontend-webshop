@@ -136,22 +136,6 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     cart.amount = amount;
     this.store.dispatch(new ShoppingCartActions.UpdateCart(cart));
   }
-
-  // updateTotalPrice(event) {
-  //   this.totalPrice = 0;
-
-  //   this.shoppingCartState.subscribe((state) => {
-  //     state.shoppingCart.forEach(cart => {
-  //       if (event.srcElement != null) {
-  //         if (event.srcElement.name == cart.products.name) {
-  //           cart.carts.amount = event.target.value;
-  //           this.updateCart(cart.carts)
-  //         }
-  //       }
-  //       // this.totalPrice += cart.carts.amount * cart.products.price
-  //     });
-  //   });
-  // }
 }
 
 //=============================================================================

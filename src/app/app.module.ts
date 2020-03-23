@@ -39,7 +39,7 @@ import * as fromApp from './app.reducer';
     ShoppingCartModule,
     HttpClientModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([AuthenticationEffects, ProductEffects, ShoppingCartEffects]), // TODO:
+    EffectsModule.forRoot([AuthenticationEffects, ProductEffects, ShoppingCartEffects]),
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot(),
     CoreModule,

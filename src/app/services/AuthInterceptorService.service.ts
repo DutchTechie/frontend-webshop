@@ -28,9 +28,9 @@ export class AuthInterceptorService implements HttpInterceptor {
           return next.handle(request);
         }
         const modifiedRequest = request;
-        /*const modifiedRequest = request.clone({
-          params: new HttpParams().set('auth', 'replaceThis') // TODO: Include this rule in cors
-        });*/
+
+        // if you need to use a token for every request or something,
+        // modify the request here
         return next.handle(modifiedRequest);
       })
     )
