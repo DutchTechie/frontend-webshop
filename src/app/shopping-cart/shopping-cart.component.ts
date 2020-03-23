@@ -14,7 +14,6 @@ import * as ShoppingCartActions from './store/shopping-cart.actions';
 import { slideOutAnimation } from '../shared/animations/fade-out.animation';
 import { changeState } from '../shared/animations/change-state.animation';
 import { animateOut } from '../shared/animations/animate-out.animation';
-import { map } from 'rxjs/operators';
 import { ShoppingCart } from 'src/models/shopping-cart.model';
 import { Observable, of } from 'rxjs';
 import { Cart } from 'src/models/cart.model';
@@ -49,9 +48,6 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initializeApplicationUser();
-    // if (this.user !== null) {
-    //   this.store.dispatch(new ShoppingCartActions.FetchShoppingCart(+this.user.userId))
-    // }
     this.shoppingCartState = this.store.select('shoppingCart');
   }
 
@@ -121,7 +117,6 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   updateCart(cart: Cart) {
     this.store.dispatch(new ShoppingCartActions.UpdateCart(cart));
-    // this.store.dispatch(new ShoppingCartActions.FetchShoppingCart(+this.user.userId))
   }
 
   updateTotalPrice(event) {

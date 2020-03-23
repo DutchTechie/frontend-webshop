@@ -44,7 +44,7 @@ export function shoppingCartReducer(state = initialState, action: Actions.Shoppi
       case Actions.FETCH_SHOPPING_CART:
         return {
           ...state,
-          loading: false,
+          loading: true,
           productError: null
         }
 
@@ -58,6 +58,7 @@ export function shoppingCartReducer(state = initialState, action: Actions.Shoppi
 
         return {
           ...state,
+          loading: false,
           numberOfItems: numberOfItemsCounted,
           shoppingCart: fetchedShoppingCartItems
         };
