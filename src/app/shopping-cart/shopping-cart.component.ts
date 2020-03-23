@@ -21,6 +21,7 @@ import { AuthenticationService } from 'src/app/auth/services/auth.service';
 import { User } from 'src/models/user.model';
 
 import * as fromShoppingCart from './store/shopping-cart.reducer';
+import { Router } from '@angular/router';
 
 //=============================================================================
 
@@ -41,7 +42,8 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
 
   constructor(
     private authenticationService : AuthenticationService,
-    private store: Store<fromApp.AppState>
+    private store: Store<fromApp.AppState>,
+    private router: Router
     ) {}
 
   ngOnDestroy(): void {}
@@ -49,6 +51,11 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initializeApplicationUser();
     this.shoppingCartState = this.store.select('shoppingCart');
+    this.shoppingCartState.subscribe((state) =>{
+      if (state.numberOfItems === 0) {
+        this.router.navigate(['/']);
+      }
+    })
   }
 
   initializeApplicationUser() {
@@ -104,7 +111,6 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
       userId: userId,
       productId: productId
     }));
-    this.store.dispatch(new ShoppingCartActions.FetchShoppingCart(userId));
   }
 
   deleteAllShoppingCartItems() {

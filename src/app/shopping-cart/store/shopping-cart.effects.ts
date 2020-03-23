@@ -126,7 +126,7 @@ export class ShoppingCartEffects {
     })
   )
 
-  @Effect({dispatch: false})
+  @Effect()
   productsDeleteOneProduct = this.actions$.pipe(
     ofType(ShoppingCartActions.DELETE_CART_ITEM),
     switchMap((productData: ShoppingCartActions.DeleteCartItem) => {
@@ -135,6 +135,7 @@ export class ShoppingCartEffects {
 
       return this.http.delete<Cart>(`${SHOPPING_CART_URL}/${userId}/${productId}`)
         .pipe(
+          map(() => { return new ShoppingCartActions.FetchShoppingCart(userId)}),
           catchError(errorResponse => {
             return handleError(errorResponse);
           })
@@ -142,7 +143,7 @@ export class ShoppingCartEffects {
     })
   )
 
-  @Effect({dispatch: false})
+  @Effect()
   productsDeleteAllProducts = this.actions$.pipe(
     ofType(ShoppingCartActions.DELETE_ALL_CART_ITEMS),
     switchMap((productData: ShoppingCartActions.DeleteAllCartItems) => {
@@ -150,6 +151,7 @@ export class ShoppingCartEffects {
 
       return this.http.delete(`${SHOPPING_CART_URL}/${userId}`)
         .pipe(
+          map(() => { return new ShoppingCartActions.FetchShoppingCart(userId)}),
           catchError(errorResponse => {
             return handleError(errorResponse);
           })

@@ -5,14 +5,8 @@
 //=============================================================================
 
 import { Action } from '@ngrx/store';
-import { Product } from 'src/models/product.model';
 import { Cart } from 'src/models/cart.model';
 import { ShoppingCart } from 'src/models/shopping-cart.model';
-
-export const START_CHECK_AVAILABLE_PRODUCTS = '[ShoppingCart] Start Check Available Products';
-export const START_CHECK_AVAILABLE_PRODUCTS_FAIL = '[ShoppingCart] Start Check Available Products Fail';
-export const REMOVE_UNUSABLE_CARTS = '[ShoppingCart] Remove Unusable Carts';
-export const START_CHECK_AVAILABLE_PRODUCTS_SUCCESS = '[ShoppingCart] Start Check Available Products Success';
 
 export const SET_SHOPPING_CART = '[ShoppingCart] Set Shopping Cart';
 export const FETCH_SHOPPING_CART = '[ShoppingCart] Fetch Shopping Cart';
@@ -29,32 +23,12 @@ export const CLEAR_ERROR = '[Cart] Clear Error';
 
 export const DELETE_CART_ITEM = '[Cart] Delete Cart Item';
 export const DELETE_ALL_CART_ITEMS = '[Cart] Delete All Cart Items';
-export const DELETE_ALL_CART_ITEMS_SUCCESS = '[Cart] Delete All Cart Items Success';
 
 //=============================================================================
 
 export class ClearCart implements Action {
   readonly type = CLEAR_CART;
 }
-
-
-// export class StartCheckAvailableProducts implements Action {
-//   readonly type = START_CHECK_AVAILABLE_PRODUCTS;
-// }
-
-// export class StartCheckAvailableProductsFail implements Action {
-//   readonly type = START_CHECK_AVAILABLE_PRODUCTS_FAIL;
-// }
-
-// export class RemoveUnusableCarts implements Action {
-//   readonly type = REMOVE_UNUSABLE_CARTS;
-// }
-
-// export class StartCheckAvailableProductsSuccess implements Action {
-//   readonly type = START_CHECK_AVAILABLE_PRODUCTS_SUCCESS;
-// }
-
-//=============================================================================
 
 export class SetShoppingCart implements Action {
   readonly type = SET_SHOPPING_CART;
@@ -123,10 +97,6 @@ export class DeleteAllCartItems implements Action {
   constructor(public payload: number) {}
 }
 
-export class DeleteAllCartItemsSuccess implements Action {
-  readonly type = DELETE_ALL_CART_ITEMS_SUCCESS;
-}
-
 //=============================================================================
 
 export class ClearError implements Action {
@@ -134,10 +104,6 @@ export class ClearError implements Action {
 }
 
 export type ShoppingCartActions =
-  // | StartCheckAvailableProducts
-  // | StartCheckAvailableProductsFail
-  // | RemoveUnusableCarts
-  // | StartCheckAvailableProductsSuccess
   | SetShoppingCart
   | FetchShoppingCart
   | FetchStart
@@ -148,7 +114,6 @@ export type ShoppingCartActions =
   | ClearError
   | DeleteCartItem
   | DeleteAllCartItems
-  | DeleteAllCartItemsSuccess
   | ClearCart
 
 //=============================================================================

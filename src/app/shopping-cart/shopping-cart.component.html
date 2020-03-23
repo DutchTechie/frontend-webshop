@@ -13,10 +13,7 @@
                       <th class="text-center">Actions</th>
                     </tr>
                   </thead>
-                  <div class="text-center" style="margin-top: 100px;" *ngIf="(shoppingCartState | async).loading">
-                    <app-loading-spinner></app-loading-spinner>
-                  </div>
-                  <tbody *ngIf="!(shoppingCartState | async).loading"
+                  <tbody
                   [hidden]="hideAllProductsPriorToDeletingThem"
                   [@animateOut]="slideOut"
                   (@animateOut.done)="endOfDeleteAllAnimation()">
