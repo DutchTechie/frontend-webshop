@@ -21,8 +21,8 @@ import * as ShoppingCartActions from '../../shopping-cart/store/shopping-cart.ac
 
 @Component({
   selector: 'app-consumer',
-  templateUrl: './consumer.component.html',
-  styleUrls: ['./consumer.component.css']
+  templateUrl: './consumer-products.component.html',
+  styleUrls: ['./consumer-products.component.css']
 })
 export class ConsumerComponent implements OnInit {
   @Input() products: Product[];
@@ -42,7 +42,6 @@ export class ConsumerComponent implements OnInit {
         const userId: string = this.user.userId;
         const cart: Cart = new Cart(userId, productId, 1);
 
-        // TODO: Make action more efficient by using withLatestFrom
         this.store.dispatch(new ShoppingCartActions.AddToCart(cart));
       } else {
         this.router.navigate([PRODUCT_ROUTES.ABSOLUTE_PATH_DEFAULT]);
