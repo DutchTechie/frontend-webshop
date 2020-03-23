@@ -54,6 +54,11 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     this.shoppingCartState.subscribe((state) =>{
       if (state.numberOfItems === 0) {
         this.router.navigate(['/']);
+      } else {
+        this.totalPrice = 0;
+        state.shoppingCart.forEach(item => {
+          this.totalPrice += item.carts.amount * item.products.price;
+        })
       }
     })
   }
@@ -132,20 +137,21 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     this.store.dispatch(new ShoppingCartActions.UpdateCart(cart));
   }
 
-  updateTotalPrice(event) {
-    this.totalPrice = 0
-    this.shoppingCartState.subscribe((state) => {
-      state.shoppingCart.forEach(cart => {
-        if (event.srcElement != null) {
-          if (event.srcElement.name == cart.products.name) {
-            cart.carts.amount = event.target.value;
-            this.updateCart(cart.carts)
-          }
-        }
-        // this.totalPrice += cart.carts.amount * cart.products.price
-      });
-    });
-  }
+  // updateTotalPrice(event) {
+  //   this.totalPrice = 0;
+
+  //   this.shoppingCartState.subscribe((state) => {
+  //     state.shoppingCart.forEach(cart => {
+  //       if (event.srcElement != null) {
+  //         if (event.srcElement.name == cart.products.name) {
+  //           cart.carts.amount = event.target.value;
+  //           this.updateCart(cart.carts)
+  //         }
+  //       }
+  //       // this.totalPrice += cart.carts.amount * cart.products.price
+  //     });
+  //   });
+  // }
 }
 
 //=============================================================================
