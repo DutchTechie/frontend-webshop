@@ -11,7 +11,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { HttpClient } from '@angular/common/http';
 import * as ShoppingCartActions from './shopping-cart.actions';
 import { Cart } from 'src/models/cart.model';
-import { ShoppingCart } from 'src/models/shopping-cart.model';
+import { ShoppingCartItem } from 'src/models/shopping-cart.model';
 
 //=============================================================================
 
@@ -25,7 +25,6 @@ export interface CartResponseData {
 
 const handleError = (errorResponse: any) => {
   const errorMessage: string = 'An unknown error has occurred';
-  console.log(errorMessage);
   return of(new ShoppingCartActions.AddOrUpdateCartFail(errorMessage));
 }
 
@@ -82,10 +81,10 @@ export class ShoppingCartEffects {
   fetchShoppingCart = this.actions$.pipe(
     ofType(ShoppingCartActions.FETCH_SHOPPING_CART),
     switchMap((shoppingCartActions: ShoppingCartActions.FetchShoppingCart) => {
-      return this.http.get<ShoppingCart[]>(
+      return this.http.get<ShoppingCartItem[]>(
         `${SHOPPING_CART_URL}/${shoppingCartActions.payload}`
       ).pipe(
-        map((shoppingCart: ShoppingCart[]) => {
+        map((shoppingCart: ShoppingCartItem[]) => {
           return shoppingCart.map(shoppingCartItem => {
             if (shoppingCartItem != null) {
               return {

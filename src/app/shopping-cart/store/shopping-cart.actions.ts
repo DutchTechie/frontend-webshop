@@ -6,7 +6,7 @@
 
 import { Action } from '@ngrx/store';
 import { Cart } from 'src/models/cart.model';
-import { ShoppingCart } from 'src/models/shopping-cart.model';
+import { ShoppingCartItem } from 'src/models/shopping-cart.model';
 
 export const SET_SHOPPING_CART = '[ShoppingCart] Set Shopping Cart';
 export const FETCH_SHOPPING_CART = '[ShoppingCart] Fetch Shopping Cart';
@@ -31,7 +31,7 @@ export class ClearCart implements Action {
 export class SetShoppingCart implements Action {
   readonly type = SET_SHOPPING_CART;
 
-  constructor(public payload: [ShoppingCart]) {}
+  constructor(public payload: [ShoppingCartItem]) {}
 }
 
 export class FetchShoppingCart implements Action {
@@ -43,7 +43,7 @@ export class FetchShoppingCart implements Action {
 export class FetchSuccess implements Action {
   readonly type = FETCH_SUCCESS;
 
-  constructor(public payload: ShoppingCart[]) {}
+  constructor(public payload: ShoppingCartItem[]) {}
 }
 
 //=============================================================================

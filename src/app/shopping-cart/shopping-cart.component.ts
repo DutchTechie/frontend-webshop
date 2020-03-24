@@ -12,7 +12,7 @@ import { Store } from '@ngrx/store';
 import { slideOutAnimation } from '../shared/animations/fade-out.animation';
 import { changeState } from '../shared/animations/change-state.animation';
 import { animateOut } from '../shared/animations/animate-out.animation';
-import { ShoppingCart } from 'src/models/shopping-cart.model';
+import { ShoppingCartItem } from 'src/models/shopping-cart.model';
 import { Observable } from 'rxjs';
 import { Cart } from 'src/models/cart.model';
 import { AuthenticationService } from 'src/app/auth/services/auth.service';
@@ -36,7 +36,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   hideAllProductsPriorToDeletingThem: boolean = false;
   calledEndAnimationOnce: boolean = false;
   slideOut: string = 'normal';
-  shoppingCartItem: ShoppingCart = null;
+  shoppingCartItem: ShoppingCartItem = null;
   totalPrice : number = 0;
   user: User = null;
 
@@ -110,7 +110,7 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     }
   }
 
-  startDeletingShoppingCartItem(cartItem: ShoppingCart) {
+  startDeletingShoppingCartItem(cartItem: ShoppingCartItem) {
     if (this.consumerIsSureToDelete()) {
       cartItem.state = (cartItem.state === 'normal') ? 'slideOut' : 'normal';
       this.shoppingCartItem = cartItem;

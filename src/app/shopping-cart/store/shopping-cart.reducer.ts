@@ -5,13 +5,13 @@
 //=============================================================================
 
 import * as Actions from './shopping-cart.actions';
-import { ShoppingCart } from 'src/models/shopping-cart.model';
+import { ShoppingCartItem } from 'src/models/shopping-cart.model';
 
 //=============================================================================
 
 export interface State {
   numberOfItems: number;
-  shoppingCartItems: ShoppingCart[];
+  shoppingCartItems: ShoppingCartItem[];
   shoppingCartError: string;
   loading: boolean;
 }
@@ -49,7 +49,7 @@ export function shoppingCartReducer(state = initialState, action: Actions.Shoppi
         }
 
       case Actions.FETCH_SUCCESS:
-        let fetchedShoppingCartItems: ShoppingCart[]  = [...action.payload];
+        let fetchedShoppingCartItems: ShoppingCartItem[]  = [...action.payload];
 
         let numberOfItemsCounted: number = 0;
         fetchedShoppingCartItems.forEach(item => {

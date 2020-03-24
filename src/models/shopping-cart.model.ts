@@ -7,7 +7,7 @@
 import { Product } from './product.model';
 import { Cart } from './cart.model';
 
-export class ShoppingCart {
+export class ShoppingCartItem {
   constructor (
       public products: Product,
       public carts: Cart,
