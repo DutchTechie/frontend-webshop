@@ -17,7 +17,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { environment } from '../environments/environment';
 import { ProductEffects } from 'src/app/product/store/product.effects';
-import { SharedModule } from './shared/shared.module';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -44,7 +43,6 @@ import * as fromApp from './app.reducer';
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot(),
     CoreModule,
-    // SharedModule,
     AppRoutingModule,
     BrowserAnimationsModule
   ],
