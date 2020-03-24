@@ -11,7 +11,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { HttpClient } from '@angular/common/http';
 import * as ShoppingCartActions from './shopping-cart.actions';
 import { Cart } from 'src/models/cart.model';
-import { ShoppingCartItem } from 'src/models/shopping-cart.model';
+import { ShoppingCartItem } from 'src/models/shopping-cart-item.model';
 
 //=============================================================================
 

@@ -23,6 +23,7 @@ import { FooterComponent } from './footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ShoppingCartEffects } from 'src/app/shopping-cart/store/shopping-cart.effects';
 import { ShoppingCartModule } from './shopping-cart/shopping-cart.module';
+import { CustomPreloadingStrategy} from './custom-preloading-strategy';
 
 import * as fromApp from './app.reducer';
 
@@ -36,19 +37,19 @@ import * as fromApp from './app.reducer';
   ],
   imports: [
     BrowserModule,
-    ShoppingCartModule,
+    ShoppingCartModule, // Pipe can't seem to be found if this module is not imported 🤷
     HttpClientModule,
     StoreModule.forRoot(fromApp.appReducer),
     EffectsModule.forRoot([AuthenticationEffects, ProductEffects, ShoppingCartEffects]),
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot(),
     CoreModule,
-    SharedModule,
+    // SharedModule,
     AppRoutingModule,
     BrowserAnimationsModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [ CustomPreloadingStrategy ],
+  bootstrap: [ AppComponent ]
 })
 
 export class AppModule { }

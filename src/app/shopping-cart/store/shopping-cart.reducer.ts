@@ -5,7 +5,7 @@
 //=============================================================================
 
 import * as Actions from './shopping-cart.actions';
-import { ShoppingCartItem } from 'src/models/shopping-cart.model';
+import { ShoppingCartItem } from 'src/models/shopping-cart-item.model';
 
 //=============================================================================
 

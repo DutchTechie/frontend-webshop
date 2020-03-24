@@ -14,14 +14,14 @@ import * as ROUTES from './product.routes';
 
 //=============================================================================
 
-const appRoutes : Routes = [
+const productRoutes : Routes = [
   { path: ROUTES.DEFAULT_PATH, component: ProductComponent, canActivate: [AuthGuard] },
   { path: ROUTES.CREATE_NEW_PRODUCT_PATH, component: ProductItemComponent, canActivate: [AuthGuard] },
   { path: ROUTES.MUTATE_OR_DETAILS_PATH, component: ProductItemComponent, resolve: [ProductResolverService], canActivate: [AuthGuard] }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(appRoutes)],
+  imports: [RouterModule.forChild(productRoutes)],
   exports: [RouterModule]
 })
 export class ProductRoutingModule {}

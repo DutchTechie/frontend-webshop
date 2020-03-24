@@ -6,7 +6,7 @@
 
 import { Action } from '@ngrx/store';
 import { Cart } from 'src/models/cart.model';
-import { ShoppingCartItem } from 'src/models/shopping-cart.model';
+import { ShoppingCartItem } from 'src/models/shopping-cart-item.model';
 
 export const SET_SHOPPING_CART = '[ShoppingCart] Set Shopping Cart';
 export const FETCH_SHOPPING_CART = '[ShoppingCart] Fetch Shopping Cart';

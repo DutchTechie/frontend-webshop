@@ -12,7 +12,7 @@ import { Store } from '@ngrx/store';
 import { slideOutAnimation } from '../shared/animations/fade-out.animation';
 import { changeState } from '../shared/animations/change-state.animation';
 import { animateOut } from '../shared/animations/animate-out.animation';
-import { ShoppingCartItem } from 'src/models/shopping-cart.model';
+import { ShoppingCartItem } from 'src/models/shopping-cart-item.model';
 import { Observable } from 'rxjs';
 import { Cart } from 'src/models/cart.model';
 import { AuthenticationService } from 'src/app/auth/services/auth.service';

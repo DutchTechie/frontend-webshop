@@ -75,7 +75,7 @@ export class ProductEffects {
     private http: HttpClient
   ) {}
 
-  @Effect({dispatch: false})
+  @Effect()
   productsDeleteOneProduct = this.actions$.pipe(
     ofType(ProductActions.DELETE_PRODUCT),
     switchMap((productData: ProductActions.DeleteProduct) => {
@@ -83,6 +83,7 @@ export class ProductEffects {
 
       return this.http.delete<Product>(`${PRODUCTS_URL}/${id}`)
         .pipe(
+          map(() => { return new ProductActions.FetchProducts(); }),
           catchError(errorResponse => {
             return handleError(errorResponse);
           })
@@ -90,12 +91,13 @@ export class ProductEffects {
     })
   )
 
-  @Effect({dispatch: false})
+  @Effect()
   productsDeleteAllProducts = this.actions$.pipe(
     ofType(ProductActions.DELETE_ALL_PRODUCTS),
     switchMap(() => {
       return this.http.delete(PRODUCTS_URL)
         .pipe(
+          map(() => { return new ProductActions.FetchProducts(); }),
           catchError(errorResponse => {
             return handleError(errorResponse);
           })
